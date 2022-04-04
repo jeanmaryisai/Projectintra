@@ -25,8 +25,8 @@ public class Main {
         }
         students.add(student2);
         for (Niveau x:niveaux){
-            if("L3".equals(x.getNiveau())){
-                x.setLeaddr(student);
+            if(x.getNiveau().equals("L3")){
+                x.setLeaddr(student);test(4);
             }
         }
 
