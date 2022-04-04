@@ -21,7 +21,7 @@ public  abstract class Menus {
                 case 1:moduleEtudiant();break;
                 case 2:modulePret();break;
                 case 3:test(3);break;
-                case 4:test(4);break;
+                case 4:politique();break;
                 case 5:d("Merci et a bientot");stay=false;
             }
             if(stay)br();
