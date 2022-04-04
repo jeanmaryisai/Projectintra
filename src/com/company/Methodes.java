@@ -110,10 +110,11 @@ public abstract class Methodes {
                 case 5:
                     System.out.println("Le niveau de l'etudiant est:" + student.getNiveau().getNiveau());
                     System.out.println("Entrer le niveau");
+                    String niveaus=niv();
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
                             for(Niveau xe:niveaux) {
-                                if(xe.getNiveau().equals(Tools.niv())) {
+                                if(xe.getNiveau().equals(niveaus)) {
                                     x.setNiveau(xe);
                                 }
                             }
@@ -165,25 +166,50 @@ public abstract class Methodes {
         }
     }
 
+    public static void assignerStudent(){
+        System.out.println("Veuillez entrer l'id de l'etudiant a que vous souhaiter assigner comme leader");
+        String id= e();
+        boolean check=false;
+        for(Student s:students) {
+            if(s.getId_student().equals(id)) {
+                d("Veuillez le niveau en question ");
+                String niv=niv();
+                for (Niveau x:niveaux){
+                    if(niv.equals(x.getNiveau())){
+                        x.setLeaddr(s);
+                        d("Etudiant assigner!!!");
+                    }
+                }
+                check=true;
+            }
+        }if(!check)d("on a pas pu trouver l'etudiant");
+
+    }
+
+
     public static void addPret() {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
         String idl=e();
         boolean check=false;Niveau niveau = null;
         for(Niveau x:niveaux){
-            if(idl.equals(x.getLeaddr().getId_student())){
-                check=true;
-                pret.setNiveau(x);}
-        }if(!check){
+           try {
+               if (idl.equals(x.getLeaddr().getId_student())) {
+                   check = true;
+                   pret.setNiveau(x);break;
+
+               }
+           }catch(Exception e){d(" Leader non trouve");}       }if(!check){
             d("Erreur!!! L'etudiant n'est pas un representant.");return;
         }
         d("Combien d'etudiants veulent preter dans votre niveau?");
-        for(int i=1;i<=ei();i++){
+        int yy=ei();
+        for(int i=1;i<=yy;i++){
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
             d("Entree le montant"); double montant=ed();
-            for(Student x: niveau.getQteEtudient()){
+            for(Student x: students){
                 if(id.equals(x.getId_student())){
                     check=true;
                     Pretspersonnels pretspersonnels=new Pretspersonnels();

@@ -18,13 +18,11 @@ public class Niveau {
 	}
 
 	private Set<Student>qteEtudient= new HashSet<Student>();
-	public Niveau( String niveau) {
-		super();
-		
+
+	public Niveau(String niveau) {
 		this.niveau = niveau;
-		
 	}
-	
+
 	public String getNiveau() {
 		return niveau;
 	}

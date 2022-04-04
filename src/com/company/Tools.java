@@ -9,11 +9,9 @@ public abstract class Tools {
     public static String niv () {
         String x=e();
         if(x.equals("L1")||x.equals("L2")||x.equals("L3")||x.equals("DU2")||x.equals("DU1")) {
-            return x;
-        }else {
-            System.out.println("Veuillez entrer l'un des niveau suivant: 'L1', 'L2' 'L3' 'DUT1', 'DU2' ");
+            test(1);return x;
+        }System.out.println("Veuillez entrer l'un des niveau suivant: 'L1', 'L2' 'L3' 'DUT1', 'DU2' ");
             return niv();
-        }
     }
     public static int ei(){
         try{
@@ -123,7 +121,7 @@ public abstract class Tools {
         try{
 
             Scanner x=new Scanner(System.in);
-            double i=x.nextInt();
+            double i=x.nextDouble();
             return i;
         }catch (Exception e){
             System.out.println("Please enter a double!");

@@ -34,7 +34,7 @@ public  abstract class Menus {
         do {
             do {
                 d("Presser 1 pour modifier le taux\n" +
-                        "presser 2 pour modifier le montant minimale pour ouvrir un compte\n" +
+                        "presser  2 pour assigner un leader a un niveau\n" +
                         "presser 3 pour retourner au menu principale"
                 );
                 choix = ei();
@@ -42,7 +42,7 @@ public  abstract class Menus {
 
             switch (choix){
                 case 1:test(1);break;
-                case 2:test(2);break;
+                case 2:assignerStudent();break;
                 case 3:stay=false;break;
 
             }
