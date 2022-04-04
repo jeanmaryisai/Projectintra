@@ -203,11 +203,21 @@ public abstract class Methodes {
         for(Prets x:prets){
             d("Le pret"+x.getId_prets()+
                     "Place le "+x.getDate().toString()+
-                    "\npar le niveau: "+x.getNiveau().getNiveau());
+                    "\npar le niveau: "+x.getNiveau().getNiveau()+"\n\n");
         }
     }
 
-
+    public static void displayPret(){
+        System.out.println("Veuillez entrer l'id du pret voulu");
+        String id= e();
+        boolean check=false;
+        for(Prets s:prets) {
+            if(s.getId_prets().equals(id)) {
+                d(s.toString());
+                check=true;
+            }
+        }if(!check)d("on a pas pu trouver le pret en question");
+    }
 
     public static void newRembousement(){
         Remboursement remboursement=new Remboursement();
