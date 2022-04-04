@@ -436,9 +436,21 @@ public abstract class Methodes {
         remboursements.add(remboursement);
     }
 
-    public static void affRemboursement(){
+    public static void affRemboursements(){
         for(Remboursement x:remboursements){
-            d(x.toString());
+            d("Remboursement "+x.getId()+" place le "+x.getDate()+" sur le pret "+ x.getIdprets().getId_prets()+"\n");
         }
+    }
+
+    public static void detailRemboursement(){
+        System.out.println("Veuillez entrer l'id du remboursement voulu voulu");
+        String id= e();
+        boolean check=false;
+        for(Remboursement s:remboursements) {
+            if(s.getId().equals(id)) {
+                d(s.toString());
+                check=true;
+            }
+        }if(!check)d("on a pas pu trouver le pret en question");
     }
 }

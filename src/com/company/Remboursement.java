@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Remboursement {
-	private int id;
+	private String id;
 	private Niveau niveau;
 	private Prets idprets;
 	private String nomVers;
@@ -62,26 +62,17 @@ public class Remboursement {
 	
 	
 	
-	public Remboursement(int id, Prets idprets, String nomVers, Student student, Prets montantVerse,
-			LocalDate dateRenboursement) {
-		super();
-		this.id = id;
-		this.idprets = idprets;
-		this.nomVers = nomVers;
-		this.student = student;
-		this.montantVerse = montantVerse;
-		this.dateRenboursement = dateRenboursement;
-	}
 
 
 
-	public int getId() {
+
+	public String getId() {
 		return id;
 	}
 
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -159,16 +150,23 @@ public class Remboursement {
 
 	@Override
 	public String toString() {
-		return "Remboursement{" +
+		String xe="Remboursement{" +
 				"id=" + id +
 				"\n\t niveau=" + niveau.getNiveau() +
-				"\n\t idprets=" + idprets +
+				"\n\t id du prets=" + idprets.getId_prets() +
 				"\n\t nomVers='" + nomVers + '\'' +
 				"\n\t student=" + student.getL_name() + " "+student.getF_name()+
 				"\n\t montant=" + montant +
-				"\n\t remboursementPersonnels=" + remboursementPersonnels +
-				"\n\t montantVerse=" + montantVerse +
-				"\n\t dateRenboursement=" + dateRenboursement.toString() +
-				'}';
+				"\n\t List Etudiant ayant participer a ce remboursement:\n\t";
+					for (RemboursementPersonnel x:remboursementPersonnels) {
+							xe+=x.getEtudient().getF_name()+
+								" "+x.getEtudient().getL_name()+" d'Id "+
+								x.getEtudient().getId_student()+" a placer "
+								+x.getMontant()+" gourdes";}
+								xe+="\n\t montantVerse=" + montantVerse +
+								"\n\t dateRenboursement=" + dateRenboursement.toString() +
+								'}';
+					return xe;
+					}
 	}
-}
+
