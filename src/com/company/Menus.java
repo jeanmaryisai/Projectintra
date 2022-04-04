@@ -50,14 +50,14 @@ public  abstract class Menus {
         } while (stay);
     }
 
-    public static void moduleEtudiant() {
+    public static void modulePret() {
         int choix;
         boolean stay = true;
         do {
             do {
-                d("Presser 1 pour creer un etudiant\n" +
-                        "presser 2 pour rechercher un client\n" +
-                        "presser 3 pour lister tous les client\n" +
+                d("Presser 1 pour placer un pret\n" +
+                        "presser 2 pour afficher tous les prets\n" +
+                        "presser 3 pour afficher un prets en details\n" +
                         "presser 4 pour modifier un client\n" +
                         "presser 5 pour retourner au menu principale"
                 );
@@ -75,27 +75,28 @@ public  abstract class Menus {
         } while (stay);
     }
 
-    public static void modulePret() {
+    public static void moduleEtudiant() {
         int choix;
         boolean stay = true;
         do {
             do {
-                d("Presser 1 pour placer un pret\n" +
+                d("Presser 1 pour creer un etudiant\n" +
                         "presser 2 pour rechercher un client\n" +
                         "presser 3 pour lister tous les client\n" +
                         "presser 4 pour modifier un client\n" +
-                        "presser 4 pour supprimmer un etudiant\n" +
-                        "presser 5 pour retourner au menu principale"
+                        "presser 5 pour supprimmer un etudiant\n" +
+                        "presser 6 pour retourner au menu principale"
                 );
                 choix = ei();
-            } while (choix != 1 && choix != 2 && choix != 3 && choix != 4&&choix!=5);
+            } while (choix != 1 && choix != 2 && choix != 3 && choix != 4&&choix!=5&&choix!=6);
 
             switch (choix){
                 case 1:createEtudiant();break;
                 case 2:searchStudent();break;
                 case 3:showStudents();break;
-                case 5:stay=false;break;
+                case 6:stay=false;break;
                 case 4:modifyStudent();break;
+                case 5:deleteStudent();break;
             }
             if(stay)br();
         } while (stay);

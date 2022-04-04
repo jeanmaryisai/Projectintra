@@ -199,12 +199,15 @@ public abstract class Methodes {
         prets.add(pret);
     }
 
-    public static void showPret(){
+    public static void showPrets(){
         for(Prets x:prets){
-            d(x.toString());
-            d("\n\n");
+            d("Le pret"+x.getId_prets()+
+                    "Place le "+x.getDate().toString()+
+                    "\npar le niveau: "+x.getNiveau().getNiveau());
         }
     }
+
+
 
     public static void newRembousement(){
         Remboursement remboursement=new Remboursement();
