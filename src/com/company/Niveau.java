@@ -49,7 +49,6 @@ public class Niveau {
 	public String toString() {
 		return "Niveau{" +
 				"\n\tniveau='" + niveau + '\'' +
-				"\n\t Representant =" + leaddr.getL_name() + " "+ leaddr.getF_name()+
 				'}';
 	}
 }

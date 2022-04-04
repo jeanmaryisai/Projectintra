@@ -20,7 +20,7 @@ public  abstract class Menus {
             switch (mainMenu()){
                 case 1:moduleEtudiant();break;
                 case 2:modulePret();break;
-                case 3:test(3);break;
+                case 3:moduleRemboursement();break;
                 case 4:politique();break;
                 case 5:d("Merci et a bientot");stay=false;
             }
@@ -99,4 +99,29 @@ public  abstract class Menus {
             if(stay)br();
         } while (stay);
     }
+
+    public static void moduleRemboursement() {
+        int choix;
+        boolean stay = true;
+        do {
+            do {
+                d("Presser 1 pour placer un remboursement\n" +
+                        "presser 2 pour afficher tous les rembousement\n" +
+                        "presser 3 pour afficher un rembousement en details\n" +
+                        "presser 4 pour retourner au menu principale"
+                );
+                choix = ei();
+            } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
+
+            switch (choix){
+                case 1:newRembousement();break;
+                case 2:affRemboursements();break;
+                case 3:detailRemboursement();break;
+                case 4:stay=false;break;
+            }
+            if(stay)br();
+        } while (stay);
+    }
+
+
 }

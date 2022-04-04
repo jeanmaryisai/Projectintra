@@ -7,6 +7,7 @@ import static com.company.Tools.d;
 public class Main {
 
     public static void main(String[] args) {
+        operation();
         menuPrincipale();
     }
 }

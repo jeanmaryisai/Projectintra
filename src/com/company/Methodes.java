@@ -27,6 +27,7 @@ public abstract class Methodes {
         niveaux.add(niv3a);
     }
 
+    //student
     public static void createEtudiant( ) {
         d("Entrer le nom de l'etudiant: ");
         String nom=e();
@@ -155,7 +156,6 @@ public abstract class Methodes {
             }
         }if(!check)d("on a pas pu trouver l'etudiant");
     }
-
 
     public static void showStudents() {
         for(Student a:students) {
