@@ -21,8 +21,7 @@ public class Prets {
 	}
 
 	private  double interet;
-	private double versement=getMontant()/4;
-	final double versemntFinal=versement;
+	private double versement;
 
 	private LocalDate vers1=LocalDate.of(0,1,1);
 	private LocalDate vers2=LocalDate.of(0,1,1);
@@ -34,6 +33,10 @@ public class Prets {
 	private double balance;
 	public boolean isIsencoour() {
 		return isencoour;
+	}
+
+	public void setId_prets(String id_prets) {
+		this.id_prets = id_prets;
 	}
 
 	public void setIsencoour(boolean isencoour) {
@@ -74,7 +77,7 @@ public class Prets {
 		this.interet = interet;
 	}
 	public double getVersement() {
-		return getMontant()/4;
+		return versement;
 	}
 	public void setVersement(double versement) {
 		this.versement = versement;

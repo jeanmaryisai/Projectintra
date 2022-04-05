@@ -20,7 +20,10 @@ public class Student {
 		
 	}
 
-		//constructr with param
+	public void setId_student(String id_student) {
+		this.id_student = id_student;
+	}
+	//constructr with param
 
 	public Student( String f_name, String l_name,String gendr, String phone,String adresse, String piece,
 			long piece_numbr) {

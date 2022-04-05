@@ -191,7 +191,7 @@ public abstract class Methodes {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
         String idl=e();
-        boolean check=false;Niveau niveau = null;
+        boolean check=false;
         for(Niveau x:niveaux){
            try {
                if (idl.equals(x.getLeaddr().getId_student())) {
@@ -221,6 +221,7 @@ public abstract class Methodes {
                 d("L'etudiant n'a pas ete retrouvee!!!");return;
             }
         }pret.setDate(LocalDate.now());
+        pret.setVersement(pret.getMontant()/4);
         pret.setBalance(pret.getMontant()/4);
         d("Le montant emprunter est de " + pret.getMontant() +" gourdes");
         prets.add(pret);
@@ -250,7 +251,7 @@ public abstract class Methodes {
         Remboursement remboursement=new Remboursement();
         System.out.println("Entrer votre Id");
         String idl=e();
-        boolean check=false;Niveau niveau = null;
+        boolean check=false;
         for(Niveau x:niveaux){
             try{if(idl.equals(x.getLeaddr().getId_student())){
                 check=true;
@@ -266,7 +267,7 @@ public abstract class Methodes {
         check=false;
         for(Prets x:prets){
             if(idP.equals(x.getId_prets())){
-                check=true; remboursement.setIdprets(x);
+                check=true; remboursement.setIdprets(x);test(48);d(remboursement.getIdprets().getId_prets());
             }
         }if(!check){
             {
@@ -301,7 +302,7 @@ public abstract class Methodes {
             }
         }
         d("Le montant total versee est de " + remboursement.getMontant() +" gourdes");
-        double Versement= remboursement.getIdprets().getVersement();
+        double Versement= remboursement.getIdprets().getVersement();d(Versement);
         double Montant= remboursement.getMontant();
         double Balance= remboursement.getIdprets().getBalance();
         if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,1,1))){
@@ -322,7 +323,7 @@ public abstract class Methodes {
                     remboursement.getIdprets().setBalance(Balance - Montant+ Versement);
                     d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre deuxieme versement");
                 }
-                else if(remboursement.getMontant()<((Versement*2)+Balance))
+                else if(Montant<((Versement*2)+Balance))
                 {
                     remboursement.getIdprets().setBalance(Balance - Montant+ (Versement*2));
                     d("Vous avez terminer votre deuxieme versement");
@@ -349,7 +350,7 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement()*3)+remboursement.getIdprets().getBalance()))
+                else if (Montant>((Versement*3)+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
