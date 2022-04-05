@@ -1,6 +1,9 @@
 package com.company;
 
+import java.io.File;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Set;
 
 import static com.company.Dao.*;
 import static com.company.Tools.*;
@@ -47,7 +50,8 @@ public abstract class Methodes {
             }
         }
         students.add(student);
-
+        File file = new File("etudiant.txt");
+        FileIO.Write(Collections.singleton(students),file);
     }
 
     public static void modifyStudent(){
@@ -149,6 +153,8 @@ public abstract class Methodes {
         String id= e();
         boolean check=false;
         Student student = null;
+        File file = new File("etudiant.txt");
+        students= Collections.singleton((Student) FileIO.Read(file));
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 d(s.toString());
