@@ -49,8 +49,6 @@ public class Prets {
 	}
 
 	public Prets() {
-		final double versemntFinale=getMontant()/4;
-		 balance=versemntFinale;
 	}
 	public String getId_prets() {
 		return id_prets;

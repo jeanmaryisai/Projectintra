@@ -221,6 +221,7 @@ public abstract class Methodes {
                 d("L'etudiant n'a pas ete retrouvee!!!");return;
             }
         }pret.setDate(LocalDate.now());
+        pret.setBalance(pret.getMontant()/4);
         d("Le montant emprunter est de " + pret.getMontant() +" gourdes");
         prets.add(pret);
     }
@@ -251,9 +252,12 @@ public abstract class Methodes {
         String idl=e();
         boolean check=false;Niveau niveau = null;
         for(Niveau x:niveaux){
-            if(idl.equals(x.getLeaddr().getId_student())){
+            try{if(idl.equals(x.getLeaddr().getId_student())){
                 check=true;
-                remboursement.setNiveau(x);}
+                remboursement.setNiveau(x);}}
+            catch (Exception e){
+
+            }
         }if(!check){
             d("Erreur!!! L'etudiant n'est pas un representant.");return;
         }
@@ -262,21 +266,23 @@ public abstract class Methodes {
         check=false;
         for(Prets x:prets){
             if(idP.equals(x.getId_prets())){
-                check=true;
-            }else {
+                check=true; remboursement.setIdprets(x);
+            }
+        }if(!check){
+            {
                 d("Erreur!!! Pret introuvable");
-                remboursement.setIdprets(x);
                 return;
             }
         }
 
         d("Combien d'etudiants on participer au remboursement?");
-        for(int i=1;i<=ei();i++){
+        int k=ei();
+        for(int i=1;i<=k;i++){
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
             d("Entree le montant versee"); double montant=ed();
-            for(Student x: niveau.getQteEtudient()){
+            for(Student x: students){
                 if(id.equals(x.getId_student())){
                     check=true;
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
@@ -298,7 +304,7 @@ public abstract class Methodes {
         double Versement= remboursement.getIdprets().getVersement();
         double Montant= remboursement.getMontant();
         double Balance= remboursement.getIdprets().getBalance();
-        if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,0,1))){
+        if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre premier versement");
@@ -356,7 +362,7 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers2().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers2().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre second versement");
@@ -401,7 +407,7 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers3().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers3().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre troisieme versement");
@@ -436,7 +442,7 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers4().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre derniere versement");
@@ -455,7 +461,7 @@ public abstract class Methodes {
                         -remboursement.getIdprets().getBalance())+" de monnaie restant");
             }
         }
-        else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,0,1))){
+        else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
             d("Cette dette a ete totalement recouvree.");
         }
         remboursement.setDateRenboursement(LocalDate.now());
