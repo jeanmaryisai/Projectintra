@@ -29,7 +29,6 @@ public class Prets {
 	private LocalDate vers4=LocalDate.of(0,1,1);
 	private LocalDate date;
 	private boolean isencoour=true;
-	final double versemntFinale=getMontant()/4;
 	private double balance;
 	public boolean isIsencoour() {
 		return isencoour;

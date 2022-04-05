@@ -302,9 +302,10 @@ public abstract class Methodes {
             }
         }
         d("Le montant total versee est de " + remboursement.getMontant() +" gourdes");
-        double Versement= remboursement.getIdprets().getVersement();d(Versement);
+        double Versement= remboursement.getIdprets().getVersement();
         double Montant= remboursement.getMontant();
         double Balance= remboursement.getIdprets().getBalance();
+
         if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
@@ -318,6 +319,7 @@ public abstract class Methodes {
             else{
                 d("Vous avez terminer votrer premier versement");
                 remboursement.getIdprets().setVers1(LocalDate.now());
+                d(Balance);
                 if(Montant<(Versement+Balance))
                 {
                     remboursement.getIdprets().setBalance(Balance - Montant+ Versement);

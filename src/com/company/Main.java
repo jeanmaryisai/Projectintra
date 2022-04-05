@@ -54,7 +54,6 @@ public class Main {
         pret.setBalance(200/4);
 
         pret.setDate(LocalDate.now());
-        pret.setBalance(pret.getMontant()/4);
         pret.setId_prets("Pcr-181856");
         prets.add(pret);
 
