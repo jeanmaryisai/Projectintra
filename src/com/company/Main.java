@@ -13,7 +13,7 @@ public class Main {
         //test
         operation();
         Student student = new Student("prenom", "nom", "sexe", "telephone", "addresse", "piecee",  00000);
-        student.setId_student("Ecr-100793");
+        student.setId_student("s1");
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L3")) {
                 student.setNiveau(x);test(3);
@@ -26,7 +26,7 @@ public class Main {
                 student.setNiveau(x);test(3);
             }
         }
-
+        student2.setId_student("s2");
         students.add(student2);
         for (Niveau x:niveaux){
             if(x.getNiveau().equals("L3")){
@@ -50,11 +50,11 @@ public class Main {
         pretspersonnelss.setStudent(student2);
         pretspersonnelss.setMontant(200);
         pret.getPretspersonnels().add(pretspersonnelss);
-        pret.setVersement(200/4);
-        pret.setBalance(200/4);
+        pret.setVersement(pret.getMontant()/4);
+        pret.setBalance(pret.getMontant()/4);
 
         pret.setDate(LocalDate.now());
-        pret.setId_prets("Pcr-181856");
+        pret.setId_prets("P");
         prets.add(pret);
 
 

@@ -69,7 +69,7 @@ public abstract class Tools {
        for(Prets xr:prets){
         for(Pretspersonnels h: xr.getPretspersonnels()){
             if(h.getId().equals(v)){
-                v=randomPId();
+                v=randomPPId();
                 break;
             }
         }
@@ -80,14 +80,28 @@ public abstract class Tools {
         Random x=new Random();
         x.nextInt(99999);x.nextInt(99999);
         int i=  (x.nextInt(99999)+100000);
-        String v="PPr-"+String.valueOf(i);
+        String v="RPr-"+String.valueOf(i);
         for(Remboursement xr: remboursements){
             for(RemboursementPersonnel h: xr.getDtailRembos()){
                 if(h.getId().equals(v)){
-                    v=randomPId();
+                    v=randomRPId();
                     break;
                 }
             }
+        }
+        return v;
+    }
+    public static String randomRId(){
+        Random x=new Random();
+        x.nextInt(99999);x.nextInt(99999);
+        int i=  (x.nextInt(99999)+100000);
+        String v="Rr-"+String.valueOf(i);
+        for(Remboursement xr: remboursements){
+                if(xr.getId().equals(v)){
+                    v=randomRId();
+                    break;
+                }
+
         }
         return v;
     }

@@ -359,8 +359,8 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    d("Vous avez "+ (Montant-(Versement*3)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
@@ -397,15 +397,15 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement()*2)+remboursement.getIdprets().getBalance()))
+                else if (Montant>((Versement*2)+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    d("Vous avez "+ (Montant-(Versement*2)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
@@ -434,13 +434,13 @@ public abstract class Methodes {
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement())+remboursement.getIdprets().getBalance()))
+                else if (Montant>(Versement+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    d("Vous avez "+ (Montant-(Versement)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
@@ -460,8 +460,8 @@ public abstract class Methodes {
                 remboursement.getIdprets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
                 remboursement.getIdprets().setVers4(LocalDate.now());
-                d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                        -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                d("Vous avez "+ (Montant
+                        -Balance)+" de monnaie restant");
             }
         }
         else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){

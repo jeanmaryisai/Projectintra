@@ -117,7 +117,7 @@ public class Prets {
 		return "Prets{" +
 				"\n\tid_prets='" + id_prets + '\'' +
 				"\n\t niveau=" + niveau +
-				"\n\t montant=" + montant +
+				"\n\t montant=" + getMontant() +
 				"\n\t interet=" + interet +
 				"\n\t versement=" + getVersement() +
 				"\n\t balance=" + balance +
