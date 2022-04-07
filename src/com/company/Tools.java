@@ -18,6 +18,10 @@ public abstract class Tools {
 
             Scanner x=new Scanner(System.in);
             int i=x.nextInt();
+            if(i<=0){
+                d("Erreur, vous ne pouvez pas entrer une valeur inferieur ou egale a zero(0)!");
+                return ei();
+            }
             return i;
         }catch (Exception e){
             System.out.println("Please enter an Interger");
@@ -139,6 +143,11 @@ public abstract class Tools {
 
             Scanner x=new Scanner(System.in);
             double i=x.nextDouble();
+            if(i<=0){
+                d("Erreur, vous ne pouvez pas entrer une valeur inferieur ou egale a zero(0)!" +
+                        "\n Veuillez entrer l'equivalent positif de votre nombre...");
+                return ed();
+            }
             return i;
         }catch (Exception e){
             System.out.println("Please enter a double!");

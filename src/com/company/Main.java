@@ -37,7 +37,7 @@ public class Main {
         Prets pret=new Prets();
         for(Niveau x:niveaux){
             try {
-                if (x.getLeaddr().getId_student().equals("Ecr-100793")) {
+                if (x.getLeaddr().getId_student().equals("s1")) {
                     pret.setNiveau(x);break;
                 }
             }catch(Exception e){d(" Leader non trouve");}       }

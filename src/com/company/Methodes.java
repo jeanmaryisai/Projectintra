@@ -195,7 +195,7 @@ public abstract class Methodes {
 
     }
 
-
+//pret
     public static void addPret() {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
@@ -205,12 +205,17 @@ public abstract class Methodes {
            try {
                if (idl.equals(x.getLeaddr().getId_student())) {
                    check = true;
-                   pret.setNiveau(x);break;
-
+                   pret.setNiveau(x);
+                   if(x.isencour){
+                       d("Vous ne pouver pas placer ce pret puisqu'il y a deja un pret en cours dans votre niveau");
+                    return;
+                   }
+                   break;
                }
-           }catch(Exception e){d(" Leader non trouve");}       }if(!check){
-            d("Erreur!!! L'etudiant n'est pas un representant.");return;
+           }catch(Exception e){}       }if(!check){
+            d("Erreur!!! L'etudiant n'a pas ete trouvee ou n'est pas un representant.");return;
         }
+
         d("Combien d'etudiants veulent preter dans votre niveau?");
         int yy=ei();
         for(int i=1;i<=yy;i++){
@@ -234,6 +239,14 @@ public abstract class Methodes {
         pret.setBalance(pret.getMontant()/4);
         d("Le montant emprunter est de " + pret.getMontant() +" gourdes");
         prets.add(pret);
+        for(Niveau x:niveaux){
+            try {
+                if (idl.equals(x.getLeaddr().getId_student())) {
+                    x.isencour=true;
+                    break;
+                }
+            }catch(Exception e){}
+        }
     }
 
     public static void showPrets(){
@@ -262,9 +275,13 @@ public abstract class Methodes {
         String idl=e();
         boolean check=false;
         for(Niveau x:niveaux){
-            try{if(idl.equals(x.getLeaddr().getId_student())){
+            try{
+                if(idl.equals(x.getLeaddr().getId_student())){
                 check=true;
-                remboursement.setNiveau(x);}}
+                remboursement.setNiveau(x);
+
+                    }
+            }
             catch (Exception e){
 
             }
@@ -360,6 +377,15 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
+
                 }
                 else if (Montant>((Versement*3)+Balance))
                 {
@@ -368,6 +394,14 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                     d("Vous avez "+ (Montant-(Versement*3)
                             -Balance)+" de monnaie restant");
                 }
@@ -405,6 +439,14 @@ public abstract class Methodes {
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                 }
                 else if (Montant>((Versement*2)+Balance))
                 {
@@ -413,6 +455,14 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                     d("Vous avez "+ (Montant-(Versement*2)
                             -Balance)+" de monnaie restant");
                 }
@@ -442,12 +492,28 @@ public abstract class Methodes {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                 }
                 else if (Montant>(Versement+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                     d("Vous avez "+ (Montant-(Versement)
                             -Balance)+" de monnaie restant");
                 }
@@ -463,12 +529,28 @@ public abstract class Methodes {
                 remboursement.getIdprets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
                 remboursement.getIdprets().setVers4(LocalDate.now());
+                for(Niveau x:niveaux){
+                    try {
+                        if (idl.equals(x.getLeaddr().getId_student())) {
+                            x.isencour=false;
+                            break;
+                        }
+                    }catch(Exception e){}
+                }
             }
             else if (Montant>Balance)
             {
                 remboursement.getIdprets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
                 remboursement.getIdprets().setVers4(LocalDate.now());
+                for(Niveau x:niveaux){
+                    try {
+                        if (idl.equals(x.getLeaddr().getId_student())) {
+                            x.isencour=false;
+                            break;
+                        }
+                    }catch(Exception e){}
+                }
                 d("Vous avez "+ (Montant
                         -Balance)+" de monnaie restant");
             }

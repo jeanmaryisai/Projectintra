@@ -8,6 +8,7 @@ import java.util.Set;
 public class Niveau {
 	private String niveau;
 	private Student leaddr;
+	public Boolean isencour=false;
 
 	public Student getLeaddr() {
 		return leaddr;
