@@ -105,7 +105,6 @@ public abstract class Tools {
         }
         return v;
     }
-
     public static boolean isvalide(){
         String v;
         boolean valide=true;
@@ -145,5 +144,32 @@ public abstract class Tools {
 
     public static void d(Object x){
         System.out.println(x);
+    }
+
+    public static String sexe(){
+        d("Veuillez entre le sexe voulu.(Entrer 'Masculin' ou 'Feminin')");
+        String v= e();
+        String m="Masculin";
+        String f="Feminin";
+
+        if (!v.equals(m)&&!v.equals(m)){
+            sexe();
+        };
+        return v;
+    }
+
+    public static String carte(){
+        d("Vous allez nous procurer un numero d'identification\n" +
+                "D'abord dites nous de quel type de numero piece qu'il s'agit\n" +
+                "Entrer 'CIN', 'NIF' ou ' NII'");
+        String v= e();
+        String m="CIN";
+        String f="NIF";
+        String n="NII";
+
+        if (!v.equals(m)&&!v.equals(m)&&!v.equals(n)){
+            carte();
+        };
+        return v;
     }
 }

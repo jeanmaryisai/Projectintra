@@ -15,17 +15,18 @@ public  abstract class Menus {
         }while (i!=1&&i!=2&&i!=3&&i!=4&&i!=5);
         return i;
     }
-    public static void menuPrincipale(){boolean stay=true;
+    public static void menuPrincipale(){
         do {
             switch (mainMenu()){
                 case 1:moduleEtudiant();break;
                 case 2:modulePret();break;
                 case 3:moduleRemboursement();break;
                 case 4:politique();break;
-                case 5:d("Merci et a bientot");stay=false;
+                case 5:d("Merci et a bientot");
+                    Dao.stayed=false;
             }
-            if(stay)br();
-        }while (stay);
+            if(Dao.stayed)br();
+        }while (Dao.stayed);
     }
 
     private static void politique() {

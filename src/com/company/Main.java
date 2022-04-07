@@ -62,7 +62,13 @@ public class Main {
 
 
 
-
-        menuPrincipale();
+        while (stayed) {
+            try {
+                menuPrincipale();
+            } catch (Exception e) {
+                d("Une erreur a ete detectee quelque part!");
+                d("Nous relancons l'application...");
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ public abstract class Dao {
 	public static Set<Prets> prets=new HashSet<Prets>();
 	public static Set<Remboursement> remboursements=new HashSet<Remboursement>();
 	public static double taux=0.1;
+	public static boolean stayed=true;
 
 
 	

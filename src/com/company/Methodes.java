@@ -30,19 +30,29 @@ public abstract class Methodes {
     //student
     public static void createEtudiant( ) {
         d("Entrer le nom de l'etudiant: ");
-        String nom=e();
+        String nom = e();
         d("Entrer le prenom de l'etudiant: ");
-        String prenom=e();d("Entrer le sexe de l'etudiant: ");
-        String sexe=e();d("Entrer l'addresse de l'etudiant: ");
-        String addresse=e();d("Entrer le telephone de l'etudiant: ");
-        String telephone=e();d("Quel est la piecee que vous utiliser?: ");
-        String piecee=e();d("Entrer le numero de la piece concernee");
-        Long piecenum= Long.valueOf(e());d("Entre le niveau de l'etudiant: ");
-        String niveau=e();
+        String prenom = e();
+        String sexe = sexe();
+        d("Entrer l'addresse de l'etudiant: ");
+        String addresse = e();
+        d("Entrer le telephone de l'etudiant: ");
+        String telephone = e();
+        String piecee = carte();
+        d("Entrer le numero de la piece concernee");
+        Long piecenum;
+        try {
+            piecenum = Long.valueOf(e());
+        } catch (NumberFormatException e) {
+            d("Erreur!!! Format incorrect!!!\n");
+            return;
+        }
+        d("Entre le niveau de l'etudiant: ");
+        String niveau = e();
 
-        Student student = new Student( prenom, nom, sexe,telephone, addresse, piecee,  piecenum);
-        for (Niveau x: niveaux) {
-            if(x.getNiveau().equals(niveau)) {
+        Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
+        for (Niveau x : niveaux) {
+            if (x.getNiveau().equals(niveau)) {
                 student.setNiveau(x);
             }
         }
