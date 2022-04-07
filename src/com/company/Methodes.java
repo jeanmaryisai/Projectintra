@@ -48,7 +48,7 @@ public abstract class Methodes {
             return;
         }
         d("Entre le niveau de l'etudiant: ");
-        String niveau = e();
+        String niveau = niv();
 
         Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
         for (Niveau x : niveaux) {
@@ -84,7 +84,7 @@ public abstract class Methodes {
 
             switch(ei()) {
                 case 1:
-                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() +" "+ student.getL_name());
+                    System.out.println("Le nom actuel de l'etudiant est:" +" "+ student.getL_name());
                     System.out.println("Entrer son nouveau Nom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
@@ -92,7 +92,7 @@ public abstract class Methodes {
                     }
                     break;
                 case 2:
-                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() +" "+ student.getL_name());
+                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() );
                     System.out.println("Entrer son nouveau Prenom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
@@ -144,36 +144,35 @@ public abstract class Methodes {
         System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
         String id= e();
         boolean check=false;
-        Student student = null;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 students.remove(s);
                 d("Etudiant supprimer!!!");
-                check=true;
+                check=true;break;
             }
         }if(!check)d("on a pas pu trouver l'etudiant");
     }
 
     public static void searchStudent() {
 
-        System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
+        System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
         boolean check=false;
-        Student student = null;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 d(s.toString());
                 check=true;
             }
-        }if(!check)d("on a pas pu trouver l'etudiant");
+        }if(!check)d("On a pas pu trouver l'etudiant");
     }
 
-    public static void showStudents() {
+    public static void showStudents() {int i=0;
         for(Student a:students) {
-           d("Etudiant: "+ a.getF_name()+" "+a.getL_name());
-           d("Etudiant ID: "+a.getId_student());
+           d("Etudiant: "+ a.getF_name()+" "+a.getL_name()+" d'ID: "+a.getId_student());
+            i++;
 
         }
+        if(i==0)d("Aucun etudiant enregistree");
     }
 
     public static void assignerStudent(){

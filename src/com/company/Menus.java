@@ -80,9 +80,9 @@ public  abstract class Menus {
         do {
             do {
                 d("Presser 1 pour creer un etudiant\n" +
-                        "presser 2 pour rechercher un client\n" +
-                        "presser 3 pour lister tous les client\n" +
-                        "presser 4 pour modifier un client\n" +
+                        "presser 2 pour rechercher un etudiant\n" +
+                        "presser 3 pour lister tous les etudiant\n" +
+                        "presser 4 pour modifier un etudiant\n" +
                         "presser 5 pour supprimmer un etudiant\n" +
                         "presser 6 pour retourner au menu principale"
                 );

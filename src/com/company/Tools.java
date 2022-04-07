@@ -119,6 +119,10 @@ public abstract class Tools {
     public static String e(){
         Scanner x=new Scanner(System.in);
         String i=x.nextLine();
+        if(i.equals("")){
+            d("Veuilliez entrer une valeur svp...");
+            return e();
+        }
         return i;
     }
     public static void br(){
