@@ -332,8 +332,11 @@ public abstract class Methodes {
         String idP=e();
         check=false;
         for(Prets x:prets){
-            if(idP.equals(x.getId_prets())){
-                check=true; remboursement.setIdprets(x);test(48);d(remboursement.getIdprets().getId_prets());
+            if(idP.equals(x.getId_prets()))
+            {
+                check=true; remboursement.setIdprets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
+                d("Voulez vous poursuivre ?");
+                if(isvalide())return;
             }
         }if(!check){
             {
@@ -342,7 +345,7 @@ public abstract class Methodes {
             }
         }
 
-        d("Combien d'etudiants on participer au remboursement?");
+        d("Combien d'etudiants ont participer au remboursement?");
         int k=ei();
         for(int i=1;i<=k;i++){
             d("Pour le "+i+" etudiant: ");

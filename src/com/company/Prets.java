@@ -67,7 +67,7 @@ public class Prets {
 		return montant*(1+taux);
 	}
 	public double getInteret() {
-		return (getMontant()-getMontantbrut());
+		return ((getVersement()*4)-((getVersement()*4)/(1+taux)));
 	}
 
 	public double getVersement() {
@@ -114,10 +114,9 @@ public class Prets {
 				"\n\t niveau=" + niveau.getNiveau() +
 				"\n\t Montant brut =" + ((getVersement()*4)/(1+taux)) +
 				"\n\t Montant net =" + (getVersement()*4) +
-				"\n\t Montant restant =" + getMontant() +
 				"\n\t interet=" + getInteret() +
 				"\n\t versement=" + getVersement() +
-				"\n\t balance=" + balance
+				"\n\t balance sur le versement en cours =" + balance
 				;
 				if(!isencoour)x+="Le pret a ete totalement recouvree!";
 				if(vers1.equals(LocalDate.of(0,1,1)))x+="\n\t premier versement non encore recouvre ";
