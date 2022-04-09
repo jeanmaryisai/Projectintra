@@ -1,6 +1,8 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.company.Dao.*;
 import static com.company.Tools.*;
@@ -199,32 +201,62 @@ public abstract class Methodes {
     public static void addPret() {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
-        String idl=e();
+        String idl=e();String niveau="";
         boolean check=false;
         for(Niveau x:niveaux){
            try {
                if (idl.equals(x.getLeaddr().getId_student())) {
                    check = true;
+                   niveau=x.getNiveau();
                    pret.setNiveau(x);
                    if(x.isencour){
                        d("Vous ne pouver pas placer ce pret puisqu'il y a deja un pret en cours dans votre niveau");
                     return;
                    }
+                   d("L'etudiant est le representant du niveau "+niveau);br();
                    break;
                }
            }catch(Exception e){}       }if(!check){
             d("Erreur!!! L'etudiant n'a pas ete trouvee ou n'est pas un representant.");return;
         }
 
+
         d("Combien d'etudiants veulent preter dans votre niveau?");
-        int yy=ei();
+        int yy=ei();int ii=0;
+        for(Student x:students){
+            try {
+            if (x.getNiveau().getNiveau().equals(niveau)) ii++;
+            }catch (Exception e){}
+        }
+        if(ii<yy){
+            d("Vous ne pouvez pas placer ce pret !!!\n" +
+                    "Vous avez entrer "+yy+" etudiants alors que le nombres d'etudiants inscrit a ce niveau est de "+ii+" donc inferieur a ce nombre.");
+            return;
+        }
+
+        String ide="";
+        List<String> noms= new ArrayList<String>();
         for(int i=1;i<=yy;i++){
+
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
+
+            if(noms.contains(id)){
+                d("Confusion!!!\nErreur!!!Etudiant double!");
+                return;
+            }noms.add(id);
             d("Entree le montant"); double montant=ed();
             for(Student x: students){
                 if(id.equals(x.getId_student())){
+                   try{ if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                        d("Cet etudiant n'appartient pas a ce niveau!");
+                        return;
+                    }
+                   }catch (Exception e){
+                       d("Cet etudiant n'appartient pas a ce niveau!");
+                       return;
+                   }
                     check=true;
                     Pretspersonnels pretspersonnels=new Pretspersonnels();
                     pretspersonnels.setStudent(x);
@@ -234,10 +266,18 @@ public abstract class Methodes {
             }if(!check){
                 d("L'etudiant n'a pas ete retrouvee!!!");return;
             }
-        }pret.setDate(LocalDate.now());
+        }
+        if(pret.getMontantbrut()<montantPretMin){
+            d("Vous ne pouver pas placer ce pret car le montant minimum pour placer un pret est de " +
+                    montantPretMin+" gourdes,selon les politique de la direction,\n alors que votre montant de pret totalise "+pret.getMontantbrut()
+                +" gourdes.");
+            return;
+        }
+        pret.setDate(LocalDate.now());
         pret.setVersement(pret.getMontant()/4);
         pret.setBalance(pret.getMontant()/4);
-        d("Le montant emprunter est de " + pret.getMontant() +" gourdes");
+        d("Le montant emprunter est de " + pret.getMontantbrut() +" gourdes." +
+                "\nAvec un taux d'interet de "+taux*100+"% vous devrez payer un somme de "+pret.getMontant());
         prets.add(pret);
         for(Niveau x:niveaux){
             try {
@@ -251,8 +291,8 @@ public abstract class Methodes {
 
     public static void showPrets(){
         for(Prets x:prets){
-            d("Le pret"+x.getId_prets()+
-                    "Place le "+x.getDate().toString()+
+            d("Un pret de "+x.getVersement()*4+" gourdes, d'Id " +x.getId_prets()+
+                    " Place le "+x.getDate().toString()+
                     "\npar le niveau: "+x.getNiveau().getNiveau()+"\n\n");
         }
     }

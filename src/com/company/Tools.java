@@ -22,9 +22,10 @@ public abstract class Tools {
                 d("Erreur, vous ne pouvez pas entrer une valeur inferieur ou egale a zero(0)!");
                 return ei();
             }
+
             return i;
         }catch (Exception e){
-            System.out.println("Please enter an Interger");
+            System.out.println("Enter un entier svp!");
             return ei();
         }
     }
@@ -165,7 +166,7 @@ public abstract class Tools {
         String m="Masculin";
         String f="Feminin";
 
-        if (!v.equals(m)&&!v.equals(m)){
+        if (!v.equals(m)&&!v.equals(f)){
             sexe();
         };
         return v;

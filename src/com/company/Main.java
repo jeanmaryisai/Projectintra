@@ -16,14 +16,14 @@ public class Main {
         student.setId_student("s1");
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L3")) {
-                student.setNiveau(x);test(3);
+                student.setNiveau(x);
             }
         }
         students.add(student);
         Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "piecee",  001000);
         for (Niveau x: niveaux) {
-            if(x.getNiveau().equals("L3")) {
-                student.setNiveau(x);test(3);
+            if(x.getNiveau().equals("L2")) {
+                student2.setNiveau(x);
             }
         }
         student2.setId_student("s2");
@@ -31,6 +31,12 @@ public class Main {
         for (Niveau x:niveaux){
             if(x.getNiveau().equals("L3")){
                 x.setLeaddr(student);test(4);
+            }
+        }
+
+        for (Niveau x:niveaux){
+            if(x.getNiveau().equals("L2")){
+                x.setLeaddr(student2);test(4);
             }
         }
 

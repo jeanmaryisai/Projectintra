@@ -4,25 +4,18 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.company.Dao.taux;
+import static com.company.Tools.d;
 import static com.company.Tools.randomPId;
 
 public class Prets {
 	private String id_prets= randomPId();
 	private Niveau niveau;
-	private double montant;
 	private Set<Pretspersonnels> pretspersonnels= new HashSet<Pretspersonnels>();
-
 	public Set<Pretspersonnels> getPretspersonnels() {
 		return pretspersonnels;
 	}
-
-	public void setPretspersonnels(Set<Pretspersonnels> pretspersonnels) {
-		this.pretspersonnels = pretspersonnels;
-	}
-
-	private  double interet;
 	private double versement;
-
 	private LocalDate vers1=LocalDate.of(0,1,1);
 	private LocalDate vers2=LocalDate.of(0,1,1);
 	private LocalDate vers3=LocalDate.of(0,1,1);
@@ -30,10 +23,6 @@ public class Prets {
 	private LocalDate date;
 	private boolean isencoour=true;
 	private double balance;
-	public boolean isIsencoour() {
-		return isencoour;
-	}
-
 	public void setId_prets(String id_prets) {
 		this.id_prets = id_prets;
 	}
@@ -61,20 +50,26 @@ public class Prets {
 	public void setNiveau(Niveau niveau) {
 		this.niveau = niveau;
 	}
-	public double getMontant() {
-		montant=0;
+	public double getMontantbrut() {
+		double montant=0;
 		for(Pretspersonnels x:pretspersonnels){
 			montant +=x.getMontant();
 		}
 
 		return montant;
 	}
+	public double getMontant() {
+		double montant=0;
+		for(Pretspersonnels x:pretspersonnels){
+			montant +=x.getMontant();
+		}
+
+		return montant*(1+taux);
+	}
 	public double getInteret() {
-		return interet;
+		return (getMontant()-getMontantbrut());
 	}
-	public void setInteret(double interet) {
-		this.interet = interet;
-	}
+
 	public double getVersement() {
 		return versement;
 	}
@@ -113,20 +108,41 @@ public class Prets {
 	}
 
 	@Override
-	public String toString() {
-		return "Prets{" +
+	public String toString() {String x="";
+		x+= "Prets{\nNb: La devise est le gourde" +
 				"\n\tid_prets='" + id_prets + '\'' +
-				"\n\t niveau=" + niveau +
-				"\n\t montant=" + getMontant() +
-				"\n\t interet=" + interet +
+				"\n\t niveau=" + niveau.getNiveau() +
+				"\n\t Montant brut =" + ((getVersement()*4)/(1+taux)) +
+				"\n\t Montant net =" + (getVersement()*4) +
+				"\n\t Montant restant =" + getMontant() +
+				"\n\t interet=" + getInteret() +
 				"\n\t versement=" + getVersement() +
-				"\n\t balance=" + balance +
-				"\n\t vers1=" + vers1 +
-				"\n\t vers2=" + vers2 +
-				"\n\t vers3=" + vers3 +
-				"\n\t vers4=" + vers4 +
-				"\n\t date=" + date +
-				"\n\t isencoour=" + isencoour +
-				'}';
+				"\n\t balance=" + balance
+				;
+				if(!isencoour)x+="Le pret a ete totalement recouvree!";
+				if(vers1.equals(LocalDate.of(0,1,1)))x+="\n\t premier versement non encore recouvre ";
+				else{
+					x+="\n\t premier versement recouvree le "+vers1;
+					if(vers2.equals(LocalDate.of(0,1,1)))x+="\n\t second versement non encore recouvre ";
+					else{
+						x+="\n\t second versement recouvree le "+vers2;
+						if(vers3.equals(LocalDate.of(0,1,1)))x+="\n\t troisieme versement non encore recouvre ";
+						else{
+							x+="\n\t premier versement recouvree le "+vers3;
+							if(vers4.equals(LocalDate.of(0,1,1)))x+="\n\t dernier versement non encore recouvre ";
+							else{
+								x+="\n\t dernier versement recouvree le "+vers4;
+							}
+						}
+					}
+				}
+				x+= "\n\t"+getPretspersonnels().size()+" etudiant ont participer a ce pret: ";
+				for (Pretspersonnels y:getPretspersonnels()){
+					x+="\n\t\t "+y.getStudent().getF_name()+" "+y.getStudent().getL_name()+" d'Id "
+							+y.getStudent().getId_student()+" a preter "+ y.getMontant()+" gourdes.( plus "+y.getMontant()*taux+" gourdes d'interet.)";
+				}
+				x+="\n\t Le pret a ete placee le " + date +
+				"\n\n\t}";
+		return x;
 	}
 }
