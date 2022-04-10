@@ -9,11 +9,11 @@ import static com.company.Tools.*;
 
 public abstract class Dao {
 	public static Set<Niveau> niveaux=new HashSet<Niveau>();
-	static Niveau niv1= new Niveau("L1");
-	static Niveau niv2= new Niveau("L2");
-	static Niveau niv3= new Niveau("L3");
-	static Niveau niv2a= new Niveau("DUT1");
-	static Niveau niv3a= new Niveau("DUT2");
+	public static Niveau niv1= new Niveau("L1");
+	public static Niveau niv2= new Niveau("L2");
+	public static Niveau niv3= new Niveau("L3");
+	public static Niveau niv2a= new Niveau("DUT1");
+	public static Niveau niv3a= new Niveau("DUT2");
 	public static Set<Student> students= new HashSet<Student>();
 	public static Set<Prets> prets=new HashSet<Prets>();
 	public static Set<Remboursement> remboursements=new HashSet<Remboursement>();

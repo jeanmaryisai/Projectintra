@@ -21,15 +21,17 @@ public class Prets {
 	}
 
 	private  double interet;
-	private double versement= getMontant()/4;
-	private double balance= versement;
-	private LocalDate vers1=LocalDate.of(0,0,1);
-	private LocalDate vers2=LocalDate.of(0,0,1);
-	private LocalDate vers3=LocalDate.of(0,0,1);
-	private LocalDate vers4=LocalDate.of(0,0,1);
-	private LocalDate date;
-	private boolean isencoour;
+	private double versement=getMontant()/4;
+	final double versemntFinal=versement;
 
+	private LocalDate vers1=LocalDate.of(0,1,1);
+	private LocalDate vers2=LocalDate.of(0,1,1);
+	private LocalDate vers3=LocalDate.of(0,1,1);
+	private LocalDate vers4=LocalDate.of(0,1,1);
+	private LocalDate date;
+	private boolean isencoour=true;
+	final double versemntFinale=getMontant()/4;
+	private double balance;
 	public boolean isIsencoour() {
 		return isencoour;
 	}
@@ -47,8 +49,8 @@ public class Prets {
 	}
 
 	public Prets() {
-		super();
-		
+		final double versemntFinale=getMontant()/4;
+		 balance=versemntFinale;
 	}
 	public String getId_prets() {
 		return id_prets;
@@ -74,7 +76,7 @@ public class Prets {
 		this.interet = interet;
 	}
 	public double getVersement() {
-		return versement;
+		return getMontant()/4;
 	}
 	public void setVersement(double versement) {
 		this.versement = versement;
@@ -117,7 +119,7 @@ public class Prets {
 				"\n\t niveau=" + niveau +
 				"\n\t montant=" + montant +
 				"\n\t interet=" + interet +
-				"\n\t versement=" + versement +
+				"\n\t versement=" + getVersement() +
 				"\n\t balance=" + balance +
 				"\n\t vers1=" + vers1 +
 				"\n\t vers2=" + vers2 +
