@@ -36,15 +36,17 @@ public  abstract class Menus {
             do {
                 d("Presser 1 pour modifier le taux\n" +
                         "presser  2 pour assigner un leader a un niveau\n" +
-                        "presser 3 pour retourner au menu principale"
+                        "presser  3 pour redefinir le montant minimale pour pacer un pret\n" +
+                        "presser 4 pour retourner au menu principale"
                 );
                 choix = ei();
-            } while (choix != 1 && choix != 2 && choix != 3);
+            } while (choix != 1 && choix != 2 && choix != 3&& choix != 4);
 
             switch (choix){
                 case 1:setTaux();break;
                 case 2:assignerStudent();break;
-                case 3:stay=false;break;
+                case 4:stay=false;break;
+                case 3:setMontantmin();
 
             }
             if(stay)br();
@@ -136,6 +138,5 @@ public  abstract class Menus {
             if(stay)br();
         } while (stay);
     }
-
 
 }

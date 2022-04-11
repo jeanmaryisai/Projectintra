@@ -22,6 +22,19 @@ public abstract class Methodes {
         }
     }
 
+    public static void setMontantmin(){
+        d("L'actuel montant minimum est de "+montantPretMin);
+        d("Voulez vous poursuivre?");
+        if(!isvalide()){
+            return;
+        }else {
+            d("Veuillez entrer le nouveau montant ");
+
+            montantPretMin=ed();
+            d("Nouveau taux: "+montantPretMin+" gourdes");
+        }
+    }
+
     public static void operation() {
         niveaux.add(niv1);
         niveaux.add(niv2);
@@ -51,7 +64,7 @@ public abstract class Methodes {
             return;
         }
         for(Student st:students){
-            if(st.getPiece_numbr()==piecenum&&st.getPiece().equals(piecee)){
+            if(st.getPiece_numbr()==piecenum && st.getPiece().equals(piecee)){
                 d("Le numero de piece est deja pris!!!");
                 return;
             }
@@ -66,7 +79,6 @@ public abstract class Methodes {
             }
         }
         students.add(student);
-
     }
 
     public static void modifyStudent(){
@@ -93,15 +105,15 @@ public abstract class Methodes {
 
             switch(ei()) {
                 case 1:
-                    System.out.println("Le nom actuel de l'etudiant est:" +" "+ student.getL_name());
+                    d("Le nom actuel de l'etudiant est:" +" "+ student.getL_name());
                     System.out.println("Entrer son nouveau Nom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
-                            x.setL_name(Tools.e());}
+                            x.setL_name(e());}
                     }
                     break;
                 case 2:
-                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() );
+                    System.out.println("Le prenom actuel de l'etudiant est:" + student.getF_name() );
                     System.out.println("Entrer son nouveau Prenom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
@@ -127,11 +139,26 @@ public abstract class Methodes {
                     }
                     break;
                 case 5:
-                    System.out.println("Le niveau de l'etudiant est:" + student.getNiveau().getNiveau());
-                    System.out.println("Entrer le niveau");
+                    System.out.println("Le niveau actuel de l'etudiant est:" + student.getNiveau().getNiveau());
+                    if(student.getNiveau().getLeaddr().equals(student)){
+                        d("Attention!!! l'etudiant en question est un representant de sa classe.\n" +
+                                "Toute modification de son niveau entrainera sa demission" +
+                                " en tant que representant.(ce qui laissera son ex niveau sans representant)" +
+                                "\n veuillez vous rendre dans le secteur 'politique de la direction' " +
+                                "pour modifier les representant.");br();
+                        d("Etes vous sur de vouloir continuer?");
+                        if (!isvalide())return;
+                    }
+                    System.out.println("Entrer le nouveau niveau");
                     String niveaus=niv();
+                    if(niveaus.equals(student.getNiveau().getNiveau())){
+                        d("Vous avez entrer le meme niveau!");return;
+                    }
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
+                            if(student.getNiveau().getLeaddr().equals(student)){
+                                x.getNiveau().setLeaddr(null);
+                            }
                             for(Niveau xe:niveaux) {
                                 if(xe.getNiveau().equals(niveaus)) {
                                     x.setNiveau(xe);
@@ -139,11 +166,12 @@ public abstract class Methodes {
                             }
 
                         }
-                    }
+                    }d("Operation reussi avec succes!");break;
                 case 6:
                     continu=false;
+
             }
-        }
+        br();}
 
 
     }
@@ -330,7 +358,7 @@ public abstract class Methodes {
                     check=true;
                     Pretspersonnels pretspersonnels=new Pretspersonnels();
                     pretspersonnels.setStudent(x);
-                    pretspersonnels.setMontant(montant);
+                    pretspersonnels.setMontant((montant)*(1+taux));
                     pret.getPretspersonnels().add(pretspersonnels);
                 }
             }if(!check){
@@ -403,7 +431,9 @@ public abstract class Methodes {
         check=false;
         for(Prets x:prets){
             if(idP.equals(x.getId_prets()))
-            {
+            {if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                d("le pret n'est pas dans le niveau du representant!");return;
+            }
                 check=true; remboursement.setIdprets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
                 d("Voulez vous poursuivre ?");
                 if(!isvalide())return;
@@ -416,27 +446,41 @@ public abstract class Methodes {
         }
 
         d("Combien d'etudiants ont, participer au remboursement?");
-        int k=ei();
+        int k=ei();List<Student>studentList=new ArrayList<>();
         for(int i=1;i<=k;i++){
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
-            d("Entree le montant versee"); double montant=ed();
+            d("Entree le montant versee"); double montant;
             for(Student x: students){
                 if(id.equals(x.getId_student())){
+                    if(studentList.contains(x)){
+                        d("Erreur etudiant double!!!");return;
+                    }studentList.add(x);
+                    if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                        d("Erreur!!! L'etudiant n'appartient pas a ce niveau.");return;
+                    }
                     for(Prets p:prets){
                         if(p.getNiveau().getLeaddr().getId_student().equals(idl)){
-
                             break;
                         }
                     }
                     check=true;
+
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
                     remboursementPersonnel.setEtudient(x);
-                    remboursementPersonnel.setMontant(montant);
-                    remboursement.getDtailRembos().add(remboursementPersonnel);
                     for (Pretspersonnels pretspersonnel : remboursement.getIdprets().getPretspersonnels()) {
                         if(pretspersonnel.getStudent().equals(x)){
+                            d("L'etudiant reste une somme personnel de "+(pretspersonnel.getMontant())+" " +
+                                    "gourdes a payer en tout!");
+                            br();
+                            d("Entree le montant versee"); montant=ed();
+                            if(pretspersonnel.getMontant()<montant){
+                                d("Le montant est superieur a la dette personnel contractee!!");
+                                d("Action interrompu!!!");return;
+                            }
+                            remboursementPersonnel.setMontant(montant);
+                            remboursement.getDtailRembos().add(remboursementPersonnel);
                             pretspersonnel.setMontant(pretspersonnel.getMontant()-montant);
                         }
                     }

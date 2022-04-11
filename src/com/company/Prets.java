@@ -53,7 +53,7 @@ public class Prets {
 	public double getMontantbrut() {
 		double montant=0;
 		for(Pretspersonnels x:pretspersonnels){
-			montant +=x.getMontant();
+			montant +=x.getMontant()/(1+taux);
 		}
 
 		return montant;
@@ -64,7 +64,7 @@ public class Prets {
 			montant +=x.getMontant();
 		}
 
-		return montant*(1+taux);
+		return montant;
 	}
 	public double getInteret() {
 		return ((getVersement()*4)-((getVersement()*4)/(1+taux)));
@@ -138,7 +138,7 @@ public class Prets {
 				x+= "\n\t"+getPretspersonnels().size()+" etudiant ont participer a ce pret: ";
 				for (Pretspersonnels y:getPretspersonnels()){
 					x+="\n\t\t "+y.getStudent().getF_name()+" "+y.getStudent().getL_name()+" d'Id "
-							+y.getStudent().getId_student()+" a preter "+ y.getMontant()+" gourdes.( plus "+y.getMontant()*taux+" gourdes d'interet.)";
+							+y.getStudent().getId_student()+" reste "+ (y.getMontant())+" gourdes a payer.(interet inclu.)";
 				}
 				x+="\n\t Le pret a ete placee le " + date +
 				"\n\n\t}";
