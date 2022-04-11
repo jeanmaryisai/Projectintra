@@ -20,7 +20,7 @@ public class Main {
             }
         }
         students.add(student);
-        Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "piecee",  001000);
+        Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L2")) {
                 student2.setNiveau(x);

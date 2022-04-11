@@ -91,7 +91,20 @@ public  abstract class Menus {
 
             switch (choix){
                 case 1:createEtudiant();break;
-                case 2:searchStudentName();break;
+                case 2:
+                    do{d("Presser 1 pour rechercher un etudiant suivant son CIN/NIF/NII\n" +
+                            "presser 2 pour rechercher un etudiant suivant son nom\n" +
+                            "presser 3 pour rechercher un etudiant suivant son id\n" +
+                            "presser 4 pour retourner au menu principale"
+                    );
+                    choix = ei();
+            } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
+                    switch (choix) {
+                        case 1:searchStudentNII();
+                        case 2:searchStudentName();
+                        case 3:searchStudentId();
+                    }
+                    break;
                 case 3:showStudents();break;
                 case 6:stay=false;break;
                 case 4:modifyStudent();break;
