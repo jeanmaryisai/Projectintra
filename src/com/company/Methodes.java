@@ -243,12 +243,21 @@ public abstract class Methodes {
         boolean check=false;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
-                d("Veuillez le niveau en question ");
-                String niv=niv();
                 for (Niveau x:niveaux){
-                    if(niv.equals(x.getNiveau())){
+                    if(s.getNiveau().equals(x)){try{
+                        if(x.getLeaddr().equals(s)){
+                            d("L'eleve est deja representant!");return;
+                        }
+                        d("L'actuel representant du niveau " +x.getNiveau()+" est"+
+                                x.getLeaddr().getF_name()+" "+x.getLeaddr().getL_name()+" d'id "+x.getLeaddr().getId_student()
+                            +"\nVeuillez confirmer son remplacement par " +
+                                s.getF_name()+" "+s.getL_name()+" d'id "+s.getId_student());
+                        if(!isvalide()){
+                            d("Action interrompu!!!");return;
+                        }
+                    }catch (Exception e){}
                         x.setLeaddr(s);
-                        d("Etudiant assigner!!!");
+                        d("Etudiant assigner comme nouveau representant du niveau "+s.getNiveau().getNiveau());
                     }
                 }
                 check=true;
