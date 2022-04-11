@@ -13,20 +13,20 @@ public class Main {
         //test
         operation();
         Student student = new Student("prenom", "nom", "sexe", "telephone", "addresse", "piecee",  00000);
-        student.setId_student("Ecr-100793");
+        student.setId_student("s1");
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L3")) {
-                student.setNiveau(x);test(3);
+                student.setNiveau(x);
             }
         }
         students.add(student);
-        Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "piecee",  001000);
+        Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
         for (Niveau x: niveaux) {
-            if(x.getNiveau().equals("L3")) {
-                student.setNiveau(x);test(3);
+            if(x.getNiveau().equals("L2")) {
+                student2.setNiveau(x);
             }
         }
-
+        student2.setId_student("s2");
         students.add(student2);
         for (Niveau x:niveaux){
             if(x.getNiveau().equals("L3")){
@@ -34,10 +34,16 @@ public class Main {
             }
         }
 
+        for (Niveau x:niveaux){
+            if(x.getNiveau().equals("L2")){
+                x.setLeaddr(student2);test(4);
+            }
+        }
+
         Prets pret=new Prets();
         for(Niveau x:niveaux){
             try {
-                if (x.getLeaddr().getId_student().equals("Ecr-100793")) {
+                if (x.getLeaddr().getId_student().equals("s1")) {
                     pret.setNiveau(x);break;
                 }
             }catch(Exception e){d(" Leader non trouve");}       }
@@ -50,19 +56,25 @@ public class Main {
         pretspersonnelss.setStudent(student2);
         pretspersonnelss.setMontant(200);
         pret.getPretspersonnels().add(pretspersonnelss);
-        pret.setVersement(200/4);
-        pret.setBalance(200/4);
+        pret.setVersement(pret.getMontant()/4);
+        pret.setBalance(pret.getMontant()/4);
 
         pret.setDate(LocalDate.now());
-        pret.setId_prets("Pcr-181856");
+        pret.setId_prets("P");
         prets.add(pret);
 
 
 
 
 
-
-
-        menuPrincipale();
+    menuPrincipale();
+//        while (stayed) {
+//            try {
+//                menuPrincipale();
+//            } catch (Exception e) {
+//                d("Une erreur a ete detectee quelque part!");
+//                d("Nous relancons l'application...");
+//            }
+//        }
     }
 }

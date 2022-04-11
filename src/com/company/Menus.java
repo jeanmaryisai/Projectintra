@@ -15,17 +15,18 @@ public  abstract class Menus {
         }while (i!=1&&i!=2&&i!=3&&i!=4&&i!=5);
         return i;
     }
-    public static void menuPrincipale(){boolean stay=true;
+    public static void menuPrincipale(){
         do {
             switch (mainMenu()){
                 case 1:moduleEtudiant();break;
                 case 2:modulePret();break;
                 case 3:moduleRemboursement();break;
                 case 4:politique();break;
-                case 5:d("Merci et a bientot");stay=false;
+                case 5:d("Merci et a bientot");
+                    Dao.stayed=false;
             }
-            if(stay)br();
-        }while (stay);
+            if(Dao.stayed)br();
+        }while (Dao.stayed);
     }
 
     private static void politique() {
@@ -35,15 +36,17 @@ public  abstract class Menus {
             do {
                 d("Presser 1 pour modifier le taux\n" +
                         "presser  2 pour assigner un leader a un niveau\n" +
-                        "presser 3 pour retourner au menu principale"
+                        "presser  3 pour redefinir le montant minimale pour pacer un pret\n" +
+                        "presser 4 pour retourner au menu principale"
                 );
                 choix = ei();
-            } while (choix != 1 && choix != 2 && choix != 3);
+            } while (choix != 1 && choix != 2 && choix != 3&& choix != 4);
 
             switch (choix){
-                case 1:test(1);break;
+                case 1:setTaux();break;
                 case 2:assignerStudent();break;
-                case 3:stay=false;break;
+                case 4:stay=false;break;
+                case 3:setMontantmin();
 
             }
             if(stay)br();
@@ -79,9 +82,9 @@ public  abstract class Menus {
         do {
             do {
                 d("Presser 1 pour creer un etudiant\n" +
-                        "presser 2 pour rechercher un client\n" +
-                        "presser 3 pour lister tous les client\n" +
-                        "presser 4 pour modifier un client\n" +
+                        "presser 2 pour rechercher un etudiant\n" +
+                        "presser 3 pour lister tous les etudiant\n" +
+                        "presser 4 pour modifier un etudiant\n" +
                         "presser 5 pour supprimmer un etudiant\n" +
                         "presser 6 pour retourner au menu principale"
                 );
@@ -90,7 +93,20 @@ public  abstract class Menus {
 
             switch (choix){
                 case 1:createEtudiant();break;
-                case 2:searchStudent();break;
+                case 2:
+                    do{d("Presser 1 pour rechercher un etudiant suivant son CIN/NIF/NII\n" +
+                            "presser 2 pour rechercher un etudiant suivant son prnom\n" +
+                            "presser 3 pour rechercher un etudiant suivant son id\n" +
+                            "presser 4 pour retourner au menu principale"
+                    );
+                    choix = ei();
+            } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
+                    switch (choix) {
+                        case 1:searchStudentNII();break;
+                        case 2:searchStudentName();break;
+                        case 3:searchStudentId();
+                    }
+                    break;
                 case 3:showStudents();break;
                 case 6:stay=false;break;
                 case 4:modifyStudent();break;
@@ -122,6 +138,5 @@ public  abstract class Menus {
             if(stay)br();
         } while (stay);
     }
-
 
 }
