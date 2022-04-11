@@ -10,14 +10,15 @@ import static com.company.Tools.*;
 
 public abstract class Methodes {
     public static void setTaux(){
-        d("L'actuel taux est de "+taux*100 +"%");
+        d("L'actuel taux d'interet est de "+taux*100 +"%");
         d("Voulez vous poursuivre?");
         if(!isvalide()){
             return;
         }else {
-            d("Veuillez entrer le nouveau taux");
-            taux=ed()/100;
-            d("Nouveau taux: "+taux*100);
+            d("Veuillez entrer le nouveau taux\nnb:entree le taux en pourcentage(un chiffre), 100,50,10");
+
+            taux=ed();
+            d("Nouveau taux: "+taux*100+"%");
         }
     }
 

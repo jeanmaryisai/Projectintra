@@ -42,7 +42,7 @@ public  abstract class Menus {
             } while (choix != 1 && choix != 2 && choix != 3);
 
             switch (choix){
-                case 1:test(1);break;
+                case 1:setTaux();break;
                 case 2:assignerStudent();break;
                 case 3:stay=false;break;
 
