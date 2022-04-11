@@ -2,8 +2,7 @@ package com.company;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Set;
+
 
 import static com.company.Dao.*;
 import static com.company.Tools.*;
@@ -11,14 +10,28 @@ import static com.company.Tools.*;
 
 public abstract class Methodes {
     public static void setTaux(){
-        d("L'actuel taux est de "+taux*100 +"%");
+        d("L'actuel taux d'interet est de "+taux*100 +"%");
         d("Voulez vous poursuivre?");
         if(!isvalide()){
             return;
         }else {
-            d("Veuillez entrer le nouveau taux");
-            taux=ed()/100;
-            d("Nouveau taux: "+taux*100);
+            d("Veuillez entrer le nouveau taux\nnb:entree le taux en pourcentage(un chiffre), 100,50,10");
+
+            taux=ed();
+            d("Nouveau taux: "+taux*100+"%");
+        }
+    }
+
+    public static void setMontantmin(){
+        d("L'actuel montant minimum est de "+montantPretMin);
+        d("Voulez vous poursuivre?");
+        if(!isvalide()){
+            return;
+        }else {
+            d("Veuillez entrer le nouveau montant ");
+
+            montantPretMin=ed();
+            d("Nouveau taux: "+montantPretMin+" gourdes");
         }
     }
 
@@ -33,25 +46,40 @@ public abstract class Methodes {
     //student
     public static void createEtudiant( ) {
         d("Entrer le nom de l'etudiant: ");
-        String nom=e();
+        String nom = e();
         d("Entrer le prenom de l'etudiant: ");
-        String prenom=e();d("Entrer le sexe de l'etudiant: ");
-        String sexe=e();d("Entrer l'addresse de l'etudiant: ");
-        String addresse=e();d("Entrer le telephone de l'etudiant: ");
-        String telephone=e();d("Quel est la piecee que vous utiliser?: ");
-        String piecee=e();d("Entrer le numero de la piece concernee");
-        Long piecenum= Long.valueOf(e());d("Entre le niveau de l'etudiant: ");
-        String niveau=e();
+        String prenom = e();
+        String sexe = sexe();
+        d("Entrer l'addresse de l'etudiant: ");
+        String addresse = e();
+        d("Entrer le telephone de l'etudiant: ");
+        String telephone = e();
+        String piecee = carte();
+        d("Entrer le numero de la piece concernee");
+        Long piecenum;
+        try {
+            piecenum = Long.valueOf(e());
+        } catch (NumberFormatException e) {
+            d("Erreur!!! Format incorrect!!!\n");
+            return;
+        }
+        for(Student st:students){
+            if(st.getPiece_numbr()==piecenum && st.getPiece().equals(piecee)){
+                d("Le numero de piece est deja pris!!!");
+                return;
+            }
+        }
+        d("Entre le niveau de l'etudiant: ");
+        String niveau = niv();
 
-        Student student = new Student( prenom, nom, sexe,telephone, addresse, piecee,  piecenum);
-        for (Niveau x: niveaux) {
-            if(x.getNiveau().equals(niveau)) {
+        Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
+        for (Niveau x : niveaux) {
+            if (x.getNiveau().equals(niveau)) {
                 student.setNiveau(x);
             }
         }
         students.add(student);
-        File file = new File("etudiant.txt");
-        FileIO.Write(Collections.singleton(students),file);
+
     }
 
     public static void modifyStudent(){
@@ -78,15 +106,15 @@ public abstract class Methodes {
 
             switch(ei()) {
                 case 1:
-                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() +" "+ student.getL_name());
+                    d("Le nom actuel de l'etudiant est:" +" "+ student.getL_name());
                     System.out.println("Entrer son nouveau Nom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
-                            x.setL_name(Tools.e());}
+                            x.setL_name(e());}
                     }
                     break;
                 case 2:
-                    System.out.println("Le nom actuel de l'etudiant est:" + student.getF_name() +" "+ student.getL_name());
+                    System.out.println("Le prenom actuel de l'etudiant est:" + student.getF_name() );
                     System.out.println("Entrer son nouveau Prenom");
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
@@ -112,11 +140,26 @@ public abstract class Methodes {
                     }
                     break;
                 case 5:
-                    System.out.println("Le niveau de l'etudiant est:" + student.getNiveau().getNiveau());
-                    System.out.println("Entrer le niveau");
+                    System.out.println("Le niveau actuel de l'etudiant est:" + student.getNiveau().getNiveau());
+                    if(student.getNiveau().getLeaddr().equals(student)){
+                        d("Attention!!! l'etudiant en question est un representant de sa classe.\n" +
+                                "Toute modification de son niveau entrainera sa demission" +
+                                " en tant que representant.(ce qui laissera son ex niveau sans representant)" +
+                                "\n veuillez vous rendre dans le secteur 'politique de la direction' " +
+                                "pour modifier les representant.");br();
+                        d("Etes vous sur de vouloir continuer?");
+                        if (!isvalide())return;
+                    }
+                    System.out.println("Entrer le nouveau niveau");
                     String niveaus=niv();
+                    if(niveaus.equals(student.getNiveau().getNiveau())){
+                        d("Vous avez entrer le meme niveau!");return;
+                    }
                     for(Student x:students) {
                         if(x.getId_student().equals(id)) {
+                            if(student.getNiveau().getLeaddr().equals(student)){
+                                x.getNiveau().setLeaddr(null);
+                            }
                             for(Niveau xe:niveaux) {
                                 if(xe.getNiveau().equals(niveaus)) {
                                     x.setNiveau(xe);
@@ -124,11 +167,12 @@ public abstract class Methodes {
                             }
 
                         }
-                    }
+                    }d("Operation reussi avec succes!");break;
                 case 6:
                     continu=false;
+
             }
-        }
+        br();}
 
 
     }
@@ -138,38 +182,90 @@ public abstract class Methodes {
         System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
         String id= e();
         boolean check=false;
-        Student student = null;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
+                for (Niveau n:
+                     niveaux) {
+                    if(n.getLeaddr().equals(s)){
+                        d("L'etudiant en question est le representant de son niveau, en " +
+                                "le supprimant le niveau sera sans representant.\nNd:Pour assigner un r" +
+                                "epresentant veuillez vous rendre dans la section 'politiques de la direction.'");
+                        d("Voulez vous poursuivre?");
+                        if(!isvalide())return;
+                        n.setLeaddr(null);break;
+                    }
+                }
                 students.remove(s);
                 d("Etudiant supprimer!!!");
-                check=true;
+                check=true;break;
             }
         }if(!check)d("on a pas pu trouver l'etudiant");
     }
 
-    public static void searchStudent() {
+    public static void searchStudentId() {
 
-        System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
+        System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
         boolean check=false;
-        Student student = null;
-        File file = new File("etudiant.txt");
-        students= Collections.singleton((Student) FileIO.Read(file));
+
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 d(s.toString());
                 check=true;
             }
-        }if(!check)d("on a pas pu trouver l'etudiant");
+        }if(!check)d("On a pas pu trouver l'etudiant");
+    }
+    public static void searchStudentName() {
+
+        System.out.println("Veuillez entrer le prenom de l'etudiant a rechercher");
+        String nom= e();
+        boolean check=false;
+        List<Student> etudiants=new ArrayList<Student>();
+        for(Student s:students) {
+            if(s.getF_name().equals(nom)) {
+                etudiants.add(s);
+                check=true;
+            }
+        }if(!check){
+            d("On a pas pu trouver l'etudiant");return;
+        }
+        if(etudiants.size()==1){
+            etudiants.get(0).toString();return;
+        }
+        d("On a trouvee "+etudiants.size()+" etudiants du meme prenom dans la salle");
+        int choix=0;
+        do {int iterration=1;
+            for (Student a : etudiants) {
+                d("Pressez "+iterration+" pour afficher:");
+                d("\tEtudiant: " + a.getF_name() + " " + a.getL_name() + " d'ID: " + a.getId_student());
+            iterration++;}
+            choix=ei();
+        }while (choix>etudiants.size());
+        d(etudiants.get(choix-1).toString());
+
     }
 
-    public static void showStudents() {
+    public static void searchStudentNII() {
+
+        System.out.println("Veuillez entrer le nif/cin ou NII de l'etudiant a rechercher");
+        long id= el();
+        boolean check=false;
+        for(Student s:students) {
+            if(s.getPiece_numbr()==id) {
+                d(s.toString());
+                check=true;
+            }
+        }if(!check)d("On a pas pu trouver l'etudiant");
+    }
+
+
+    public static void showStudents() {int i=0;
         for(Student a:students) {
-           d("Etudiant: "+ a.getF_name()+" "+a.getL_name());
-           d("Etudiant ID: "+a.getId_student());
+           d("Etudiant: "+ a.getF_name()+" "+a.getL_name()+" d'ID: "+a.getId_student());
+            i++;
 
         }
+        if(i==0)d("Aucun etudiant enregistree");
     }
 
     public static void assignerStudent(){
@@ -178,12 +274,21 @@ public abstract class Methodes {
         boolean check=false;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
-                d("Veuillez le niveau en question ");
-                String niv=niv();
                 for (Niveau x:niveaux){
-                    if(niv.equals(x.getNiveau())){
+                    if(s.getNiveau().equals(x)){try{
+                        if(x.getLeaddr().equals(s)){
+                            d("L'eleve est deja representant!");return;
+                        }
+                        d("L'actuel representant du niveau " +x.getNiveau()+" est"+
+                                x.getLeaddr().getF_name()+" "+x.getLeaddr().getL_name()+" d'id "+x.getLeaddr().getId_student()
+                            +"\nVeuillez confirmer son remplacement par " +
+                                s.getF_name()+" "+s.getL_name()+" d'id "+s.getId_student());
+                        if(!isvalide()){
+                            d("Action interrompu!!!");return;
+                        }
+                    }catch (Exception e){}
                         x.setLeaddr(s);
-                        d("Etudiant assigner!!!");
+                        d("Etudiant assigner comme nouveau representant du niveau "+s.getNiveau().getNiveau());
                     }
                 }
                 check=true;
@@ -192,49 +297,102 @@ public abstract class Methodes {
 
     }
 
-
+//pret
     public static void addPret() {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
-        String idl=e();
-        boolean check=false;Niveau niveau = null;
+        String idl=e();String niveau="";
+        boolean check=false;
         for(Niveau x:niveaux){
            try {
                if (idl.equals(x.getLeaddr().getId_student())) {
                    check = true;
-                   pret.setNiveau(x);break;
-
+                   niveau=x.getNiveau();
+                   pret.setNiveau(x);
+                   if(x.isencour){
+                       d("Vous ne pouver pas placer ce pret puisqu'il y a deja un pret en cours dans votre niveau");
+                    return;
+                   }
+                   d("L'etudiant est le representant du niveau "+niveau);br();
+                   break;
                }
-           }catch(Exception e){d(" Leader non trouve");}       }if(!check){
-            d("Erreur!!! L'etudiant n'est pas un representant.");return;
+           }catch(Exception e){}       }if(!check){
+            d("Erreur!!! L'etudiant n'a pas ete trouvee ou n'est pas un representant.");return;
         }
+
+
         d("Combien d'etudiants veulent preter dans votre niveau?");
-        int yy=ei();
+        int yy=ei();int ii=0;
+        for(Student x:students){
+            try {
+            if (x.getNiveau().getNiveau().equals(niveau)) ii++;
+            }catch (Exception e){}
+        }
+        if(ii<yy){
+            d("Vous ne pouvez pas placer ce pret !!!\n" +
+                    "Vous avez entrer "+yy+" etudiants alors que le nombres d'etudiants inscrit a ce niveau est de "+ii+" donc inferieur a ce nombre.");
+            return;
+        }
+
+        String ide="";
+        List<String> noms= new ArrayList<String>();
         for(int i=1;i<=yy;i++){
+
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
+
+            if(noms.contains(id)){
+                d("Confusion!!!\nErreur!!!Etudiant double!");
+                return;
+            }noms.add(id);
             d("Entree le montant"); double montant=ed();
             for(Student x: students){
                 if(id.equals(x.getId_student())){
+                   try{ if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                        d("Cet etudiant n'appartient pas a ce niveau!");
+                        return;
+                    }
+                   }catch (Exception e){
+                       d("Cet etudiant n'appartient pas a ce niveau!");
+                       return;
+                   }
                     check=true;
                     Pretspersonnels pretspersonnels=new Pretspersonnels();
                     pretspersonnels.setStudent(x);
-                    pretspersonnels.setMontant(montant);
+                    pretspersonnels.setMontant((montant)*(1+taux));
                     pret.getPretspersonnels().add(pretspersonnels);
                 }
             }if(!check){
                 d("L'etudiant n'a pas ete retrouvee!!!");return;
             }
-        }pret.setDate(LocalDate.now());
-        d("Le montant emprunter est de " + pret.getMontant() +" gourdes");
+        }
+        if(pret.getMontantbrut()<montantPretMin){
+            d("Vous ne pouver pas placer ce pret car le montant minimum pour placer un pret est de " +
+                    montantPretMin+" gourdes,selon les politique de la direction,\n alors que votre montant de pret totalise "+pret.getMontantbrut()
+                +" gourdes.");
+            return;
+        }
+        pret.setDate(LocalDate.now());
+        pret.setVersement(pret.getMontant()/4);
+        pret.setBalance(pret.getMontant()/4);
+        d("Le montant emprunter est de " + pret.getMontantbrut() +" gourdes." +
+                "\nAvec un taux d'interet de "+taux*100+"% vous devrez payer un somme de "+pret.getMontant());
         prets.add(pret);
+        for(Niveau x:niveaux){
+            try {
+                if (idl.equals(x.getLeaddr().getId_student())) {
+                    x.isencour=true;
+                    break;
+                }
+            }catch(Exception e){}
+        }
     }
 
     public static void showPrets(){
         for(Prets x:prets){
-            d("Le pret"+x.getId_prets()+
-                    "Place le "+x.getDate().toString()+
+            d("Un pret de "+x.getVersement()*4+" gourdes, d'Id " +x.getId_prets()+
+                    " Place le "+x.getDate().toString()+
                     "\npar le niveau: "+x.getNiveau().getNiveau()+"\n\n");
         }
     }
@@ -255,11 +413,18 @@ public abstract class Methodes {
         Remboursement remboursement=new Remboursement();
         System.out.println("Entrer votre Id");
         String idl=e();
-        boolean check=false;Niveau niveau = null;
+        boolean check=false;
         for(Niveau x:niveaux){
-            if(idl.equals(x.getLeaddr().getId_student())){
+            try{
+                if(idl.equals(x.getLeaddr().getId_student())){
                 check=true;
-                remboursement.setNiveau(x);}
+                remboursement.setNiveau(x);
+
+                    }
+            }
+            catch (Exception e){
+
+            }
         }if(!check){
             d("Erreur!!! L'etudiant n'est pas un representant.");return;
         }
@@ -267,30 +432,57 @@ public abstract class Methodes {
         String idP=e();
         check=false;
         for(Prets x:prets){
-            if(idP.equals(x.getId_prets())){
-                check=true;
-            }else {
+            if(idP.equals(x.getId_prets()))
+            {if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                d("le pret n'est pas dans le niveau du representant!");return;
+            }
+                check=true; remboursement.setIdprets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
+                d("Voulez vous poursuivre ?");
+                if(!isvalide())return;
+            }
+        }if(!check){
+            {
                 d("Erreur!!! Pret introuvable");
-                remboursement.setIdprets(x);
                 return;
             }
         }
 
-        d("Combien d'etudiants on participer au remboursement?");
-        for(int i=1;i<=ei();i++){
+        d("Combien d'etudiants ont, participer au remboursement?");
+        int k=ei();List<Student>studentList=new ArrayList<>();
+        for(int i=1;i<=k;i++){
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
-            d("Entree le montant versee"); double montant=ed();
-            for(Student x: niveau.getQteEtudient()){
+            d("Entree le montant versee"); double montant;
+            for(Student x: students){
                 if(id.equals(x.getId_student())){
+                    if(studentList.contains(x)){
+                        d("Erreur etudiant double!!!");return;
+                    }studentList.add(x);
+                    if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
+                        d("Erreur!!! L'etudiant n'appartient pas a ce niveau.");return;
+                    }
+                    for(Prets p:prets){
+                        if(p.getNiveau().getLeaddr().getId_student().equals(idl)){
+                            break;
+                        }
+                    }
                     check=true;
+
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
                     remboursementPersonnel.setEtudient(x);
-                    remboursementPersonnel.setMontant(montant);
-                    remboursement.getDtailRembos().add(remboursementPersonnel);
                     for (Pretspersonnels pretspersonnel : remboursement.getIdprets().getPretspersonnels()) {
                         if(pretspersonnel.getStudent().equals(x)){
+                            d("L'etudiant reste une somme personnel de "+(pretspersonnel.getMontant())+" " +
+                                    "gourdes a payer en tout!");
+                            br();
+                            d("Entree le montant versee"); montant=ed();
+                            if(pretspersonnel.getMontant()<montant){
+                                d("Le montant est superieur a la dette personnel contractee!!");
+                                d("Action interrompu!!!");return;
+                            }
+                            remboursementPersonnel.setMontant(montant);
+                            remboursement.getDtailRembos().add(remboursementPersonnel);
                             pretspersonnel.setMontant(pretspersonnel.getMontant()-montant);
                         }
                     }
@@ -304,7 +496,8 @@ public abstract class Methodes {
         double Versement= remboursement.getIdprets().getVersement();
         double Montant= remboursement.getMontant();
         double Balance= remboursement.getIdprets().getBalance();
-        if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,0,1))){
+
+        if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre premier versement");
@@ -317,12 +510,13 @@ public abstract class Methodes {
             else{
                 d("Vous avez terminer votrer premier versement");
                 remboursement.getIdprets().setVers1(LocalDate.now());
+                d(Balance);
                 if(Montant<(Versement+Balance))
                 {
                     remboursement.getIdprets().setBalance(Balance - Montant+ Versement);
                     d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre deuxieme versement");
                 }
-                else if(remboursement.getMontant()<((Versement*2)+Balance))
+                else if(Montant<((Versement*2)+Balance))
                 {
                     remboursement.getIdprets().setBalance(Balance - Montant+ (Versement*2));
                     d("Vous avez terminer votre deuxieme versement");
@@ -348,21 +542,38 @@ public abstract class Methodes {
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
+
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement()*3)+remboursement.getIdprets().getBalance()))
+                else if (Montant>((Versement*3)+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
+                    d("Vous avez "+ (Montant-(Versement*3)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
         }
-        else if(remboursement.getIdprets().getVers2().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers2().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre second versement");
@@ -393,21 +604,37 @@ public abstract class Methodes {
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement()*2)+remboursement.getIdprets().getBalance()))
+                else if (Montant>((Versement*2)+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers2(LocalDate.now());
                     remboursement.getIdprets().setVers3(LocalDate.now());
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
+                    d("Vous avez "+ (Montant-(Versement*2)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
         }
-        else if(remboursement.getIdprets().getVers3().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers3().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre troisieme versement");
@@ -430,19 +657,35 @@ public abstract class Methodes {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
                 }
-                else if (remboursement.getMontant()>((remboursement.getIdprets().getVersement())+remboursement.getIdprets().getBalance()))
+                else if (Montant>(Versement+Balance))
                 {
                     remboursement.getIdprets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
                     remboursement.getIdprets().setVers4(LocalDate.now());
-                    d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                            -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                    for(Niveau x:niveaux){
+                        try {
+                            if (idl.equals(x.getLeaddr().getId_student())) {
+                                x.isencour=false;
+                                break;
+                            }
+                        }catch(Exception e){}
+                    }
+                    d("Vous avez "+ (Montant-(Versement)
+                            -Balance)+" de monnaie restant");
                 }
 
             }
         }
-        else if(remboursement.getIdprets().getVers4().equals(LocalDate.of(0,0,1))){
+        else if(remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
                 remboursement.getIdprets().setBalance(Balance- Montant);
                 d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre derniere versement");
@@ -451,17 +694,33 @@ public abstract class Methodes {
                 remboursement.getIdprets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
                 remboursement.getIdprets().setVers4(LocalDate.now());
+                for(Niveau x:niveaux){
+                    try {
+                        if (idl.equals(x.getLeaddr().getId_student())) {
+                            x.isencour=false;
+                            break;
+                        }
+                    }catch(Exception e){}
+                }
             }
             else if (Montant>Balance)
             {
                 remboursement.getIdprets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
                 remboursement.getIdprets().setVers4(LocalDate.now());
-                d("Vous avez "+ (remboursement.getMontant()-(remboursement.getIdprets().getMontant()*3)
-                        -remboursement.getIdprets().getBalance())+" de monnaie restant");
+                for(Niveau x:niveaux){
+                    try {
+                        if (idl.equals(x.getLeaddr().getId_student())) {
+                            x.isencour=false;
+                            break;
+                        }
+                    }catch(Exception e){}
+                }
+                d("Vous avez "+ (Montant
+                        -Balance)+" de monnaie restant");
             }
         }
-        else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,0,1))){
+        else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
             d("Cette dette a ete totalement recouvree.");
         }
         remboursement.setDateRenboursement(LocalDate.now());

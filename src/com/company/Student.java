@@ -20,7 +20,10 @@ public class Student {
 		
 	}
 
-		//constructr with param
+	public void setId_student(String id_student) {
+		this.id_student = id_student;
+	}
+	//constructr with param
 
 	public Student( String f_name, String l_name,String gendr, String phone,String adresse, String piece,
 			long piece_numbr) {
@@ -136,15 +139,15 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student{" +
-				"id_student='" + id_student + '\'' +
-				"\n\t f_name='" + f_name + '\'' +
-				"\n\t l_name='" + l_name + '\'' +
-				"\n\t niveau=" + niveau +
-				"\n\t gendr='" + gendr + '\'' +
-				"\n\t phone='" + phone + '\'' +
+				"\n\t Id de l'etudiant='" + id_student + '\'' +
+				"\n\t Prenom='" + f_name + '\'' +
+				"\n\t Nom='" + l_name + '\'' +
+				"\n\t niveau=" + niveau.getNiveau() +
+				"\n\t sexe='" + gendr + '\'' +
+				"\n\t Telephone='" + phone + '\'' +
 				"\n\t adresse='" + adresse + '\'' +
-				"\n\t piece='" + piece + '\'' +
-				"\n\t piece_numbr=" + piece_numbr +
+				"\n\t Cin ou Nif='" + piece + '\'' +
+				"\n\t numero de piece=" + piece_numbr +
 				'}';
 	}
 }

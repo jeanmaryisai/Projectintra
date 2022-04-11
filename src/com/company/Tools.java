@@ -18,9 +18,14 @@ public abstract class Tools {
 
             Scanner x=new Scanner(System.in);
             int i=x.nextInt();
+            if(i<=0){
+                d("Erreur, vous ne pouvez pas entrer une valeur inferieur ou egale a zero(0)!");
+                return ei();
+            }
+
             return i;
         }catch (Exception e){
-            System.out.println("Please enter an Interger");
+            System.out.println("Enter un entier svp!");
             return ei();
         }
     }
@@ -69,7 +74,7 @@ public abstract class Tools {
        for(Prets xr:prets){
         for(Pretspersonnels h: xr.getPretspersonnels()){
             if(h.getId().equals(v)){
-                v=randomPId();
+                v=randomPPId();
                 break;
             }
         }
@@ -80,18 +85,31 @@ public abstract class Tools {
         Random x=new Random();
         x.nextInt(99999);x.nextInt(99999);
         int i=  (x.nextInt(99999)+100000);
-        String v="PPr-"+String.valueOf(i);
+        String v="RPr-"+String.valueOf(i);
         for(Remboursement xr: remboursements){
             for(RemboursementPersonnel h: xr.getDtailRembos()){
                 if(h.getId().equals(v)){
-                    v=randomPId();
+                    v=randomRPId();
                     break;
                 }
             }
         }
         return v;
     }
+    public static String randomRId(){
+        Random x=new Random();
+        x.nextInt(99999);x.nextInt(99999);
+        int i=  (x.nextInt(99999)+100000);
+        String v="Rr-"+String.valueOf(i);
+        for(Remboursement xr: remboursements){
+                if(xr.getId().equals(v)){
+                    v=randomRId();
+                    break;
+                }
 
+        }
+        return v;
+    }
     public static boolean isvalide(){
         String v;
         boolean valide=true;
@@ -106,6 +124,10 @@ public abstract class Tools {
     public static String e(){
         Scanner x=new Scanner(System.in);
         String i=x.nextLine();
+        if(i.equals("")){
+            d("Veuilliez entrer une valeur svp...");
+            return e();
+        }
         return i;
     }
     public static void br(){
@@ -122,6 +144,11 @@ public abstract class Tools {
 
             Scanner x=new Scanner(System.in);
             double i=x.nextDouble();
+            if(i<=0){
+                d("Erreur, vous ne pouvez pas entrer une valeur inferieur ou egale a zero(0)!" +
+                        "\n Veuillez entrer l'equivalent positif de votre nombre...");
+                return ed();
+            }
             return i;
         }catch (Exception e){
             System.out.println("Please enter a double!");
@@ -131,5 +158,32 @@ public abstract class Tools {
 
     public static void d(Object x){
         System.out.println(x);
+    }
+
+    public static String sexe(){
+        d("Veuillez entre le sexe voulu.(Entrer 'Masculin' ou 'Feminin')");
+        String v= e();
+        String m="Masculin";
+        String f="Feminin";
+
+        if (!v.equals(m)&&!v.equals(f)){
+            sexe();
+        };
+        return v;
+    }
+
+    public static String carte(){
+        d("Vous allez nous procurer un numero d'identification\n" +
+                "D'abord dites nous de quel type de numero piece qu'il s'agit\n" +
+                "Entrer 'CIN', 'NIF' ou ' NII'");
+        String v= e();
+        String m="CIN";
+        String f="NIF";
+        String n="NII";
+
+        if (!v.equals(m)&&!v.equals(f)&&!v.equals(n)){
+            carte();
+        };
+        return v;
     }
 }

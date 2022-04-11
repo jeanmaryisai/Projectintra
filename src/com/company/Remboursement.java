@@ -3,8 +3,10 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.company.Tools.randomRId;
+
 public class Remboursement {
-	private String id;
+	private String id=randomRId();
 	private Niveau niveau;
 	private Prets idprets;
 	private String nomVers;
@@ -132,7 +134,8 @@ public class Remboursement {
 
 
 
-	public void setDateRenboursement(LocalDate dateRenboursement) {
+	public void
+	setDateRenboursement(LocalDate dateRenboursement) {
 		this.dateRenboursement = dateRenboursement;
 	}
 
@@ -154,15 +157,15 @@ public class Remboursement {
 				"id=" + id +
 				"\n\t niveau=" + niveau.getNiveau() +
 				"\n\t id du prets=" + idprets.getId_prets() +
-				"\n\t nomVers='" + nomVers + '\'' +
-				"\n\t student=" + student.getL_name() + " "+student.getF_name()+
-				"\n\t montant=" + montant +
+				//"\n\t nomVers='" + nomVers + '\'' +
+				//"\n\t student=" + student.getL_name() + " "+student.getF_name()+
+				"\n\t montant=" + getMontant() +
 				"\n\t List Etudiant ayant participer a ce remboursement:\n\t";
 					for (RemboursementPersonnel x:remboursementPersonnels) {
 							xe+=x.getEtudient().getF_name()+
 								" "+x.getEtudient().getL_name()+" d'Id "+
 								x.getEtudient().getId_student()+" a placer "
-								+x.getMontant()+" gourdes";}
+								+x.getMontant()+" gourdes\n\t";}
 								xe+="\n\t montantVerse=" + montantVerse +
 								"\n\t dateRenboursement=" + dateRenboursement.toString() +
 								'}';
