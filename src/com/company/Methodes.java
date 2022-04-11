@@ -49,6 +49,12 @@ public abstract class Methodes {
             d("Erreur!!! Format incorrect!!!\n");
             return;
         }
+        for(Student st:students){
+            if(st.getPiece_numbr()==piecenum&&st.getPiece().equals(piecee)){
+                d("Le numero de piece est deja pris!!!");
+                return;
+            }
+        }
         d("Entre le niveau de l'etudiant: ");
         String niveau = niv();
 
@@ -148,6 +154,17 @@ public abstract class Methodes {
         boolean check=false;
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
+                for (Niveau n:
+                     niveaux) {
+                    if(n.getLeaddr().equals(s)){
+                        d("L'etudiant en question est le representant de son niveau, en " +
+                                "le supprimant le niveau sera sans representant.\nNd:Pour assigner un r" +
+                                "epresentant veuillez vous rendre dans la section 'politiques de la direction.'");
+                        d("Voulez vous poursuivre?");
+                        if(!isvalide())return;
+                        n.setLeaddr(null);break;
+                    }
+                }
                 students.remove(s);
                 d("Etudiant supprimer!!!");
                 check=true;break;
@@ -192,8 +209,8 @@ public abstract class Methodes {
                 d("\tEtudiant: " + a.getF_name() + " " + a.getL_name() + " d'ID: " + a.getId_student());
             iterration++;}
             choix=ei();
-        }while (choix>=etudiants.size());
-        etudiants.get(choix-1).toString();
+        }while (choix>etudiants.size());
+        d(etudiants.get(choix-1).toString());
 
     }
 
