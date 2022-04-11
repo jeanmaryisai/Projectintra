@@ -1,8 +1,8 @@
 package com.company;
 
+import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static com.company.Dao.*;
 import static com.company.Tools.*;
@@ -79,6 +79,7 @@ public abstract class Methodes {
             }
         }
         students.add(student);
+
     }
 
     public static void modifyStudent(){
@@ -206,6 +207,7 @@ public abstract class Methodes {
         System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
         boolean check=false;
+
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 d(s.toString());
