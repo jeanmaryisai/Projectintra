@@ -181,7 +181,7 @@ public abstract class Tools {
         String f="NIF";
         String n="NII";
 
-        if (!v.equals(m)&&!v.equals(m)&&!v.equals(n)){
+        if (!v.equals(m)&&!v.equals(f)&&!v.equals(n)){
             carte();
         };
         return v;

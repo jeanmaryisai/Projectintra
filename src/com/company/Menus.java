@@ -91,7 +91,7 @@ public  abstract class Menus {
 
             switch (choix){
                 case 1:createEtudiant();break;
-                case 2:searchStudent();break;
+                case 2:searchStudentName();break;
                 case 3:showStudents();break;
                 case 6:stay=false;break;
                 case 4:modifyStudent();break;

@@ -155,7 +155,7 @@ public abstract class Methodes {
         }if(!check)d("on a pas pu trouver l'etudiant");
     }
 
-    public static void searchStudent() {
+    public static void searchStudentId() {
 
         System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
@@ -167,6 +167,49 @@ public abstract class Methodes {
             }
         }if(!check)d("On a pas pu trouver l'etudiant");
     }
+    public static void searchStudentName() {
+
+        System.out.println("Veuillez entrer le prenom de l'etudiant a rechercher");
+        String nom= e();
+        boolean check=false;
+        List<Student> etudiants=new ArrayList<Student>();
+        for(Student s:students) {
+            if(s.getF_name().equals(nom)) {
+                etudiants.add(s);
+                check=true;
+            }
+        }if(!check){
+            d("On a pas pu trouver l'etudiant");return;
+        }
+        if(etudiants.size()==1){
+            etudiants.get(0).toString();return;
+        }
+        d("On a trouvee "+etudiants.size()+" etudiants du meme prenom dans la salle");
+        int choix=0;
+        do {int iterration=1;
+            for (Student a : etudiants) {
+                d("Pressez "+iterration+" pour afficher:");
+                d("\tEtudiant: " + a.getF_name() + " " + a.getL_name() + " d'ID: " + a.getId_student());
+            iterration++;}
+            choix=ei();
+        }while (choix>=etudiants.size());
+        etudiants.get(choix-1).toString();
+
+    }
+
+    public static void searchStudentNII() {
+
+        System.out.println("Veuillez entrer le nif/cin ou NII de l'etudiant a rechercher");
+        long id= el();
+        boolean check=false;
+        for(Student s:students) {
+            if(s.getPiece_numbr()==id) {
+                d(s.toString());
+                check=true;
+            }
+        }if(!check)d("On a pas pu trouver l'etudiant");
+    }
+
 
     public static void showStudents() {int i=0;
         for(Student a:students) {
@@ -336,7 +379,7 @@ public abstract class Methodes {
             {
                 check=true; remboursement.setIdprets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
                 d("Voulez vous poursuivre ?");
-                if(isvalide())return;
+                if(!isvalide())return;
             }
         }if(!check){
             {
@@ -345,7 +388,7 @@ public abstract class Methodes {
             }
         }
 
-        d("Combien d'etudiants ont participer au remboursement?");
+        d("Combien d'etudiants ont, participer au remboursement?");
         int k=ei();
         for(int i=1;i<=k;i++){
             d("Pour le "+i+" etudiant: ");
@@ -354,6 +397,12 @@ public abstract class Methodes {
             d("Entree le montant versee"); double montant=ed();
             for(Student x: students){
                 if(id.equals(x.getId_student())){
+                    for(Prets p:prets){
+                        if(p.getNiveau().getLeaddr().getId_student().equals(idl)){
+
+                            break;
+                        }
+                    }
                     check=true;
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
                     remboursementPersonnel.setEtudient(x);
