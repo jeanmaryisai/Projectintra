@@ -11,57 +11,9 @@ import java.io.ObjectOutputStream;
 import static com.company.Dao.*;
 public class FileIO {
 
-    public static void Write(Set<Object> list,File file){
-        System.out.println("entry");
-        FileWriter fw=null;
-        System.out.println(list);
-        try{
-            fw=new FileWriter(file,true);
-            for(Object el:list){
-                fw.write(el+"\t");
-            }
-            fw.write(System.lineSeparator());
-            fw.close();
-            System.out.println("entry");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("entry");
-    }
+    public static void WriteToFile(String myData,File file, boolean append) {
 
-    public static void Read(File file1){
 
-        try {
-
-            FileOutputStream fileOut = new FileOutputStream(file1);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-
-            objectOut.close();
-            System.out.println("The Object  was succesfully written to a file");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-//        Set <Object> set = new HashSet<>();
-//        try{
-////            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-////            String line = null;
-////            Scanner sc=new Scanner(new FileInputStream("test.txt"));
-//
-//            Scanner sc=new Scanner(file);
-//            while(sc.hasNextLine()){
-//                System.out.println(sc.nextLine());
-//            }
-//            System.out.println(set);
-//            sc.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return set;
-    }
-    public static void WriteToFile(String myData, boolean append) {
-
-        File file = new File("etdr.txt");
 
 
         // exists(): Tests whether the file or directory denoted by this abstract pathname exists.

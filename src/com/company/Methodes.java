@@ -1,5 +1,8 @@
 package com.company;
 
+import com.google.gson.Gson;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,10 @@ public abstract class Methodes {
 
     //student
     public static void createEtudiant( ) {
+        Gson gson = new Gson();
+        // add file
+        File file = new File("student.txt");
+
         d("Entrer le nom de l'etudiant: ");
         String nom = e();
         d("Entrer le prenom de l'etudiant: ");
@@ -79,13 +86,20 @@ public abstract class Methodes {
             }
         }
         students.add(student);
+        //add file to file and specify the file path with extension
+        FileIO.WriteToFile(gson.toJson(student),file,true);
     }
 
     public static void modifyStudent(){
+        // declaring file to load student file
+        File file = new File("student.txt");
+        FileIO.ReadFromFile(file,1);
+
         System.out.println("Veuillez entrer l'id de l'etudiant que vous voulez modifier");
         String id= e();
         boolean check=false;
         Student student = null;
+
         for(Student x:students) {
             if(x.getId_student().equals(id)) {
                 check =true;student=x;
