@@ -59,16 +59,16 @@ public class FileIO {
 //        }
 //        return set;
     }
-    public static void crunchifyWriteToFile(String myData, File file2) {
+    public static void WriteToFile(String myData, boolean append) {
 
-        File crunchifyFile = new File("etd.txt");
+        File file = new File("etdr.txt");
 
 
         // exists(): Tests whether the file or directory denoted by this abstract pathname exists.
-        if (!crunchifyFile.exists()) {
+        if (!file.exists()) {
 
             try {
-                crunchifyFile.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 System.out.println("Exception Occurred: " + e.toString());
             }
@@ -77,47 +77,83 @@ public class FileIO {
         try {
 
             // Convenience class for writing character files
-            FileWriter crunchifyWriter;
-            crunchifyWriter = new FileWriter(crunchifyFile.getAbsoluteFile(), true);
+            FileWriter writer;
+            writer = new FileWriter(file.getAbsoluteFile(), append);
 
             // Writes text to a character-output stream
-            BufferedWriter bufferWriter = new BufferedWriter(crunchifyWriter);
-            bufferWriter.write(myData.toString()+","+"\t");
+            BufferedWriter bufferWriter = new BufferedWriter(writer);
+            bufferWriter.write(myData.toString()+"\n");
             bufferWriter.close();
 
-            crunchifyLog("Company data saved at file location: "  + " Data: " + myData + "\n");
+            Log("Company data saved at file location: "  + " Data: " + myData + "\n");
         } catch (IOException e) {
 
-            crunchifyLog("Hmm.. Got an error while saving Company data to file " + e.toString());
+            Log("Hmm.. Got an error while saving Company data to file " + e.toString());
         }
     }
-    public static void crunchifyLog(String d){
+    public static void Log(String d){
         System.out.println(d);
     }
 
-    public static void crunchifyReadFromFile() {
+    public static void ReadFromFile(File file1, int choice) {
         Set <Object> set = new HashSet<>();
+        Student student = null;
+        Prets pret = null;
+        Remboursement rem = null;
         Gson gson = new Gson();
-        File crunchifyFile = new File("etd.txt");
-        Student company = null;
-        if (!crunchifyFile.exists())
-            crunchifyLog("File doesn't exist");
-        try {
-            FileReader fw=new FileReader(crunchifyFile);
-            BufferedReader bufferedReader = new BufferedReader(fw);
-            String line;
-            while((line = bufferedReader.readLine()) != null) {
-                StringReader s  =new StringReader(line);
-                JsonReader myReader = new JsonReader(s);
-                company = gson.fromJson(myReader, Student.class);
-                crunchifyLog("Company Name: " + company.toString());
-                students.add(company);
+        File file = new File("etdr.txt");
+        if (choice == 1){
+            if (!file.exists())
+                Log("File doesn't exist");
+            try {
+                FileReader fw=new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fw);
+                String line;
+                while((line = bufferedReader.readLine()) != null) {
+                    StringReader s  =new StringReader(line);
+                    JsonReader myReader = new JsonReader(s);
+                    student = gson.fromJson(myReader, Student.class);
+                    Log("Company Name: " + student.toString());
+                    students.add(student);
+                }
+            } catch (Exception e) {
+                Log("error load cache from file " + e.toString());
             }
-        } catch (Exception e) {
-            crunchifyLog("error load cache from file " + e.toString());
+        } else if (choice == 2){
+            if (!file.exists())
+                Log("File doesn't exist");
+            try {
+                FileReader fw=new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fw);
+                String line;
+                while((line = bufferedReader.readLine()) != null) {
+                    StringReader s  =new StringReader(line);
+                    JsonReader myReader = new JsonReader(s);
+                    pret = gson.fromJson(myReader, Prets.class);
+                    Log("Pret " + pret.toString());
+                    prets.add(pret);
+                }
+            } catch (Exception e) {
+                Log("error load cache from file " + e.toString());
+            }
+        } else if(choice == 3){
+            if (!file.exists())
+                Log("File doesn't exist");
+            try {
+                FileReader fw=new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fw);
+                String line;
+                while((line = bufferedReader.readLine()) != null) {
+                    StringReader s  =new StringReader(line);
+                    JsonReader myReader = new JsonReader(s);
+                    rem = gson.fromJson(myReader, Remboursement.class);
+                    Log("Remboursement:" + rem.toString());
+                    remboursements.add(rem);
+                }
+            } catch (Exception e) {
+                Log("error load cache from file " + e.toString());
+            }
         }
-
-        System.out.println();
 
     }
 }
