@@ -13,9 +13,10 @@ public class FileIO {
 
     public static void WriteToFile(String myData,File file, boolean append) {
 
-
-
-
+        Log("enter");
+        if (append == false) {
+            file.delete();
+        }
         // exists(): Tests whether the file or directory denoted by this abstract pathname exists.
         if (!file.exists()) {
 
@@ -36,24 +37,22 @@ public class FileIO {
             BufferedWriter bufferWriter = new BufferedWriter(writer);
             bufferWriter.write(myData.toString()+"\n");
             bufferWriter.close();
-
-            Log("Company data saved at file location: "  + " Data: " + myData + "\n");
         } catch (IOException e) {
 
-            Log("Hmm.. Got an error while saving Company data to file " + e.toString());
+            Log("Hmm.. Got an error while saving  data to file " + e.toString());
         }
     }
     public static void Log(String d){
         System.out.println(d);
     }
 
-    public static void ReadFromFile(File file1, int choice) {
+    public static void ReadFromFile(File file, int choice) {
         Set <Object> set = new HashSet<>();
         Student student = null;
         Prets pret = null;
         Remboursement rem = null;
         Gson gson = new Gson();
-        File file = new File("etdr.txt");
+
         if (choice == 1){
             if (!file.exists())
                 Log("File doesn't exist");
@@ -65,7 +64,7 @@ public class FileIO {
                     StringReader s  =new StringReader(line);
                     JsonReader myReader = new JsonReader(s);
                     student = gson.fromJson(myReader, Student.class);
-                    Log("Company Name: " + student.toString());
+                    Log("student: " + student.toString());
                     students.add(student);
                 }
             } catch (Exception e) {

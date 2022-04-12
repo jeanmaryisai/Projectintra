@@ -1,14 +1,15 @@
 package com.company;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.company.Dao.*;
 import static com.company.Tools.*;
+import static com.company.FileIO.*;
 
 
 public abstract class Methodes {
@@ -51,7 +52,7 @@ public abstract class Methodes {
         Gson gson = new Gson();
         // add file
         File file = new File("student.txt");
-
+//        FileIO.ReadFromFile(file,1);
         d("Entrer le nom de l'etudiant: ");
         String nom = e();
         d("Entrer le prenom de l'etudiant: ");
@@ -79,18 +80,23 @@ public abstract class Methodes {
         d("Entre le niveau de l'etudiant: ");
         String niveau = niv();
 
-        Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
+        Log(niveaux.toString());
         for (Niveau x : niveaux) {
             if (x.getNiveau().equals(niveau)) {
+                Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum,x);
                 student.setNiveau(x);
+                WriteToFile(gson.toJson(student),file,true);
+                students.add(student);
             }
         }
-        students.add(student);
+
         //add file to file and specify the file path with extension
-        FileIO.WriteToFile(gson.toJson(student),file,true);
+        Log(students.toString());
+
     }
 
     public static void modifyStudent(){
+        Gson gson = new Gson();
         // declaring file to load student file
         File file = new File("student.txt");
         FileIO.ReadFromFile(file,1);
@@ -185,6 +191,10 @@ public abstract class Methodes {
                     continu=false;
 
             }
+            for(Student x:students) {
+                FileIO.WriteToFile(gson.toJson(student),file,false);
+            }
+
         br();}
 
 
@@ -216,7 +226,10 @@ public abstract class Methodes {
     }
 
     public static void searchStudentId() {
-
+        Gson gson = new Gson();
+        // declaring file to load student file
+        File file = new File("student.txt");
+        FileIO.ReadFromFile(file,1);
         System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
         boolean check=false;
@@ -229,7 +242,8 @@ public abstract class Methodes {
     }
 
     public static void searchStudentName() {
-
+        File file = new File("student.txt");
+        FileIO.ReadFromFile(file,1);
         System.out.println("Veuillez entrer le prenom de l'etudiant a rechercher");
         String nom= e();
         boolean check=false;
@@ -259,7 +273,8 @@ public abstract class Methodes {
     }
 
     public static void searchStudentNII() {
-
+        File file = new File("student.txt");
+        FileIO.ReadFromFile(file,1);
         System.out.println("Veuillez entrer le nif/cin ou NII de l'etudiant a rechercher");
         long id= el();
         boolean check=false;
