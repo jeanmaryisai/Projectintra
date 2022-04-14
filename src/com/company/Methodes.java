@@ -287,11 +287,13 @@ public abstract class Methodes {
     }
 
     public static void showStudents() {int i=0;
+        System.out.printf("%5s %20s %20s %5s %5s %20s", "Id", "Prenom", "Nom", "Niveau","sexe","CIN/NIF/NII");
+        d("\n-----------------------------------------------------------------------------------");
         for(Student a:students) {
-           d("Etudiant: "+ a.getF_name()+" "+a.getL_name()+" d'ID: "+a.getId_student());
+           a.print();
             i++;
-
-        }
+            d("\n");
+        }d("\n");
         if(i==0)d("Aucun etudiant enregistree");
     }
 
@@ -417,11 +419,16 @@ public abstract class Methodes {
     }
 
     public static void showPrets(){
-        for(Prets x:prets){
-            d("Un pret de "+x.getVersement()*4+" gourdes, d'Id " +x.getId_prets()+
-                    " Place le "+x.getDate().toString()+
-                    "\npar le niveau: "+x.getNiveau().getNiveau()+"\n\n");
-        }
+        int i=0;
+        System.out.printf("%5s %5s %30s %30s %5s","Id","Niveau","Montant","Montant(restant)","nmbre d'etudiant");
+
+        d("\n------------------------------------------------------------------------------------------------");
+        for(Prets a:prets) {
+            a.print();
+            i++;
+            d("\n");
+        }d("\n");
+        if(i==0)d("Aucun pret enregistree");
     }
 
     public static void displayPret(){

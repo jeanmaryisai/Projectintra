@@ -49,12 +49,12 @@ public class Main {
             }catch(Exception e){d(" Leader non trouve");}       }
         Pretspersonnels pretspersonnels=new Pretspersonnels();
         pretspersonnels.setStudent(student);
-        pretspersonnels.setMontant(200);
+        pretspersonnels.setMontant(200*(1+taux));
         pret.getPretspersonnels().add(pretspersonnels);
 
         Pretspersonnels pretspersonnelss=new Pretspersonnels();
         pretspersonnelss.setStudent(student2);
-        pretspersonnelss.setMontant(200);
+        pretspersonnelss.setMontant(200*(1+taux));
         pret.getPretspersonnels().add(pretspersonnelss);
         pret.setVersement(pret.getMontant()/4);
         pret.setBalance(pret.getMontant()/4);

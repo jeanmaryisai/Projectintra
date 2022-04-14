@@ -50,4 +50,7 @@ public class Niveau {
 				"\n\tniveau='" + niveau + '\'' +
 				'}';
 	}
+	public String stringgson(){
+		return niveau+","+leaddr.getId_student()+","+isencour;
+	}
 }

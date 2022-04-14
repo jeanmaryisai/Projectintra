@@ -150,4 +150,12 @@ public class Student {
 				"\n\t numero de piece=" + piece_numbr +
 				'}';
 	}
+
+	public void print(){
+		System.out.printf("%5s %20s %20s %5s %5s %20s", id_student, f_name, l_name, niveau.getNiveau(),gendr,piece_numbr);
+	}
+
+	public String stringgson(){
+		return id_student+","+f_name+","+l_name+","+niveau.getNiveau()+","+gendr+","+phone+","+adresse+","+piece+","+piece_numbr;
+	}
 }

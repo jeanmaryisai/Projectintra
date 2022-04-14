@@ -1,4 +1,5 @@
 package com.company;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
@@ -55,7 +56,6 @@ public class Prets {
 		for(Pretspersonnels x:pretspersonnels){
 			montant +=x.getMontant()/(1+taux);
 		}
-
 		return montant;
 	}
 	public double getMontant() {
@@ -106,7 +106,9 @@ public class Prets {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-
+	public void print(){
+		System.out.printf("%5s %5s %30s %30s %5s",id_prets,niveau.getNiveau(),(getVersement()*4),getMontant(),pretspersonnels.size());
+	}
 	@Override
 	public String toString() {String x="";
 		x+= "Prets{\nNb: La devise est le gourde" +

@@ -6,6 +6,7 @@ public class Pretspersonnels {
     private String id=randomPPId();
     private Student student;
     private double montant;
+    private String idpret;
 
     public String getId() {
         return id;
@@ -30,6 +31,8 @@ public class Pretspersonnels {
     public void setMontant(double montant) {
         this.montant = montant;
     }
+
+
 
     @Override
     public String toString() {
