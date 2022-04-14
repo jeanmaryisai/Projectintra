@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -162,7 +160,7 @@ public class FileIO {
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(r.getId()+","+r.getIdprets()+","+r.getMontant()+","
+                    bufferWriter.write(r.getId()+","+r.getPrets()+","+r.getMontant()+","
                             +r.getNomVers()+","+r.getListDtail()+","+r.getMontantVerse()+"," +"\n");
                     bufferWriter.close();
                 } catch (IOException e) {

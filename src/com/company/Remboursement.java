@@ -3,44 +3,23 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.company.Dao.typeText;
 import static com.company.Tools.randomRId;
 
 public class Remboursement {
 	private String id=randomRId();
 	private Niveau niveau;
-	private Prets idprets;
-	private String nomVers;
+	private Prets prets;
 	private Student student;
-	private double montant;
+	private Prets montantVerse;
+	private LocalDate dateRenboursement;
+	Set<RemboursementPersonnel>listDtail= new HashSet<RemboursementPersonnel>();
 	private Set<RemboursementPersonnel> remboursementPersonnels =new HashSet<RemboursementPersonnel>();
-	private LocalDate date;
-
-	public Set<RemboursementPersonnel> getRemboursementPersonnels() {
-		return remboursementPersonnels;
-	}
-
-	public void setRemboursementPersonnels(Set<RemboursementPersonnel> remboursementPersonnels) {
-		this.remboursementPersonnels = remboursementPersonnels;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
 	public Set<RemboursementPersonnel> getDtailRembos() {
 		return remboursementPersonnels;
 	}
-
-	public void setDtailRembos(Set<RemboursementPersonnel> remboursementPersonnels) {
-		this.remboursementPersonnels = remboursementPersonnels;
-	}
-
 	public double getMontant(){
-		montant=0;
+		double montant=0;
 		for(RemboursementPersonnel x: remboursementPersonnels){
 			montant += x.getMontant();
 		}
@@ -53,11 +32,6 @@ public class Remboursement {
 	public void setNiveau(Niveau niveau) {
 		this.niveau = niveau;
 	}
-
-	private Prets montantVerse;
-	private LocalDate dateRenboursement;
-	Set<RemboursementPersonnel>listDtail= new HashSet<RemboursementPersonnel>();
-	
 	public Remboursement() {
 	
 	}
@@ -80,28 +54,21 @@ public class Remboursement {
 
 
 
-	public Prets getIdprets() {
-		return idprets;
+	public Prets getPrets() {
+		return prets;
 	}
 
 
 
-	public void setIdprets(Prets idprets) {
-		this.idprets = idprets;
+	public void setPrets(Prets prets) {
+		this.prets = prets;
 	}
 
 
 
 	public String getNomVers() {
-		return nomVers;
+		return "";
 	}
-
-
-
-	public void setNomVers(String nomVers) {
-		this.nomVers = nomVers;
-	}
-
 
 
 	public Student getStudent() {
@@ -151,12 +118,20 @@ public class Remboursement {
 		this.listDtail = listDtail;
 	}
 
+	public String stringgson(){
+		return id+typeText.delimiteur+
+		niveau.getNiveau()+typeText.delimiteur+
+		prets.getId_prets()+typeText.delimiteur+
+		student.getId_student()+typeText.delimiteur+
+				dateRenboursement+typeText.delimiteur+
+				montantVerse;
+	}
 	@Override
 	public String toString() {
 		String xe="Remboursement{" +
 				"id=" + id +
 				"\n\t niveau=" + niveau.getNiveau() +
-				"\n\t id du prets=" + idprets.getId_prets() +
+				"\n\t id du prets=" + prets.getId_prets() +
 				//"\n\t nomVers='" + nomVers + '\'' +
 				//"\n\t student=" + student.getL_name() + " "+student.getF_name()+
 				"\n\t montant=" + getMontant() +

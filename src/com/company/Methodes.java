@@ -1,7 +1,6 @@
 package com.company;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -470,7 +469,7 @@ public abstract class Methodes {
             {if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
                 d("le pret n'est pas dans le niveau du representant!");return;
             }
-                check=true; remboursement.setIdprets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
+                check=true; remboursement.setPrets(x);d("Il vous reste "+x.getMontant()+" gourdes au total, a payer sur ce pret.");
                 d("Voulez vous poursuivre ?");
                 if(!isvalide())return;
             }
@@ -505,7 +504,7 @@ public abstract class Methodes {
 
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
                     remboursementPersonnel.setEtudient(x);
-                    for (Pretspersonnels pretspersonnel : remboursement.getIdprets().getPretspersonnels()) {
+                    for (Pretspersonnels pretspersonnel : remboursement.getPrets().getPretspersonnels()) {
                         if(pretspersonnel.getStudent().equals(x)){
                             d("L'etudiant reste une somme personnel de "+(pretspersonnel.getMontant())+" " +
                                     "gourdes a payer en tout!");
@@ -527,55 +526,55 @@ public abstract class Methodes {
             }
         }
         d("Le montant total versee est de " + remboursement.getMontant() +" gourdes");
-        double Versement= remboursement.getIdprets().getVersement();
+        double Versement= remboursement.getPrets().getVersement();
         double Montant= remboursement.getMontant();
-        double Balance= remboursement.getIdprets().getBalance();
+        double Balance= remboursement.getPrets().getBalance();
 
-        if(remboursement.getIdprets().getVers1().equals(LocalDate.of(0,1,1))){
+        if(remboursement.getPrets().getVers1().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
-                remboursement.getIdprets().setBalance(Balance- Montant);
-                d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre premier versement");
+                remboursement.getPrets().setBalance(Balance- Montant);
+                d("Il vous reste une balance de "+remboursement.getPrets().getBalance()+" gourdes sur votre premier versement");
             }
             else if(Montant== Balance){
                 d("Vous avez terminer votrer premier versement");
-                remboursement.getIdprets().setBalance(Versement);
-                remboursement.getIdprets().setVers1(LocalDate.now());
+                remboursement.getPrets().setBalance(Versement);
+                remboursement.getPrets().setVers1(LocalDate.now());
             }
             else{
                 d("Vous avez terminer votrer premier versement");
-                remboursement.getIdprets().setVers1(LocalDate.now());
+                remboursement.getPrets().setVers1(LocalDate.now());
                 d(Balance);
                 if(Montant<(Versement+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ Versement);
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre deuxieme versement");
+                    remboursement.getPrets().setBalance(Balance - Montant+ Versement);
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre deuxieme versement");
                 }
                 else if(Montant<((Versement*2)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ (Versement*2));
+                    remboursement.getPrets().setBalance(Balance - Montant+ (Versement*2));
                     d("Vous avez terminer votre deuxieme versement");
-                    remboursement.getIdprets().setVers1(LocalDate.now());
-                    remboursement.getIdprets().setVers2(LocalDate.now());
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre troisieme versement");
+                    remboursement.getPrets().setVers1(LocalDate.now());
+                    remboursement.getPrets().setVers2(LocalDate.now());
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre troisieme versement");
                 }
                 else if (Montant<((Versement*3)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ (Versement*3));
+                    remboursement.getPrets().setBalance(Balance - Montant+ (Versement*3));
                     d("Vous avez terminer votre troisieme versement");
-                    remboursement.getIdprets().setVers1(LocalDate.now());
-                    remboursement.getIdprets().setVers2(LocalDate.now());
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre derniere versement");
+                    remboursement.getPrets().setVers1(LocalDate.now());
+                    remboursement.getPrets().setVers2(LocalDate.now());
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre derniere versement");
                 }
 
                 else if (Montant==((Versement*3)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers1(LocalDate.now());
-                    remboursement.getIdprets().setVers2(LocalDate.now());
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers1(LocalDate.now());
+                    remboursement.getPrets().setVers2(LocalDate.now());
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -588,11 +587,11 @@ public abstract class Methodes {
                 }
                 else if (Montant>((Versement*3)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers2(LocalDate.now());
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers2(LocalDate.now());
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -607,37 +606,37 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers2().equals(LocalDate.of(0,1,1))){
+        else if(remboursement.getPrets().getVers2().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
-                remboursement.getIdprets().setBalance(Balance- Montant);
-                d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre second versement");
+                remboursement.getPrets().setBalance(Balance- Montant);
+                d("Il vous reste une balance de "+remboursement.getPrets().getBalance()+" gourdes sur votre second versement");
             }
             else if(Montant== Balance){
                 d("Vous avez terminer votrer second versement");
-                remboursement.getIdprets().setBalance(Versement);
-                remboursement.getIdprets().setVers2(LocalDate.now());
+                remboursement.getPrets().setBalance(Versement);
+                remboursement.getPrets().setVers2(LocalDate.now());
             }
             else{
                 d("Vous avez terminer votrer second versement");
-                remboursement.getIdprets().setVers2(LocalDate.now());
+                remboursement.getPrets().setVers2(LocalDate.now());
                 if(Montant<(Versement+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ Versement);
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre troisieme versement");
+                    remboursement.getPrets().setBalance(Balance - Montant+ Versement);
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre troisieme versement");
                 }
                 else if(Montant<((Versement*2)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ (Versement*2));
+                    remboursement.getPrets().setBalance(Balance - Montant+ (Versement*2));
                     d("Vous avez terminer votre troisieme versement");
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre troisieme versement");
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre troisieme versement");
                 }
                 else if (Montant==((Versement*2)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -649,11 +648,11 @@ public abstract class Methodes {
                 }
                 else if (Montant>((Versement*2)+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers2(LocalDate.now());
-                    remboursement.getIdprets().setVers3(LocalDate.now());
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers2(LocalDate.now());
+                    remboursement.getPrets().setVers3(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -668,29 +667,29 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers3().equals(LocalDate.of(0,1,1))){
+        else if(remboursement.getPrets().getVers3().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
-                remboursement.getIdprets().setBalance(Balance- Montant);
-                d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre troisieme versement");
+                remboursement.getPrets().setBalance(Balance- Montant);
+                d("Il vous reste une balance de "+remboursement.getPrets().getBalance()+" gourdes sur votre troisieme versement");
             }
             else if(Montant== Balance){
                 d("Vous avez terminer votrer troisieme versement");
-                remboursement.getIdprets().setBalance(Versement);
-                remboursement.getIdprets().setVers3(LocalDate.now());
+                remboursement.getPrets().setBalance(Versement);
+                remboursement.getPrets().setVers3(LocalDate.now());
             }
             else{
                 d("Vous avez terminer votre troisieme versement");
-                remboursement.getIdprets().setVers3(LocalDate.now());
+                remboursement.getPrets().setVers3(LocalDate.now());
                 if(Montant<(Versement+Balance))
                 {
-                    remboursement.getIdprets().setBalance(Balance - Montant+ Versement);
-                    d("Il vous reste une balance de "+ remboursement.getIdprets().getBalance()+" sur votre dernire versement");
+                    remboursement.getPrets().setBalance(Balance - Montant+ Versement);
+                    d("Il vous reste une balance de "+ remboursement.getPrets().getBalance()+" sur votre dernire versement");
                 }
                 else if (Montant==(Versement+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -702,9 +701,9 @@ public abstract class Methodes {
                 }
                 else if (Montant>(Versement+Balance))
                 {
-                    remboursement.getIdprets().setBalance(0);
+                    remboursement.getPrets().setBalance(0);
                     d("Vous avez payer l'integralite de votre pret.");
-                    remboursement.getIdprets().setVers4(LocalDate.now());
+                    remboursement.getPrets().setVers4(LocalDate.now());
                     for(Niveau x:niveaux){
                         try {
                             if (idl.equals(x.getLeaddr().getId_student())) {
@@ -719,15 +718,15 @@ public abstract class Methodes {
 
             }
         }
-        else if(remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
+        else if(remboursement.getPrets().getVers4().equals(LocalDate.of(0,1,1))){
             if(Montant< Balance){
-                remboursement.getIdprets().setBalance(Balance- Montant);
-                d("Il vous reste une balance de "+remboursement.getIdprets().getBalance()+" gourdes sur votre derniere versement");
+                remboursement.getPrets().setBalance(Balance- Montant);
+                d("Il vous reste une balance de "+remboursement.getPrets().getBalance()+" gourdes sur votre derniere versement");
             }
             else if(Montant== Balance){
-                remboursement.getIdprets().setBalance(0);
+                remboursement.getPrets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
-                remboursement.getIdprets().setVers4(LocalDate.now());
+                remboursement.getPrets().setVers4(LocalDate.now());
                 for(Niveau x:niveaux){
                     try {
                         if (idl.equals(x.getLeaddr().getId_student())) {
@@ -739,9 +738,9 @@ public abstract class Methodes {
             }
             else if (Montant>Balance)
             {
-                remboursement.getIdprets().setBalance(0);
+                remboursement.getPrets().setBalance(0);
                 d("Vous avez payer l'integralite de votre pret.");
-                remboursement.getIdprets().setVers4(LocalDate.now());
+                remboursement.getPrets().setVers4(LocalDate.now());
                 for(Niveau x:niveaux){
                     try {
                         if (idl.equals(x.getLeaddr().getId_student())) {
@@ -754,7 +753,7 @@ public abstract class Methodes {
                         -Balance)+" de monnaie restant");
             }
         }
-        else if(!remboursement.getIdprets().getVers4().equals(LocalDate.of(0,1,1))){
+        else if(!remboursement.getPrets().getVers4().equals(LocalDate.of(0,1,1))){
             d("Cette dette a ete totalement recouvree.");
         }
         remboursement.setDateRenboursement(LocalDate.now());
@@ -763,7 +762,7 @@ public abstract class Methodes {
 
     public static void affRemboursements(){
         for(Remboursement x:remboursements){
-            d("Remboursement "+x.getId()+" place le "+x.getDate()+" sur le pret "+ x.getIdprets().getId_prets()+"\n");
+            d("Remboursement "+x.getId()+" place le "+x.getDateRenboursement()+" sur le pret "+ x.getPrets().getId_prets()+"\n");
         }
     }
 

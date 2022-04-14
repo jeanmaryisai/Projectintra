@@ -1,6 +1,7 @@
 package com.company;
 
 
+import static com.company.Dao.typeText;
 import static com.company.Tools.randomRPId;
 
 public class RemboursementPersonnel {
@@ -8,6 +9,7 @@ public class RemboursementPersonnel {
 	private Prets prets;
 	private Student etudient;
 	private double montant;
+	private Remboursement remboursement;
 	
 	public RemboursementPersonnel() {
 	
@@ -19,6 +21,14 @@ public class RemboursementPersonnel {
 		this.prets = prets;
 		this.etudient = etudient;
 		this.montant = montant;
+	}
+
+	public Remboursement getRemboursement() {
+		return remboursement;
+	}
+
+	public void setRemboursement(Remboursement remboursement) {
+		this.remboursement = remboursement;
 	}
 
 	public String getId() {
@@ -47,6 +57,14 @@ public class RemboursementPersonnel {
 
 	public void setMontant(double montant) {
 		this.montant = montant;
+	}
+
+	public String stringgson(){
+		return  Id+typeText.delimiteur+
+		prets.getId_prets()+typeText.delimiteur+
+		etudient.getId_student()+typeText.delimiteur+
+				montant+typeText.delimiteur+
+		remboursement.getId();
 	}
 
 	@Override

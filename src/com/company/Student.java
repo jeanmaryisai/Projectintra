@@ -1,5 +1,6 @@
 package com.company;
 
+import static com.company.Dao.typeText;
 import static com.company.Tools.randomSId;
 
 public class Student {
@@ -156,6 +157,6 @@ public class Student {
 	}
 
 	public String stringgson(){
-		return id_student+","+f_name+","+l_name+","+niveau.getNiveau()+","+gendr+","+phone+","+adresse+","+piece+","+piece_numbr;
+		return id_student+typeText.delimiteur+f_name+typeText.delimiteur+l_name+typeText.delimiteur+niveau.getNiveau()+typeText.delimiteur+gendr+typeText.delimiteur+phone+typeText.delimiteur+adresse+typeText.delimiteur+piece+typeText.delimiteur+piece_numbr;
 	}
 }

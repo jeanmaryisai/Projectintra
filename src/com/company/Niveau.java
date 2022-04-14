@@ -3,6 +3,7 @@ package com.company;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.company.Dao.typeText;
 
 
 public class Niveau {
@@ -51,6 +52,6 @@ public class Niveau {
 				'}';
 	}
 	public String stringgson(){
-		return niveau+","+leaddr.getId_student()+","+isencour;
+		return niveau+typeText.delimiteur+leaddr.getId_student()+typeText.delimiteur+isencour;
 	}
 }

@@ -1,12 +1,10 @@
 package com.company;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import static com.company.Dao.taux;
-import static com.company.Tools.d;
+import static com.company.Dao.typeText;
 import static com.company.Tools.randomPId;
 
 public class Prets {
@@ -109,6 +107,13 @@ public class Prets {
 	public void print(){
 		System.out.printf("%5s %5s %30s %30s %5s",id_prets,niveau.getNiveau(),(getVersement()*4),getMontant(),pretspersonnels.size());
 	}
+	public String stringgson(){
+		return id_prets+typeText.delimiteur+niveau.getNiveau()+typeText.delimiteur
+				+versement+typeText.delimiteur+vers1+typeText.delimiteur
+				+vers2+typeText.delimiteur+vers3+typeText.delimiteur+vers4+
+				typeText.delimiteur+date+typeText.delimiteur+isencoour+typeText.delimiteur+balance;
+	}
+
 	@Override
 	public String toString() {String x="";
 		x+= "Prets{\nNb: La devise est le gourde" +
