@@ -387,6 +387,7 @@ public abstract class Methodes {
                    }
                     check=true;
                     Pretspersonnels pretspersonnels=new Pretspersonnels();
+                    pretspersonnels.setPret(pret);
                     pretspersonnels.setStudent(x);
                     pretspersonnels.setMontant((montant)*(1+taux));
                     pret.getPretspersonnels().add(pretspersonnels);
@@ -504,6 +505,7 @@ public abstract class Methodes {
 
                     RemboursementPersonnel remboursementPersonnel =new RemboursementPersonnel();
                     remboursementPersonnel.setEtudient(x);
+                    remboursementPersonnel.setRemboursement(remboursement);
                     for (Pretspersonnels pretspersonnel : remboursement.getPrets().getPretspersonnels()) {
                         if(pretspersonnel.getStudent().equals(x)){
                             d("L'etudiant reste une somme personnel de "+(pretspersonnel.getMontant())+" " +
