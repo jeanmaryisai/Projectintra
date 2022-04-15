@@ -48,9 +48,10 @@ public abstract class Methodes {
 
     //student
     public static void createEtudiant( ) {
-        Gson gson = new Gson();
+
         // add file
         File file = new File("student.txt");
+        File file2 = new File("niveau.txt");
 //        FileIO.ReadFromFile(file,1);
         d("Entrer le nom de l'etudiant: ");
         String nom = e();
@@ -87,17 +88,15 @@ public abstract class Methodes {
                 students.add(student);
             }
         }
-
+        FileIO.write(file,1,true);
         //add file to file and specify the file path with extension
-        Log(students.toString());
+        FileIO.write(file2,5,true);
 
     }
 
     public static void modifyStudent(){
-        Gson gson = new Gson();
-        // declaring file to load student file
-        File file = new File("student.txt");
 
+        // declaring file to load student file
 
         System.out.println("Veuillez entrer l'id de l'etudiant que vous voulez modifier");
         String id= e();
@@ -189,15 +188,11 @@ public abstract class Methodes {
                     continu=false;
 
             }
-
-
         br();}
-
-
     }
 
     public static void deleteStudent() {
-
+        File file = new File("student.txt");
         System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
         String id= e();
         boolean check=false;
@@ -219,6 +214,7 @@ public abstract class Methodes {
                 check=true;break;
             }
         }if(!check)d("on a pas pu trouver l'etudiant");
+        FileIO.write(file,1,false);
     }
 
     public static void searchStudentId() {
@@ -292,6 +288,8 @@ public abstract class Methodes {
         System.out.println("Veuillez entrer l'id de l'etudiant a que vous souhaiter assigner comme leader");
         String id= e();
         boolean check=false;
+        File file = new File("student.txt");
+        FileIO.load(file,1);
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
                 for (Niveau x:niveaux){
@@ -408,6 +406,10 @@ public abstract class Methodes {
                 }
             }catch(Exception e){}
         }
+        File file = new File("prets.txt");
+        File file2 = new File("pretperso.txt");
+        FileIO.write(file,2,true);
+        FileIO.write(file2,6,true);
     }
 
     public static void showPrets(){
@@ -446,7 +448,7 @@ public abstract class Methodes {
                 check=true;
                 remboursement.setNiveau(x);
 
-                    }
+                }
             }
             catch (Exception e){
 
@@ -752,6 +754,10 @@ public abstract class Methodes {
         }
         remboursement.setDateRenboursement(LocalDate.now());
         remboursements.add(remboursement);
+        File file = new File("Remboursements.txt");
+        File file2 = new File("RemPerso.txt");
+        FileIO.write(file,3,true);
+        FileIO.write(file2,4,true);
     }
 
     public static void affRemboursements(){

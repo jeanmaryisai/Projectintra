@@ -1,4 +1,6 @@
 package com.company;
+import java.io.File;
+
 import static com.company.Tools.*;
 import static com.company.Methodes.*;
 
@@ -65,7 +67,8 @@ public  abstract class Menus {
                 );
                 choix = ei();
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
-
+            File file = new File("prets.txt");
+            FileIO.load(file,2);
             switch (choix){
                 case 1:addPret();break;
                 case 2:showPrets();break;
@@ -80,7 +83,10 @@ public  abstract class Menus {
         int choix;
         boolean stay = true;
         do {
+            File file = new File("student.txt");
+            FileIO.load(file,1);
             do {
+
                 d("Presser 1 pour creer un etudiant\n" +
                         "presser 2 pour rechercher un etudiant\n" +
                         "presser 3 pour lister tous les etudiant\n" +
@@ -101,6 +107,7 @@ public  abstract class Menus {
                     );
                     choix = ei();
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
+                    FileIO.load(file,1);
                     switch (choix) {
                         case 1:searchStudentNII();break;
                         case 2:searchStudentName();break;
@@ -120,6 +127,8 @@ public  abstract class Menus {
         int choix;
         boolean stay = true;
         do {
+            File file = new File("Remboursements.txt");
+            FileIO.load(file,3);
             do {
                 d("Presser 1 pour placer un remboursement\n" +
                         "presser 2 pour afficher tous les rembousement\n" +

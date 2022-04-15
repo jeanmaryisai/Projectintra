@@ -19,14 +19,14 @@ public class FileIO {
         System.out.println(d);
     }
 
-    public static void write(File file, int choice){
+    public static void write(File file, int choice, Boolean append){
         if (choice == 1){
             for (Student s : students){
                 try {
 
                     // Convenience class for writing character files
                     FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
+                    writer = new FileWriter(file.getAbsoluteFile(), append);
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -43,7 +43,7 @@ public class FileIO {
 
                     // Convenience class for writing character files
                     FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
+                    writer = new FileWriter(file.getAbsoluteFile(), append);
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -60,7 +60,7 @@ public class FileIO {
 
                     // Convenience class for writing character files
                     FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
+                    writer = new FileWriter(file.getAbsoluteFile(), append);
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -79,7 +79,7 @@ public class FileIO {
 
                     // Convenience class for writing character files
                     FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
+                    writer = new FileWriter(file.getAbsoluteFile(), append);
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -97,7 +97,7 @@ public class FileIO {
 
                     // Convenience class for writing character files
                     FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
+                    writer = new FileWriter(file.getAbsoluteFile(), append);
 
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -115,7 +115,7 @@ public class FileIO {
                     try {
                         // Convenience class for writing character files
                         FileWriter writer;
-                        writer = new FileWriter(file.getAbsoluteFile(), true);
+                        writer = new FileWriter(file.getAbsoluteFile(), append);
 
                         // Writes text to a character-output stream
                         BufferedWriter bufferWriter = new BufferedWriter(writer);
@@ -257,7 +257,7 @@ public class FileIO {
             Set<RemboursementPersonnel> remboursementPersonnels = new HashSet<RemboursementPersonnel>();
             try {
 
-                File fileRemPerso = new File("pretperso.txt");
+                File fileRemPerso = new File(" RemPerso.txt");
                 if (file.exists() && fileRemPerso.exists()) {
                     remboursements.clear();
                     String remOut, remPersoOut;
