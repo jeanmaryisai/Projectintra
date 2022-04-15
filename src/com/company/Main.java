@@ -1,4 +1,5 @@
 package com.company;
+import java.io.File;
 import java.time.LocalDate;
 
 import static com.company.Dao.*;
@@ -14,6 +15,7 @@ public class Main {
         operation();
         Student student = new Student("prenom", "nom", "sexe", "telephone", "addresse", "piecee",  00000);
         student.setId_student("s1");
+        File file = new File("");
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L3")) {
                 student.setNiveau(x);

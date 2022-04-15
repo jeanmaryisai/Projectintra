@@ -159,4 +159,5 @@ public class Student {
 	public String stringgson(){
 		return id_student+typeText.delimiteur+f_name+typeText.delimiteur+l_name+typeText.delimiteur+niveau.getNiveau()+typeText.delimiteur+gendr+typeText.delimiteur+phone+typeText.delimiteur+adresse+typeText.delimiteur+piece+typeText.delimiteur+piece_numbr;
 	}
+
 }

@@ -42,6 +42,9 @@ public class RemboursementPersonnel {
 	public void setPrets(Prets prets) {
 		this.prets = prets;
 	}
+	public void setId(String id ) {
+		this.Id = id;
+	}
 
 	public Student getEtudient() {
 		return etudient;

@@ -78,13 +78,12 @@ public abstract class Methodes {
         }
         d("Entre le niveau de l'etudiant: ");
         String niveau = niv();
+        Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
 
         Log(niveaux.toString());
         for (Niveau x : niveaux) {
             if (x.getNiveau().equals(niveau)) {
-                Student student = new Student(prenom, nom, sexe, telephone, addresse, piecee, piecenum);
                 student.setNiveau(x);
-                WriteToFile(gson.toJson(student),file,true);
                 students.add(student);
             }
         }

@@ -24,12 +24,18 @@ public class Niveau {
 	public Niveau(String niveau) {
 		this.niveau = niveau;
 	}
+	public Niveau() {
+
+	}
 
 	public String getNiveau() {
 		return niveau;
 	}
 	public void setNiveau(String niveau) {
 		this.niveau = niveau;
+	}
+	public void setIsencour(Boolean isencour) {
+		this.isencour = isencour;
 	}
 	//public String getLeaddr() {
 	//	return leaddr;

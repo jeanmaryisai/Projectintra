@@ -29,6 +29,9 @@ public class Prets {
 	public void setIsencoour(boolean isencoour) {
 		this.isencoour = isencoour;
 	}
+	public void setPerso(Set<Pretspersonnels> pretspersonnels) {
+		this.pretspersonnels = pretspersonnels;
+	}
 
 	public double getBalance() {
 		return balance;
