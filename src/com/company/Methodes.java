@@ -97,7 +97,7 @@ public abstract class Methodes {
         Gson gson = new Gson();
         // declaring file to load student file
         File file = new File("student.txt");
-        FileIO.ReadFromFile(file,1);
+
 
         System.out.println("Veuillez entrer l'id de l'etudiant que vous voulez modifier");
         String id= e();
@@ -189,9 +189,7 @@ public abstract class Methodes {
                     continu=false;
 
             }
-            for(Student x:students) {
-                FileIO.WriteToFile(gson.toJson(student),file,false);
-            }
+
 
         br();}
 
@@ -224,10 +222,7 @@ public abstract class Methodes {
     }
 
     public static void searchStudentId() {
-        Gson gson = new Gson();
-        // declaring file to load student file
-        File file = new File("student.txt");
-        FileIO.ReadFromFile(file,1);
+
         System.out.println("Veuillez entrer l'id de l'etudiant a rechercher");
         String id= e();
         boolean check=false;
@@ -240,8 +235,7 @@ public abstract class Methodes {
     }
 
     public static void searchStudentName() {
-        File file = new File("student.txt");
-        FileIO.ReadFromFile(file,1);
+
         System.out.println("Veuillez entrer le prenom de l'etudiant a rechercher");
         String nom= e();
         boolean check=false;
@@ -271,8 +265,7 @@ public abstract class Methodes {
     }
 
     public static void searchStudentNII() {
-        File file = new File("student.txt");
-        FileIO.ReadFromFile(file,1);
+
         System.out.println("Veuillez entrer le nif/cin ou NII de l'etudiant a rechercher");
         long id= el();
         boolean check=false;

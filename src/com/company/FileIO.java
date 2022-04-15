@@ -15,103 +15,10 @@ import java.util.logging.Logger;
 import static com.company.Dao.*;
 public class FileIO {
 
-    public static void WriteToFile(String myData,File file, boolean append) {
-
-        Log("enter");
-        if (append == false) {
-            file.delete();
-        }
-        // exists(): Tests whether the file or directory denoted by this abstract pathname exists.
-        if (!file.exists()) {
-
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.out.println("Exception Occurred: " + e.toString());
-            }
-        }
-
-        try {
-
-            // Convenience class for writing character files
-            FileWriter writer;
-            writer = new FileWriter(file.getAbsoluteFile(), append);
-
-            // Writes text to a character-output stream
-            BufferedWriter bufferWriter = new BufferedWriter(writer);
-            bufferWriter.write(myData.toString()+"\n");
-            bufferWriter.close();
-        } catch (IOException e) {
-
-            Log("Hmm.. Got an error while saving  data to file " + e.toString());
-        }
-    }
     public static void Log(Object d){
         System.out.println(d);
     }
 
-    public static void ReadFromFile(File file, int choice) {
-        Set <Object> set = new HashSet<>();
-        Student student = null;
-        Prets pret = null;
-        Remboursement rem = null;
-        Gson gson = new Gson();
-
-        if (choice == 1){
-            if (!file.exists())
-                Log("File doesn't exist");
-            try {
-                FileReader fw=new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fw);
-                String line;
-                while((line = bufferedReader.readLine()) != null) {
-                    StringReader s  =new StringReader(line);
-                    JsonReader myReader = new JsonReader(s);
-                    myReader.toString();
-                    student = gson.fromJson(myReader, Student.class);
-                    Log("student: " + student.toString());
-                    students.add(student);
-                }
-            } catch (Exception e) {
-                Log("error load cache from file " + e.toString());
-            }
-        } else if (choice == 2){
-            if (!file.exists())
-                Log("File doesn't exist");
-            try {
-                FileReader fw=new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fw);
-                String line;
-                while((line = bufferedReader.readLine()) != null) {
-                    StringReader s  =new StringReader(line);
-                    JsonReader myReader = new JsonReader(s);
-                    pret = gson.fromJson(myReader, Prets.class);
-                    Log("Pret " + pret.toString());
-                    prets.add(pret);
-                }
-            } catch (Exception e) {
-                Log("error load cache from file " + e.toString());
-            }
-        } else if(choice == 3){
-            if (!file.exists())
-                Log("File doesn't exist");
-            try {
-                FileReader fw=new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fw);
-                String line;
-                while((line = bufferedReader.readLine()) != null) {
-                    StringReader s  =new StringReader(line);
-                    JsonReader myReader = new JsonReader(s);
-                    rem = gson.fromJson(myReader, Remboursement.class);
-                    Log("Remboursement:" + rem.toString());
-                    remboursements.add(rem);
-                }
-            } catch (Exception e) {
-                Log("error load cache from file " + e.toString());
-            }
-        }
-
-    }
     public static void write(File file, int choice){
         if (choice == 1){
             for (Student s : students){
@@ -227,17 +134,19 @@ public class FileIO {
         if (choice == 1) {
             try {
                 File fileNiveau = new File("niveau.txt");
-                students.clear();
-                niveaux.clear();
-                String studentInput,niveauInput;
-                FileInputStream inputStream1 = new FileInputStream(file);
-                FileInputStream inputStream2 = new FileInputStream(fileNiveau);
-                BufferedReader brstudent = new BufferedReader(new InputStreamReader(inputStream1));
-                BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream2));
+                if (file.exists() && fileNiveau.exists()) {
 
-                    while((niveauInput=brniveau.readLine())!=null) {
+                    students.clear();
+                    niveaux.clear();
+                    String studentInput, niveauInput;
+                    FileInputStream inputStream1 = new FileInputStream(file);
+                    FileInputStream inputStream2 = new FileInputStream(fileNiveau);
+                    BufferedReader brstudent = new BufferedReader(new InputStreamReader(inputStream1));
+                    BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream2));
+
+                    while ((niveauInput = brniveau.readLine()) != null) {
                         String[] niveauEl = niveauInput.split(",");
-                        while((studentInput=brstudent.readLine())!=null) {
+                        while ((studentInput = brstudent.readLine()) != null) {
                             String[] studentEl = studentInput.split(",");
                             if (niveauEl[1].equals(studentEl[0])) {
                                 Student student = new Student();
@@ -259,14 +168,14 @@ public class FileIO {
                             }
                         }
                     }
-                    while((studentInput=brstudent.readLine())!=null) {
+                    while ((studentInput = brstudent.readLine()) != null) {
                         String[] studentEl = studentInput.split(",");
                         Student student = new Student();
-                        for (Student stud:students){
-                            if (stud.getId_student().equals(studentEl[0])){
+                        for (Student stud : students) {
+                            if (stud.getId_student().equals(studentEl[0])) {
                                 continue;
-                            } else{
-                                for (Niveau niv : niveaux){
+                            } else {
+                                for (Niveau niv : niveaux) {
                                     if (niv.getNiveau().equals(studentEl[3])) {
                                         student.setNiveau(niv);
                                     }
@@ -282,62 +191,64 @@ public class FileIO {
                             }
                         }
                     }
+                } else{
+                    Log("You have to create student first");
+                }
                 } catch (IOException ex) {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (choice == 2){
             Set<Pretspersonnels> pretspersonnels= new HashSet<Pretspersonnels>();
             try {
-                prets.clear();
-                File fileNiveau = new File("niveau.txt");
                 File fileperso = new File("pretperso.txt");
-                String pretOut,pretpersoOut;
-                FileInputStream inputStream1 = new FileInputStream(file);
-                FileInputStream inputStream2 = new FileInputStream(fileNiveau);
-                FileInputStream inputStream3 = new FileInputStream(fileperso);
-                BufferedReader brpret = new BufferedReader(new InputStreamReader(inputStream1));
-                BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream2));
-                BufferedReader brperso = new BufferedReader(new InputStreamReader(inputStream3));
+                if (file.exists() && fileperso.exists()) {
+                    prets.clear();
+                    String pretOut, pretpersoOut;
+                    FileInputStream inputStream1 = new FileInputStream(file);
+                    FileInputStream inputStream3 = new FileInputStream(fileperso);
+                    BufferedReader brpret = new BufferedReader(new InputStreamReader(inputStream1));
+                    BufferedReader brperso = new BufferedReader(new InputStreamReader(inputStream3));
 
 
-                while((pretOut=brpret.readLine())!=null) {
-                    String[] pretEl = pretOut.split(",");
+                    while ((pretOut = brpret.readLine()) != null) {
+                        String[] pretEl = pretOut.split(",");
 
-                    Prets pret = new Prets();
-                    Niveau nivo = new Niveau();
-                    pret.setId_prets(pretEl[0]);
-                    for (Niveau niv : niveaux){
-                        if (niv.getNiveau().equals(pretEl[1])) {
-                            pret.setNiveau(niv);
-                        }
-                    }
-                    pret.setVersement(Double.parseDouble(pretEl[2]));
-                    pret.setVers1(LocalDate.parse(pretEl[3]));
-                    pret.setVers2(LocalDate.parse(pretEl[4]));
-                    pret.setVers3(LocalDate.parse(pretEl[5]));
-                    pret.setVers4(LocalDate.parse(pretEl[6]));
-                    pret.setDate(LocalDate.parse(pretEl[7]));
-                    pret.setIsencoour(Boolean.parseBoolean(pretEl[8]));
-                    pret.setBalance(Double.parseDouble(pretEl[9]));
-
-                    while((pretpersoOut=brperso.readLine())!=null) {
-                        String[] persoEl = pretpersoOut.split(",");
-                        if (persoEl[3].equals(pretEl[0])) {
-                            Pretspersonnels pretperso = new Pretspersonnels();
-                            pretperso.setId(persoEl[0]);
-                            pretperso.setPret(pret);
-                            pretperso.setMontant(Double.parseDouble(persoEl[2]));
-                            for (Student stud:students){
-                                if (persoEl[1].equals(stud.getId_student())){
-                                    pretperso.setStudent(stud);
-                                }
+                        Prets pret = new Prets();
+                        Niveau nivo = new Niveau();
+                        pret.setId_prets(pretEl[0]);
+                        for (Niveau niv : niveaux) {
+                            if (niv.getNiveau().equals(pretEl[1])) {
+                                pret.setNiveau(niv);
                             }
-                            pretspersonnels.add(pretperso);
-                            pret.setPerso(pretspersonnels);
                         }
+                        pret.setVersement(Double.parseDouble(pretEl[2]));
+                        pret.setVers1(LocalDate.parse(pretEl[3]));
+                        pret.setVers2(LocalDate.parse(pretEl[4]));
+                        pret.setVers3(LocalDate.parse(pretEl[5]));
+                        pret.setVers4(LocalDate.parse(pretEl[6]));
+                        pret.setDate(LocalDate.parse(pretEl[7]));
+                        pret.setIsencoour(Boolean.parseBoolean(pretEl[8]));
+                        pret.setBalance(Double.parseDouble(pretEl[9]));
 
+                        while ((pretpersoOut = brperso.readLine()) != null) {
+                            String[] persoEl = pretpersoOut.split(",");
+                            if (persoEl[3].equals(pretEl[0])) {
+                                Pretspersonnels pretperso = new Pretspersonnels();
+                                pretperso.setId(persoEl[0]);
+                                pretperso.setPret(pret);
+                                pretperso.setMontant(Double.parseDouble(persoEl[2]));
+                                for (Student stud : students) {
+                                    if (persoEl[1].equals(stud.getId_student())) {
+                                        pretperso.setStudent(stud);
+                                    }
+                                }
+                                pretspersonnels.add(pretperso);
+                                pret.setPerso(pretspersonnels);
+                            }
+
+                        }
+                        prets.add(pret);
                     }
-                    prets.add(pret);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
@@ -345,63 +256,63 @@ public class FileIO {
         } else if (choice == 3){
             Set<RemboursementPersonnel> remboursementPersonnels = new HashSet<RemboursementPersonnel>();
             try {
-                remboursements.clear();
-                File fileNiveau = new File("niveau.txt");
+
                 File fileRemPerso = new File("pretperso.txt");
-                String remOut,remPersoOut;
-                FileInputStream inputStream1 = new FileInputStream(file);
-                FileInputStream inputStream2 = new FileInputStream(fileNiveau);
-                FileInputStream inputStream3 = new FileInputStream(fileRemPerso);
-                BufferedReader brRem = new BufferedReader(new InputStreamReader(inputStream1));
-                BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream2));
-                BufferedReader brRemPerso = new BufferedReader(new InputStreamReader(inputStream3));
+                if (file.exists() && fileRemPerso.exists()) {
+                    remboursements.clear();
+                    String remOut, remPersoOut;
+                    FileInputStream inputStream1 = new FileInputStream(file);
+                    FileInputStream inputStream3 = new FileInputStream(fileRemPerso);
+                    BufferedReader brRem = new BufferedReader(new InputStreamReader(inputStream1));
+                    BufferedReader brRemPerso = new BufferedReader(new InputStreamReader(inputStream3));
 
 
-                while((remOut=brRem.readLine())!=null) {
-                    String[] remEl = remOut.split(",");
+                    while ((remOut = brRem.readLine()) != null) {
+                        String[] remEl = remOut.split(",");
 
-                    Remboursement rem = new Remboursement();
-                    rem.setId(remEl[0]);
-                    for (Niveau niv : niveaux){
-                        if (niv.getNiveau().equals(remEl[1])) {
-                            rem.setNiveau(niv);
-                        }
-                    }
-                    for (Prets pret : prets){
-                        if (pret.getId_prets().equals(remEl[2])) {
-                            rem.setPrets(pret);
-                            rem.setMontantVerse(pret);
-                        }
-                    }
-                    for (Student student : students){
-                        if (student.getId_student().equals(remEl[3])) {
-                            rem.setStudent(student);
-                        }
-                    }
-                    rem.setDateRenboursement(LocalDate.parse(remEl[4]));
-
-                    while((remPersoOut=brRemPerso.readLine())!=null) {
-                        String[] persoEl = remPersoOut.split(",");
-                        if (persoEl[4].equals(remEl[0])) {
-                            RemboursementPersonnel remperso = new RemboursementPersonnel();
-                            remperso.setId(persoEl[0]);
-                            for (Student stud:students){
-                                if (persoEl[2].equals(stud.getId_student())){
-                                    remperso.setEtudient(stud);
-                                }
+                        Remboursement rem = new Remboursement();
+                        rem.setId(remEl[0]);
+                        for (Niveau niv : niveaux) {
+                            if (niv.getNiveau().equals(remEl[1])) {
+                                rem.setNiveau(niv);
                             }
-                            for (Prets pret : prets){
-                                if (persoEl[1].equals(pret.getId_prets())) {
-                                    remperso.setPrets(pret);
-                                }
-                            }
-                            remperso.setRemboursement(rem);
-                            remboursementPersonnels.add(remperso);
                         }
+                        for (Prets pret : prets) {
+                            if (pret.getId_prets().equals(remEl[2])) {
+                                rem.setPrets(pret);
+                                rem.setMontantVerse(pret);
+                            }
+                        }
+                        for (Student student : students) {
+                            if (student.getId_student().equals(remEl[3])) {
+                                rem.setStudent(student);
+                            }
+                        }
+                        rem.setDateRenboursement(LocalDate.parse(remEl[4]));
 
+                        while ((remPersoOut = brRemPerso.readLine()) != null) {
+                            String[] persoEl = remPersoOut.split(",");
+                            if (persoEl[4].equals(remEl[0])) {
+                                RemboursementPersonnel remperso = new RemboursementPersonnel();
+                                remperso.setId(persoEl[0]);
+                                for (Student stud : students) {
+                                    if (persoEl[2].equals(stud.getId_student())) {
+                                        remperso.setEtudient(stud);
+                                    }
+                                }
+                                for (Prets pret : prets) {
+                                    if (persoEl[1].equals(pret.getId_prets())) {
+                                        remperso.setPrets(pret);
+                                    }
+                                }
+                                remperso.setRemboursement(rem);
+                                remboursementPersonnels.add(remperso);
+                            }
+
+                        }
+                        rem.setListDtail(remboursementPersonnels);
+                        remboursements.add(rem);
                     }
-                    rem.setListDtail(remboursementPersonnels);
-                    remboursements.add(rem);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
