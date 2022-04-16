@@ -90,7 +90,7 @@ public abstract class Methodes {
         }
         FileIO.write(file,1,true);
         //add file to file and specify the file path with extension
-        FileIO.write(file2,5,true);
+        
 
     }
 
