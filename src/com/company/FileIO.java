@@ -190,7 +190,6 @@ public class FileIO {
         StringTokenizer st;
         if(!file.exists())return;
         List<String> l;
-        students.clear();
         if (choice == 1) {
             try {
                 l = Files.readAllLines(file.toPath());
