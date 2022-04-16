@@ -19,26 +19,73 @@ public class Main {
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L3")) {
                 student.setNiveau(x);
+                System.out.println(x);
             }
         }
         students.add(student);
         Student student2 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
+
         for (Niveau x: niveaux) {
             if(x.getNiveau().equals("L2")) {
                 student2.setNiveau(x);
+                System.out.println(x);
             }
         }
+        Student student3 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
+        for (Niveau x: niveaux) {
+            if(x.getNiveau().equals("L1")) {
+                student3.setNiveau(x);
+                System.out.println(x);
+            }
+        }
+        Student student4 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
+        for (Niveau x: niveaux) {
+            if(x.getNiveau().equals("DUT1")) {
+                student4.setNiveau(x);
+                System.out.println(x);
+            }
+        }
+        Student student5 = new Student("prenoc", "nsdom", "sexe", "telephone", "addresse", "nif",  1);
+        for (Niveau x: niveaux) {
+            if(x.getNiveau().equals("DUT1")) {
+                student5.setNiveau(x);
+                System.out.println(x);
+            }
+        }
+        student5.setId_student("s55");
+        students.add(student5);
+        for (Niveau x:niveaux){
+            if(x.getNiveau().equals("L3")){
+                x.setLeaddr(student);test(4);
+                System.out.println(x);
+            }
+        }
+        student4.setId_student("s56");
+        students.add(student4);
+        student3.setId_student("s564");
+        students.add(student3);
         student2.setId_student("s2");
         students.add(student2);
         for (Niveau x:niveaux){
             if(x.getNiveau().equals("L3")){
                 x.setLeaddr(student);test(4);
+                System.out.println(x);
             }
         }
 
         for (Niveau x:niveaux){
             if(x.getNiveau().equals("L2")){
                 x.setLeaddr(student2);test(4);
+            }
+        }
+        for (Niveau x:niveaux){
+            if(x.getNiveau().equals("L1")){
+                x.setLeaddr(student3);test(4);
+            }
+        }
+        for (Niveau x:niveaux){
+            if(x.getNiveau().equals("DUT1")){
+                x.setLeaddr(student4);test(4);
             }
         }
 

@@ -3,7 +3,7 @@ import java.io.File;
 
 import static com.company.Tools.*;
 import static com.company.Methodes.*;
-
+import static com.company.Dao.*;
 public  abstract class Menus {
     public static int mainMenu(){int i;
         do {d(Dao.students.size());
@@ -81,12 +81,10 @@ public  abstract class Menus {
 
     public static void moduleEtudiant() {
         int choix;
+        File file = new File(filename("student"));
+        FileIO.load(file,1);
         boolean stay = true;
         do {
-            File file = new File("student.txt");
-            try{FileIO.load(file,1);}catch (Exception e){
-                d(e);
-            }
             do {
 
                 d("Presser 1 pour creer un etudiant\n" +
@@ -109,7 +107,7 @@ public  abstract class Menus {
                     );
                     choix = ei();
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
-                   FileIO.load(file,1);
+
                     switch (choix) {
                         case 1:searchStudentNII();break;
                         case 2:searchStudentName();break;
@@ -122,15 +120,26 @@ public  abstract class Menus {
                 case 5:deleteStudent();break;
             }
             if(stay)br();
+
         } while (stay);
+        for (Student s: students){
+            System.out.println(s);
+        }
     }
 
     public static void moduleRemboursement() {
         int choix;
         boolean stay = true;
         do {
-            File file = new File("Remboursements.txt");
+            File file2 = new File(filename("prets"));
+            File file3 = new File(filename("pretperso"));
+            File file = new File(filename("Remboursements"));
+            File file1 = new File(filename("student"));
+            FileIO.load(file1,1);
+            FileIO.load(file2,2);
             FileIO.load(file,3);
+
+
             do {
                 d("Presser 1 pour placer un remboursement\n" +
                         "presser 2 pour afficher tous les rembousement\n" +

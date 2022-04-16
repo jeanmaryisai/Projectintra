@@ -44,7 +44,7 @@ public abstract class Methodes {
         niveaux.add(niv2);
         niveaux.add(niv3);
         niveaux.add(niv2a);
-        niveaux.add(niv3a);
+
     }
 
 
@@ -100,7 +100,7 @@ public abstract class Methodes {
     public static void modifyStudent(){
 
         // declaring file to load student file
-
+        File file = new File(filename("student"));
         System.out.println("Veuillez entrer l'id de l'etudiant que vous voulez modifier");
         String id= e();
         boolean check=false;
@@ -192,6 +192,7 @@ public abstract class Methodes {
 
             }
         br();}
+        FileIO.write(file,1,false);
     }
 
     public static void deleteStudent() {
@@ -280,6 +281,7 @@ public abstract class Methodes {
         System.out.printf("%5s %20s %20s %5s %5s %20s", "Id", "Prenom", "Nom", "Niveau","sexe","CIN/NIF/NII");
         d("\n-----------------------------------------------------------------------------------");
         for(Student a:students) {
+            System.out.println(a);
            a.print();
             i++;
             d("\n");
@@ -442,6 +444,10 @@ public abstract class Methodes {
 
     //rembousement
     public static void newRembousement(){
+        File file1 = new File("student.txt");
+        FileIO.load(file1,1);
+        File file3 = new File("Remboursements.txt");
+        FileIO.load(file3,3);
         Remboursement remboursement=new Remboursement();
         System.out.println("Entrer votre Id");
         String idl=e();
@@ -491,6 +497,7 @@ public abstract class Methodes {
                     if(studentList.contains(x)){
                         d("Erreur etudiant double!!!");return;
                     }studentList.add(x);
+                    remboursement.setStudent(x);
                     if(!x.getNiveau().getLeaddr().getId_student().equals(idl)){
                         d("Erreur!!! L'etudiant n'appartient pas a ce niveau.");return;
                     }
@@ -758,14 +765,17 @@ public abstract class Methodes {
         }
         remboursement.setDateRenboursement(LocalDate.now());
         remboursements.add(remboursement);
+        System.out.println(remboursements.toString());
+
+
         File file = new File("Remboursements.txt");
-        File file2 = new File("RemPerso.txt");
         FileIO.write(file,3,true);
-        FileIO.write(file2,4,true);
+
     }
 
     public static void affRemboursements(){
         for(Remboursement x:remboursements){
+            d(x.toString());
             d("Remboursement "+x.getId()+" place le "+x.getDateRenboursement()+" sur le pret "+ x.getPrets().getId_prets()+"\n");
         }
     }
