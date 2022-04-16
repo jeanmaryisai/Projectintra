@@ -135,7 +135,7 @@ public class FileIO {
             try {
                 File fileNiveau = new File("niveau.txt");
                 if (file.exists() && fileNiveau.exists()) {
-
+                    Log("exist");
                     students.clear();
                     niveaux.clear();
                     String studentInput, niveauInput;
@@ -146,9 +146,11 @@ public class FileIO {
 
                     while ((niveauInput = brniveau.readLine()) != null) {
                         String[] niveauEl = niveauInput.split(",");
+                        Log(brstudent.readLine());
                         while ((studentInput = brstudent.readLine()) != null) {
                             String[] studentEl = studentInput.split(",");
                             if (niveauEl[1].equals(studentEl[0])) {
+                                Log("fret");
                                 Student student = new Student();
                                 Niveau nivo = new Niveau();
                                 nivo.setNiveau(niveauEl[0]);
@@ -168,9 +170,12 @@ public class FileIO {
                             }
                         }
                     }
+                    Log(brstudent.readLine());
                     while ((studentInput = brstudent.readLine()) != null) {
                         String[] studentEl = studentInput.split(",");
                         Student student = new Student();
+                        Log(studentEl[1]);
+                        Log("exist2");
                         for (Student stud : students) {
                             if (stud.getId_student().equals(studentEl[0])) {
                                 continue;
@@ -180,6 +185,7 @@ public class FileIO {
                                         student.setNiveau(niv);
                                     }
                                 }
+                                Log("exist3");
                                 student.setId_student(studentEl[0]);
                                 student.setF_name(studentEl[1]);
                                 student.setL_name(studentEl[2]);
@@ -188,6 +194,7 @@ public class FileIO {
                                 student.setAdresse(studentEl[6]);
                                 student.setPiece(studentEl[7]);
                                 student.setPiece_numbr(Long.parseLong(studentEl[8]));
+                                students.add(student);
                             }
                         }
                     }

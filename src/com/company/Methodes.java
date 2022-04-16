@@ -318,6 +318,9 @@ public abstract class Methodes {
 //pret
     public static void addPret() {
         Prets pret=new Prets();
+        File file3 = new File("student.txt");
+        FileIO.load(file3,1);
+        System.out.println(students);
         System.out.println("Entrer votre Id");
         String idl=e();String niveau="";
         boolean check=false;
