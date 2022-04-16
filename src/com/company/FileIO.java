@@ -206,9 +206,8 @@ public class FileIO {
             }
         } else if (choice == 2){
             try {
-               try {
                    l = Files.readAllLines(file.toPath());
-               }catch (NoSuchFileException e){ return;}
+
                    for (String s : l) {
                     st = new StringTokenizer(s, "\t");
                     prets.add(new Prets(st.nextToken(typeText.delimiteur),
@@ -223,8 +222,8 @@ public class FileIO {
                             Double.valueOf(st.nextToken(typeText.delimiteur))));
                 }
 
-            } catch (IOException ex) {
-                Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                d(ex);
             }
         } else if (choice == 3){
             try {
