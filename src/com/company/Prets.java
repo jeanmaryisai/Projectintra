@@ -169,4 +169,10 @@ public class Prets {
 				"\n\n\t}";
 		return x;
 	}
+
+	public void setIsencoour(boolean parseBoolean) {
+	}
+
+	public void setPerso(Set<Pretspersonnels> pretspersonnels) {
+	}
 }
