@@ -112,9 +112,85 @@ public class FileIO {
         }
 
     }
-    public static void load1(File file ,int choice){
+
+    public static void write(File file, int choice, boolean ignore){
+        if (choice == 1){
+            for (Student s : students){
+                try {
+
+                    // Convenience class for writing character files
+                    FileWriter writer;
+                    writer = new FileWriter(file.getAbsoluteFile(), true);
+
+                    // Writes text to a character-output stream
+                    BufferedWriter bufferWriter = new BufferedWriter(writer);
+                    bufferWriter.write(s.stringgson()+"\n");
+                    bufferWriter.close();
+                } catch (IOException e) {
+
+                    Log("error load cache from file " + e);
+                }
+            }
+        } else if (choice == 2){
+            for (Prets p : prets){
+                try {
+
+                    // Convenience class for writing character files
+                    FileWriter writer;
+                    writer = new FileWriter(file.getAbsoluteFile(), true);
+
+                    // Writes text to a character-output stream
+                    BufferedWriter bufferWriter = new BufferedWriter(writer);
+                    bufferWriter.write(p.stringgson()+"\n");
+                    bufferWriter.close();
+                } catch (IOException e) {
+
+                    Log("error load cache from file " + e.toString());
+                }
+            }
+        } else if (choice == 3){
+            for (Remboursement r : remboursements){
+                try {
+
+                    // Convenience class for writing character files
+                    FileWriter writer;
+                    writer = new FileWriter(file.getAbsoluteFile(), true);
+
+                    // Writes text to a character-output stream
+                    BufferedWriter bufferWriter = new BufferedWriter(writer);
+                    bufferWriter.write(r.stringgson() +"\n");
+                    bufferWriter.close();
+                } catch (IOException e) {
+
+                    Log("error load cache from file " + e.toString());
+                }
+            }
+        }
+
+    }
+
+    public static void writePP(Prets pret,File file,boolean append){
+        for (Pretspersonnels pp : pret.getPretspersonnels()){
+            try {
+
+                // Convenience class for writing character files
+                FileWriter writer;
+                writer = new FileWriter(file.getAbsoluteFile(), true);
+
+                // Writes text to a character-output stream
+                BufferedWriter bufferWriter = new BufferedWriter(writer);
+                bufferWriter.write(pp.stringgson() +"\n");
+                bufferWriter.close();
+            } catch (IOException e) {
+
+                Log("error load cache from file " + e.toString());
+            }
+        }
+    }
+    public static void load(File file ,int choice){
 
         if (choice == 1) {
+            Log("good");
             try {
                 File fileNiveau = new File("niveau.txt");
                 if (file.exists() && fileNiveau.exists()) {
@@ -310,81 +386,7 @@ public class FileIO {
 
         }
     }
-    public static void write(File file, int choice, boolean ignore){
-        if (choice == 1){
-            for (Student s : students){
-                try {
-
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(s.stringgson()+"\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e);
-                }
-            }
-        } else if (choice == 2){
-            for (Prets p : prets){
-                try {
-
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(p.stringgson()+"\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e.toString());
-                }
-            }
-        } else if (choice == 3){
-            for (Remboursement r : remboursements){
-                try {
-
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(r.stringgson() +"\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e.toString());
-                }
-            }
-        }
-
-    }
-
-    public static void writePP(Prets pret,File file,boolean append){
-        for (Pretspersonnels pp : pret.getPretspersonnels()){
-            try {
-
-                // Convenience class for writing character files
-                FileWriter writer;
-                writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                // Writes text to a character-output stream
-                BufferedWriter bufferWriter = new BufferedWriter(writer);
-                bufferWriter.write(pp.stringgson() +"\n");
-                bufferWriter.close();
-            } catch (IOException e) {
-
-                Log("error load cache from file " + e.toString());
-            }
-        }
-    }
-    public static void load(File file ,int choice){
+    public static void load1(File file ,int choice){
         StringTokenizer st;
         if(!file.exists())return;
         List<String> l;

@@ -1,3 +1,6 @@
 Ecr-109540,JeanMAr,Isai,L3,Masculin,312,Rune,CIN,38791
 Ecr-109540,JeanMAr,Isai,L3,Masculin,312,Rune,CIN,38791
 Ecr-148891,Jais,Erico,L3,Masculin,239104,Rieur,CIN,100394
+s2,prenoc,nsdom,L2,sexe,telephone,addresse,nif,1
+Ecr-152931,werty,ertyu,L3,Masculin,123456,werty,CIN,123456
+s1,prenom,nom,L3,sexe,telephone,addresse,piecee,0
