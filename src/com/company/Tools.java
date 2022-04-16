@@ -70,7 +70,7 @@ public abstract class Tools {
         Random x=new Random();
         x.nextInt(99999);x.nextInt(99999);
         int i=  (x.nextInt(99999)+100000);
-        String v="RPr-"+String.valueOf(i);
+        String v="PPr-"+String.valueOf(i);
        for(Prets xr:prets){
         for(Pretspersonnels h: xr.getPretspersonnels()){
             if(h.getId().equals(v)){
@@ -185,5 +185,9 @@ public abstract class Tools {
             carte();
         };
         return v;
+    }
+
+    public static String filename(String x){
+        return x+typeText.extention;
     }
 }

@@ -52,8 +52,9 @@ public abstract class Methodes {
     public static void createEtudiant( ) {
 
         // add file
-        File file = new File("student.txt");
-        File file2 = new File("niveau.txt");
+
+        File file = new File(filename("student"));
+        File file2 = new File(filename("niveau"));
 //        FileIO.ReadFromFile(file,1);
         d("Entrer le nom de l'etudiant: ");
         String nom = e();
@@ -194,7 +195,7 @@ public abstract class Methodes {
     }
 
     public static void deleteStudent() {
-        File file = new File("student.txt");
+        File file = new File(filename("student"));
         System.out.println("Veuillez entrer l'id de l'etudiant a suprimer");
         String id= e();
         boolean check=false;

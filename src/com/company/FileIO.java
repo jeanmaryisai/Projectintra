@@ -220,6 +220,9 @@ public class FileIO {
                             Boolean.valueOf(st.nextToken(typeText.delimiteur)),
                             Double.valueOf(st.nextToken(typeText.delimiteur))));
                 }
+                   for(String s:l){
+                       st = new StringTokenizer(s, "\t");
+                   }
 
             } catch (Exception ex) {
                 d(ex);
