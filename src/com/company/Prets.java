@@ -3,8 +3,8 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import static com.company.Dao.taux;
-import static com.company.Dao.typeText;
+
+import static com.company.Dao.*;
 import static com.company.Tools.randomPId;
 
 public class Prets {
@@ -22,17 +22,10 @@ public class Prets {
 	private LocalDate date;
 	private boolean isencoour=true;
 	private double balance;
+
 	public void setId_prets(String id_prets) {
 		this.id_prets = id_prets;
 	}
-
-	public void setIsencoour(boolean isencoour) {
-		this.isencoour = isencoour;
-	}
-	public void setPerso(Set<Pretspersonnels> pretspersonnels) {
-		this.pretspersonnels = pretspersonnels;
-	}
-
 	public double getBalance() {
 		return balance;
 	}
@@ -43,6 +36,23 @@ public class Prets {
 
 	public Prets() {
 	}
+
+	public Prets(String id_prets, String niveau, double versement, LocalDate vers1, LocalDate vers2, LocalDate vers3, LocalDate vers4, LocalDate date, boolean isencoour, double balance) {
+		this.id_prets = id_prets;
+		for(Niveau n:niveaux){
+			if(n.getNiveau().equals(niveau)){
+			this.niveau = n;}
+		}
+		this.versement = versement;
+		this.vers1 = vers1;
+		this.vers2 = vers2;
+		this.vers3 = vers3;
+		this.vers4 = vers4;
+		this.date = date;
+		this.isencoour = isencoour;
+		this.balance = balance;
+	}
+
 	public String getId_prets() {
 		return id_prets;
 	}
@@ -111,12 +121,17 @@ public class Prets {
 		System.out.printf("%5s %5s %30s %30s %5s",id_prets,niveau.getNiveau(),(getVersement()*4),getMontant(),pretspersonnels.size());
 	}
 	public String stringgson(){
-		return id_prets+typeText.delimiteur+niveau.getNiveau()+typeText.delimiteur
-				+versement+typeText.delimiteur+vers1+typeText.delimiteur
-				+vers2+typeText.delimiteur+vers3+typeText.delimiteur+vers4+
-				typeText.delimiteur+date+typeText.delimiteur+isencoour+typeText.delimiteur+balance;
+		return id_prets+typeText.delimiteur
+				+niveau.getNiveau()+typeText.delimiteur
+				+versement+typeText.delimiteur
+				+vers1+typeText.delimiteur
+				+vers2+typeText.delimiteur+
+				vers3+typeText.delimiteur+
+				vers4+ typeText.delimiteur
+				+date+typeText.delimiteur
+				+isencoour+typeText.delimiteur
+				+balance;
 	}
-
 	@Override
 	public String toString() {String x="";
 		x+= "Prets{\nNb: La devise est le gourde" +

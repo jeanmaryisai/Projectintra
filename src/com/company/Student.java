@@ -1,5 +1,6 @@
 package com.company;
 
+import static com.company.Dao.niveaux;
 import static com.company.Dao.typeText;
 import static com.company.Tools.randomSId;
 
@@ -19,6 +20,21 @@ public class Student {
 	public Student() {
 		super();
 		
+	}
+
+	public Student(String id_student, String f_name, String l_name, String niveau, String gendr, String phone, String adresse, String piece, long piece_numbr) {
+		this.id_student = id_student;
+		this.f_name = f_name;
+		this.l_name = l_name;
+		for(Niveau n:niveaux){
+			if(n.getNiveau().equals(niveau)){
+		this.niveau = n;}
+		}
+		this.gendr = gendr;
+		this.phone = phone;
+		this.adresse = adresse;
+		this.piece = piece;
+		this.piece_numbr = piece_numbr;
 	}
 
 	public void setId_student(String id_student) {
@@ -157,7 +173,15 @@ public class Student {
 	}
 
 	public String stringgson(){
-		return id_student+typeText.delimiteur+f_name+typeText.delimiteur+l_name+typeText.delimiteur+niveau.getNiveau()+typeText.delimiteur+gendr+typeText.delimiteur+phone+typeText.delimiteur+adresse+typeText.delimiteur+piece+typeText.delimiteur+piece_numbr;
+		return id_student+typeText.delimiteur+
+				f_name+typeText.delimiteur+
+				l_name+typeText.delimiteur
+				+niveau.getNiveau()+typeText.delimiteur
+				+gendr+typeText.delimiteur+
+				phone+typeText.delimiteur
+				+adresse+typeText.delimiteur
+				+piece+typeText.delimiteur
+				+piece_numbr;
 	}
 
 }

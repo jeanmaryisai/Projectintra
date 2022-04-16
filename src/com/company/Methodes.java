@@ -12,6 +12,7 @@ import static com.company.FileIO.*;
 
 
 public abstract class Methodes {
+    //other stuff
     public static void setTaux(){
         d("L'actuel taux d'interet est de "+taux*100 +"%");
         d("Voulez vous poursuivre?");
@@ -45,6 +46,7 @@ public abstract class Methodes {
         niveaux.add(niv2a);
         niveaux.add(niv3a);
     }
+
 
     //student
     public static void createEtudiant( ) {
@@ -315,7 +317,7 @@ public abstract class Methodes {
 
     }
 
-//pret
+    //pret
     public static void addPret() {
         Prets pret=new Prets();
         System.out.println("Entrer votre Id");
@@ -341,9 +343,9 @@ public abstract class Methodes {
 
         d("Combien d'etudiants veulent preter dans votre niveau?");
         int yy=ei();int ii=0;
-        for(Student x:students){
+        for(Student x:students){d(x.getNiveau().getNiveau());
             try {
-            if (x.getNiveau().getNiveau().equals(niveau)) ii++;
+            if (x.getNiveau().getNiveau().equals(niveau)){ ii++;}
             }catch (Exception e){}
         }
         if(ii<yy){
@@ -407,9 +409,9 @@ public abstract class Methodes {
             }catch(Exception e){}
         }
         File file = new File("prets.txt");
-        File file2 = new File("pretperso.txt");
         FileIO.write(file,2,true);
-        FileIO.write(file2,6,true);
+        File file2 = new File("pretperso.txt");
+        FileIO.writePP(pret,file2,true);
     }
 
     public static void showPrets(){
@@ -437,6 +439,7 @@ public abstract class Methodes {
         }if(!check)d("on a pas pu trouver le pret en question");
     }
 
+    //rembousement
     public static void newRembousement(){
         Remboursement remboursement=new Remboursement();
         System.out.println("Entrer votre Id");

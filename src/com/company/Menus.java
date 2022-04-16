@@ -6,7 +6,7 @@ import static com.company.Methodes.*;
 
 public  abstract class Menus {
     public static int mainMenu(){int i;
-        do {
+        do {d(Dao.students.size());
             d("Menu principale\n" +
                     "Presser 1 pour le module Etudiants" +
                     "\nPresser 2 pour le module prets" +
@@ -84,7 +84,9 @@ public  abstract class Menus {
         boolean stay = true;
         do {
             File file = new File("student.txt");
-            FileIO.load(file,1);
+            try{FileIO.load(file,1);}catch (Exception e){
+                d(e);
+            }
             do {
 
                 d("Presser 1 pour creer un etudiant\n" +
@@ -107,7 +109,7 @@ public  abstract class Menus {
                     );
                     choix = ei();
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
-                    FileIO.load(file,1);
+                   FileIO.load(file,1);
                     switch (choix) {
                         case 1:searchStudentNII();break;
                         case 2:searchStudentName();break;
