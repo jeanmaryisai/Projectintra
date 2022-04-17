@@ -10,7 +10,7 @@ import static com.company.Tools.randomPId;
 public class Prets {
 	private String id_prets= randomPId();
 	private Niveau niveau;
-	private Set<Pretspersonnels> pretspersonnels= new HashSet<Pretspersonnels>();
+	public Set<Pretspersonnels> pretspersonnels= new HashSet<Pretspersonnels>();
 	public Set<Pretspersonnels> getPretspersonnels() {
 		return pretspersonnels;
 	}

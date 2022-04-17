@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.LoggingPermission;
+
 import static com.company.Tools.*;
 import static com.company.Dao.*;
 import static com.company.Tools.d;
@@ -210,11 +212,11 @@ public class FileIO {
     public static void load(File file, int choice) {
 
         if (choice == 1) {
-            Log("good");
+
             try {
                 File fileNiveau = new File(filename("niveau"));
                 if (file.exists() && fileNiveau.exists()) {
-                    Log("exist");
+
                     students.clear();
                     niveaux.clear();
                     int lines = 0;
@@ -252,7 +254,6 @@ public class FileIO {
 
                         }
                         if (brstudent.readLine() == null) {
-                            Log("br is Null");
                             inputStream1.getChannel().position(0);
                             brstudent = new BufferedReader(new InputStreamReader(inputStream1));
 
@@ -297,7 +298,7 @@ public class FileIO {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (choice == 2) {
-            Set<Pretspersonnels> pretspersonnels = new HashSet<Pretspersonnels>();
+            Set<Pretspersonnels> pretspersonnels2 = new HashSet<Pretspersonnels>();
             try {
                 File fileperso = new File(filename("pretperso"));
                 if (file.exists() && fileperso.exists()) {
@@ -331,23 +332,32 @@ public class FileIO {
 
                         while ((pretpersoOut = brperso.readLine()) != null) {
                             String[] persoEl = pretpersoOut.split(",");
+
                             if (persoEl[3].equals(pretEl[0])) {
+
                                 Pretspersonnels pretperso = new Pretspersonnels();
                                 pretperso.setId(persoEl[0]);
                                 pretperso.setPret(pret);
                                 pretperso.setMontant(Double.parseDouble(persoEl[2]));
+
                                 for (Student stud : students) {
                                     if (persoEl[1].equals(stud.getId_student())) {
+                                        Log(stud.getId_student());
                                         pretperso.setStudent(stud);
                                     }
                                 }
-                                pretspersonnels.add(pretperso);
-                                pret.setPerso(pretspersonnels);
+                                pret.pretspersonnels.add(pretperso);
                             }
 
                         }
-
                         prets.add(pret);
+                        if (brperso.readLine() == null) {
+                            inputStream3.getChannel().position(0);
+                            brperso = new BufferedReader(new InputStreamReader(inputStream3));
+
+                        }
+
+
                     }
                     brpret.close();
                     brperso.close();

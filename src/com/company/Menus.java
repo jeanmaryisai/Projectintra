@@ -58,6 +58,10 @@ public  abstract class Menus {
     public static void modulePret() {
         int choix;
         boolean stay = true;
+        File file1 = new File(filename("student"));
+        FileIO.load(file1,1);
+        File file = new File(filename("prets"));
+        FileIO.load(file,2);
         do {
             do {
                 d("Presser 1 pour placer un pret\n" +
@@ -67,8 +71,7 @@ public  abstract class Menus {
                 );
                 choix = ei();
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
-            File file = new File(filename("prets"));
-            FileIO.load(file,2);
+
             switch (choix){
                 case 1:addPret();break;
                 case 2:showPrets();break;
