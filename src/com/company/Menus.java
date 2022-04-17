@@ -69,6 +69,8 @@ public  abstract class Menus {
             } while (choix != 1 && choix != 2 && choix != 3 && choix != 4);
             File file = new File(filename("prets"));
             FileIO.load(file,2);
+            File file2 = new File(filename("pretperso"));
+            FileIO.load(file2,4);
             switch (choix){
                 case 1:addPret();break;
                 case 2:showPrets();break;

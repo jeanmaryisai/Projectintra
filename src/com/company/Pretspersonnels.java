@@ -1,6 +1,7 @@
 package com.company;
 
-import static com.company.Dao.typeText;
+import static com.company.Dao.*;
+import static com.company.Tools.d;
 import static com.company.Tools.randomPPId;
 
 public class Pretspersonnels {
@@ -9,8 +10,25 @@ public class Pretspersonnels {
     private double montant;
     private Prets pret;
 
+    public Pretspersonnels() {
+
+    }
+
     public String getId() {
         return id;
+    }
+
+    public Pretspersonnels(String id, String student, double montant, String pret) {
+        this.id = id;
+        for(Student s:students) {
+         if(s.getId_student().equals(student))
+            this.student = s;
+        }
+        this.montant = montant;
+        for (Prets p:prets) {
+         if(p.getId_prets().equals(pret))
+            this.pret = p;
+        }
     }
 
     public Prets getPret() {
