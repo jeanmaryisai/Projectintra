@@ -12,6 +12,8 @@ public abstract class Dao {
 	public static Set<Student> students= new HashSet<Student>();
 	public static Set<Prets> prets=new HashSet<Prets>();
 	public static Set<Remboursement> remboursements=new HashSet<Remboursement>();
+	public static Set<Pretspersonnels> pretspersonnels= new HashSet<>();
+	public static Set<RemboursementPersonnel> remboursementPersonnels= new HashSet<>();
 	public static double taux=0.1;
 	public static double montantPretMin=100.00;
 
@@ -25,7 +27,6 @@ public abstract class Dao {
 	public static Niveau niv3a= new Niveau("DUT2");
 
 	public static Fileinfo text=new Fileinfo("texte",".txt",",");
-
 	public static Fileinfo typeText=text;
 
 	

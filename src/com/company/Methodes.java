@@ -281,7 +281,6 @@ public abstract class Methodes {
         System.out.printf("%5s %20s %20s %5s %5s %20s", "Id", "Prenom", "Nom", "Niveau","sexe","CIN/NIF/NII");
         d("\n-----------------------------------------------------------------------------------");
         for(Student a:students) {
-            System.out.println(a);
            a.print();
             i++;
             d("\n");
