@@ -77,25 +77,26 @@ public class FileIO {
                 }
             }
         } else if (choice == 4) {
-            for (Remboursement r : remboursements) {
-                for (RemboursementPersonnel rp : r.getDtailRembos()) {
-                    System.out.println(rp.getEtudient());
-                    try {
 
+                    try {
+                        Log("test");
                         // Convenience class for writing character files
                         FileWriter writer;
                         writer = new FileWriter(file.getAbsoluteFile(), append);
-
-                        // Writes text to a character-output stream
                         BufferedWriter bufferWriter = new BufferedWriter(writer);
-                        bufferWriter.write(rp.stringgson() + "\n");
+                        // Writes text to a character-output stream
+                        for (Remboursement r : remboursements) {
+                            for (RemboursementPersonnel rp : r.getListDtail()) {
+                                System.out.println(rp.getEtudient());
+                                bufferWriter.write(rp.stringgson() + "\n");
+                            }
+                        }
                         bufferWriter.close();
                         writer.close();
                     } catch (IOException e) {
 
                         Log("error load cache from file " + e.toString());
-                    }
-                }
+
             }
         } else if (choice == 5) {
 
@@ -255,18 +256,18 @@ public class FileIO {
         } else if (choice == 3) {
             Set<RemboursementPersonnel> remboursementPersonnels = new HashSet<RemboursementPersonnel>();
             try {
-
+                File fileperso= new File(filename("remperso"));
                 if (file.exists()) {
+                    Log("exist1");
                     remboursements.clear();
-                    String remOut;
+                    String remOut, rempersoOut;
                     FileInputStream inputStream1 = new FileInputStream(file);
-
+                    FileInputStream inputStream2 = new FileInputStream(fileperso);
                     BufferedReader brRem = new BufferedReader(new InputStreamReader(inputStream1));
-
-
+                    BufferedReader brRemperso = new BufferedReader(new InputStreamReader(inputStream2));
                     while ((remOut = brRem.readLine()) != null) {
                         String[] remEl = remOut.split(",");
-
+                        Log("rem" + remEl[2]);
                         Remboursement rem = new Remboursement();
                         rem.setId(remEl[0]);
                         for (Niveau niv : niveaux) {
@@ -275,7 +276,6 @@ public class FileIO {
                             }
                         }
                         for (Prets pret : prets) {
-                            Log(pret.toString());
                             if (pret.getId_prets().equals(remEl[2])) {
 
                                 rem.setPrets(pret);
@@ -287,7 +287,29 @@ public class FileIO {
                             }
                         }
                         rem.setDateRenboursement(LocalDate.parse(remEl[4]));
+
+                        while ((rempersoOut = brRemperso.readLine())!= null){
+                            String[] rempersoEl = rempersoOut.split(",");
+                            if (rem.getId().equals(rempersoEl[3])) {
+                                Log("test2");
+                                RemboursementPersonnel remperso = new RemboursementPersonnel(rempersoEl[0], rempersoEl[1], Double.parseDouble(rempersoEl[2]));
+                                remperso.setRemboursement(rem);
+                                for (Prets pret : prets) {
+                                    if (pret.getId_prets().equals(remEl[2])) {
+                                        remperso.setPrets(pret);
+                                    }
+                                }
+                                rem.getListDtail().add(remperso);
+                                Log(rem.getListDtail());
+                            }
+                        }
                         remboursements.add(rem);
+                        Log(remboursements.toString());
+                        if (brRemperso.readLine() == null) {
+                            inputStream2.getChannel().position(0);
+                            brRemperso = new BufferedReader(new InputStreamReader(inputStream2));
+
+                        }
                     }
                     brRem.close();
                 }

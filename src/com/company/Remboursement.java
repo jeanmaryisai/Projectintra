@@ -11,16 +11,12 @@ public class Remboursement {
 	private Niveau niveau;
 	private Prets prets;
 	private Student student;
-	private Prets montantVerse;
 	private LocalDate dateRenboursement;
-	Set<RemboursementPersonnel>listDtail= new HashSet<RemboursementPersonnel>();
-	private Set<RemboursementPersonnel> remboursementPersonnels =new HashSet<RemboursementPersonnel>();
-	public Set<RemboursementPersonnel> getDtailRembos() {
-		return remboursementPersonnels;
-	}
+	public Set<RemboursementPersonnel>listDtail= new HashSet<RemboursementPersonnel>();
+
 	public double getMontant(){
 		double montant=0;
-		for(RemboursementPersonnel x: remboursementPersonnels){
+		for(RemboursementPersonnel x: listDtail){
 			montant += x.getMontant();
 		}
 		return montant;
@@ -82,19 +78,6 @@ public class Remboursement {
 	}
 
 
-
-	public Prets getMontantVerse() {
-		return montantVerse;
-	}
-
-
-
-	public void setMontantVerse(Prets montantVerse) {
-		this.montantVerse = montantVerse;
-	}
-
-
-
 	public LocalDate getDateRenboursement() {
 		return dateRenboursement;
 	}
@@ -135,13 +118,12 @@ public class Remboursement {
 				//"\n\t student=" + student.getL_name() + " "+student.getF_name()+
 				"\n\t montant=" + getMontant() +
 				"\n\t List Etudiant ayant participer a ce remboursement:\n\t";
-					for (RemboursementPersonnel x:remboursementPersonnels) {
+					for (RemboursementPersonnel x:listDtail) {
 							xe+=x.getEtudient().getF_name()+
 								" "+x.getEtudient().getL_name()+" d'Id "+
 								x.getEtudient().getId_student()+" a placer "
 								+x.getMontant()+" gourdes\n\t";}
-								xe+="\n\t montantVerse=" + montantVerse +
-								"\n\t dateRenboursement=" + dateRenboursement.toString() +
+								xe+="\n\t dateRenboursement=" + dateRenboursement.toString() +
 								'}';
 					return xe;
 					}

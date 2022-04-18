@@ -87,7 +87,7 @@ public abstract class Tools {
         int i=  (x.nextInt(99999)+100000);
         String v="RPr-"+String.valueOf(i);
         for(Remboursement xr: remboursements){
-            for(RemboursementPersonnel h: xr.getDtailRembos()){
+            for(RemboursementPersonnel h: xr.getListDtail()){
                 if(h.getId().equals(v)){
                     v=randomRPId();
                     break;

@@ -133,7 +133,6 @@ public  abstract class Menus {
         boolean stay = true;
         do {
             File file2 = new File(filename("prets"));
-            File file3 = new File(filename("pretperso"));
             File file = new File(filename("Remboursements"));
             File file1 = new File(filename("student"));
             FileIO.load(file1,1);

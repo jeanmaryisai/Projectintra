@@ -448,9 +448,9 @@ public abstract class Methodes {
 
     //rembousement
     public static void newRembousement(){
-        File file1 = new File("student.txt");
+        File file1 = new File(filename("student"));
         FileIO.load(file1,1);
-        File file3 = new File("Remboursements.txt");
+        File file3 = new File(filename("Remboursements"));
         FileIO.load(file3,3);
         Remboursement remboursement=new Remboursement();
         System.out.println("Entrer votre Id");
@@ -495,7 +495,7 @@ public abstract class Methodes {
             d("Pour le "+i+" etudiant: ");
             d("Entrer l'id: ");
             String id=e();check=false;
-            d("Entree le montant versee"); double montant;
+             double montant;
             for(Student x: students){
                 if(id.equals(x.getId_student())){
                     if(studentList.contains(x)){
@@ -516,7 +516,8 @@ public abstract class Methodes {
                     remboursementPersonnel.setEtudient(x);
                     remboursementPersonnel.setRemboursement(remboursement);
                     for (Pretspersonnels pretspersonnel : remboursement.getPrets().getPretspersonnels()) {
-                        if(pretspersonnel.getStudent().equals(x)){
+
+                        if(pretspersonnel.getStudent().getId_student().equals(x.getId_student())){
                             d("L'etudiant reste une somme personnel de "+(pretspersonnel.getMontant())+" " +
                                     "gourdes a payer en tout!");
                             br();
@@ -526,8 +527,9 @@ public abstract class Methodes {
                                 d("Action interrompu!!!");return;
                             }
                             remboursementPersonnel.setMontant(montant);
-                            remboursement.getDtailRembos().add(remboursementPersonnel);
+                            remboursement.getListDtail().add(remboursementPersonnel);
                             pretspersonnel.setMontant(pretspersonnel.getMontant()-montant);
+
                         }
                     }
 
@@ -771,13 +773,21 @@ public abstract class Methodes {
         remboursements.add(remboursement);
         System.out.println(remboursements.toString());
 
-
-        File file = new File("Remboursements.txt");
+        File file5 = new File(filename("prets"));
+        File file7 = new File(filename("pretperso"));
+        FileIO.write(file5,2,false);
+        File file6 = new File(filename("niveau"));
+        FileIO.write(file6,5,false);
+        FileIO.write(file7,6,false);
+        File file = new File(filename("Remboursements"));
+        File file2 = new File(filename("remperso"));
         FileIO.write(file,3,true);
+        FileIO.write(file2,4,true);
 
     }
 
     public static void affRemboursements(){
+
         for(Remboursement x:remboursements){
             d(x.toString());
             d("Remboursement "+x.getId()+" place le "+x.getDateRenboursement()+" sur le pret "+ x.getPrets().getId_prets()+"\n");
@@ -785,6 +795,9 @@ public abstract class Methodes {
     }
 
     public static void detailRemboursement(){
+        File file2 = new File(filename("Remboursements"));
+        FileIO.load(file2,3);
+        d("yesy");
         System.out.println("Veuillez entrer l'id du remboursement voulu voulu");
         String id= e();
         boolean check=false;

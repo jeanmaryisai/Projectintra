@@ -1,6 +1,7 @@
 package com.company;
 
 
+import static com.company.Dao.students;
 import static com.company.Dao.typeText;
 import static com.company.Tools.randomRPId;
 
@@ -15,11 +16,18 @@ public class RemboursementPersonnel {
 	
 	}
 
-	public RemboursementPersonnel(String id, Prets prets, Student etudient, double montant) {
+	public RemboursementPersonnel(String id, Student etudient,Prets prets, double montant) {
 		super();
 		Id = id;
 		this.prets = prets;
 		this.etudient = etudient;
+		this.montant = montant;
+	}
+	public RemboursementPersonnel(String id, String etudient, double montant) {
+		Id = id;
+		for(Student s:students){
+			if(s.getId_student().equals(etudient))
+		this.etudient = s;}
 		this.montant = montant;
 	}
 
@@ -64,7 +72,7 @@ public class RemboursementPersonnel {
 
 	public String stringgson(){
 		return  Id+typeText.delimiteur+
-		prets.getId_prets()+typeText.delimiteur+
+
 		etudient.getId_student()+typeText.delimiteur+
 				montant+typeText.delimiteur+
 		remboursement.getId();
