@@ -123,8 +123,7 @@ public class Remboursement {
 		niveau.getNiveau()+typeText.delimiteur+
 		prets.getId_prets()+typeText.delimiteur+
 		student.getId_student()+typeText.delimiteur+
-				dateRenboursement+typeText.delimiteur+
-				montantVerse;
+				dateRenboursement;
 	}
 	@Override
 	public String toString() {

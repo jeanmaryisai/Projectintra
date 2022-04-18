@@ -91,9 +91,9 @@ public abstract class Methodes {
                 students.add(student);
             }
         }
-        FileIO.write(file,1,true);
+        FileIO.write(file,1,false);
         //add file to file and specify the file path with extension
-        FileIO.write(file2,5,true);
+        FileIO.write(file2,5,false);
 
     }
 
@@ -292,7 +292,8 @@ public abstract class Methodes {
         System.out.println("Veuillez entrer l'id de l'etudiant a que vous souhaiter assigner comme leader");
         String id= e();
         boolean check=false;
-        File file = new File("student.txt");
+        File file = new File(filename("student"));
+        File file1 = new File(filename("niveau"));
         FileIO.load(file,1);
         for(Student s:students) {
             if(s.getId_student().equals(id)) {
@@ -311,7 +312,9 @@ public abstract class Methodes {
                     }catch (Exception e){}
                         x.setLeaddr(s);
                         d("Etudiant assigner comme nouveau representant du niveau "+s.getNiveau().getNiveau());
+                        FileIO.write(file1,5,false);
                     }
+
                 }
                 check=true;
             }
@@ -410,9 +413,11 @@ public abstract class Methodes {
                 }
             }catch(Exception e){}
         }
-        File file = new File("prets.txt");
+        File file4 = new File(filename("niveau"));
+        FileIO.write(file4,5,false);
+        File file = new File(filename("prets"));
         FileIO.write(file,2,true);
-        File file2 = new File("pretperso.txt");
+        File file2 = new File(filename("pretperso"));
         FileIO.writePP(pret,file2,true);
     }
 

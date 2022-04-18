@@ -25,8 +25,6 @@ public class FileIO {
 
     public static void write(File file, int choice, Boolean append) {
         if (choice == 1) {
-
-
             try {
                 FileWriter writer;
                 writer = new FileWriter(file.getAbsoluteFile(), append);
@@ -35,6 +33,7 @@ public class FileIO {
                     bufferWriter.write(s.stringgson() + "\n");
                 }
                 bufferWriter.close();
+                writer.close();
             } catch (IOException e) {
 
                 Log("error load cache from file " + e.toString());
@@ -53,6 +52,7 @@ public class FileIO {
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
                     bufferWriter.write(p.stringgson() + "\n");
                     bufferWriter.close();
+                    writer.close();
                 } catch (IOException e) {
 
                     Log("error load cache from file " + e.toString());
@@ -70,6 +70,7 @@ public class FileIO {
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
                     bufferWriter.write(r.stringgson() + "\n");
                     bufferWriter.close();
+                    writer.close();
                 } catch (IOException e) {
 
                     Log("error load cache from file " + e.toString());
@@ -89,6 +90,7 @@ public class FileIO {
                         BufferedWriter bufferWriter = new BufferedWriter(writer);
                         bufferWriter.write(rp.stringgson() + "\n");
                         bufferWriter.close();
+                        writer.close();
                     } catch (IOException e) {
 
                         Log("error load cache from file " + e.toString());
@@ -96,22 +98,24 @@ public class FileIO {
                 }
             }
         } else if (choice == 5) {
-            for (Niveau niveau : niveaux) {
+
                 try {
 
                     // Convenience class for writing character files
                     FileWriter writer;
                     writer = new FileWriter(file.getAbsoluteFile(), append);
-
                     // Writes text to a character-output stream
                     BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(niveau.stringgson() + "\n");
+                    for (Niveau niveau : niveaux) {
+                        bufferWriter.write(niveau.stringgson() + "\n");
+                    }
                     bufferWriter.close();
+                    writer.close();
                 } catch (IOException e) {
 
                     Log("error load cache from file " + e.toString());
                 }
-            }
+
         } else if (choice == 6) {
             for (Prets p : prets) {
                 for (Pretspersonnels perso : p.getPretspersonnels()) {
@@ -125,6 +129,7 @@ public class FileIO {
                         BufferedWriter bufferWriter = new BufferedWriter(writer);
                         bufferWriter.write(perso.stringgson() + "\n");
                         bufferWriter.close();
+                        writer.close();
                     } catch (IOException e) {
 
                         Log("error load cache from file " + e.toString());
@@ -134,61 +139,7 @@ public class FileIO {
         }
     }
 
-    public static void write1(File file, int choice, boolean ignore) {
-        if (choice == 1) {
-            for (Student s : students) {
-                try {
 
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(s.stringgson() + "\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e);
-                }
-            }
-        } else if (choice == 2) {
-            for (Prets p : prets) {
-                try {
-
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(p.stringgson() + "\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e.toString());
-                }
-            }
-        } else if (choice == 3) {
-            for (Remboursement r : remboursements) {
-                try {
-
-                    // Convenience class for writing character files
-                    FileWriter writer;
-                    writer = new FileWriter(file.getAbsoluteFile(), true);
-
-                    // Writes text to a character-output stream
-                    BufferedWriter bufferWriter = new BufferedWriter(writer);
-                    bufferWriter.write(r.stringgson() + "\n");
-                    bufferWriter.close();
-                } catch (IOException e) {
-
-                    Log("error load cache from file " + e.toString());
-                }
-            }
-        }
-
-    }
 
     public static void writePP(Prets pret, File file, boolean append) {
         for (Pretspersonnels pp : pret.getPretspersonnels()) {
@@ -212,85 +163,20 @@ public class FileIO {
     public static void load(File file, int choice) {
 
         if (choice == 1) {
-
             try {
-                File fileNiveau = new File(filename("niveau"));
-                if (file.exists() && fileNiveau.exists()) {
 
+                if (file.exists()) {
                     students.clear();
-                    niveaux.clear();
-                    int lines = 0;
                     String studentInput, niveauInput;
                     FileInputStream inputStream1 = new FileInputStream(file);
-                    FileInputStream inputStream2 = new FileInputStream(fileNiveau);
                     BufferedReader brstudent = new BufferedReader(new InputStreamReader(inputStream1));
-                    BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream2));
 
-                    while ((niveauInput = brniveau.readLine()) != null) {
-                        String[] niveauEl = niveauInput.split(",");
-                        while ((studentInput = brstudent.readLine()) != null) {
-                            String[] studentEl = studentInput.split(",");
-
-                            if (studentEl[0].equals(niveauEl[1])) {
-
-                                Student student = new Student();
-                                Niveau nivo = new Niveau();
-                                nivo.setNiveau(niveauEl[0]);
-                                nivo.setLeaddr(student);
-                                nivo.setIsencour(Boolean.parseBoolean(niveauEl[2]));
-                                student.setId_student(studentEl[0]);
-                                student.setF_name(studentEl[1]);
-                                student.setL_name(studentEl[2]);
-                                student.setNiveau(nivo);
-                                student.setGendr(studentEl[4]);
-                                student.setPhone(studentEl[5]);
-                                student.setAdresse(studentEl[6]);
-                                student.setPiece(studentEl[7]);
-                                student.setPiece_numbr(Long.parseLong(studentEl[8]));
-                                niveaux.add(nivo);
-                                students.add(student);
-
-                            }
-
-                        }
-                        if (brstudent.readLine() == null) {
-                            inputStream1.getChannel().position(0);
-                            brstudent = new BufferedReader(new InputStreamReader(inputStream1));
-
-                        }
-                    }
-                    Log(brstudent.readLine());
-                    inputStream1.getChannel().position(0);
-                    brstudent = new BufferedReader(new InputStreamReader(inputStream1));
                     while ((studentInput = brstudent.readLine()) != null) {
                         String[] studentEl = studentInput.split(",");
-
-                        Student student1 = new Student();
-                        for (Student stud : students) {
-                            if (stud.getId_student().equals(studentEl[0])) {
-                                continue;
-                            } else {
-                                for (Niveau niv : niveaux) {
-                                    if (niv.getNiveau().equals(studentEl[3])) {
-                                        student1.setNiveau(niv);
-                                    }
-                                }
-                            }
-                        }
-                        student1.setId_student(studentEl[0]);
-                        student1.setF_name(studentEl[1]);
-                        student1.setL_name(studentEl[2]);
-                        student1.setGendr(studentEl[4]);
-                        student1.setPhone(studentEl[5]);
-                        student1.setAdresse(studentEl[6]);
-                        student1.setPiece(studentEl[7]);
-                        student1.setPiece_numbr(Long.parseLong(studentEl[8]));
-                        students.add(student1);
-
-
+                        Student student = new Student(studentEl[0],studentEl[1],studentEl[2],studentEl[3],studentEl[4],studentEl[5],studentEl[6],studentEl[7],Long.parseLong(studentEl[8]));
+                        students.add(student);
                     }
                     brstudent.close();
-                    brniveau.close();
                 } else {
                     Log("You have to create student first");
                 }
@@ -371,7 +257,6 @@ public class FileIO {
             try {
 
                 if (file.exists()) {
-                    Log("exist1");
                     remboursements.clear();
                     String remOut;
                     FileInputStream inputStream1 = new FileInputStream(file);
@@ -381,7 +266,7 @@ public class FileIO {
 
                     while ((remOut = brRem.readLine()) != null) {
                         String[] remEl = remOut.split(",");
-                        Log("rem" + remEl[2]);
+
                         Remboursement rem = new Remboursement();
                         rem.setId(remEl[0]);
                         for (Niveau niv : niveaux) {
@@ -394,7 +279,6 @@ public class FileIO {
                             if (pret.getId_prets().equals(remEl[2])) {
 
                                 rem.setPrets(pret);
-                                rem.setMontantVerse(pret);
                             }
                         }
                         for (Student student : students) {
@@ -403,35 +287,37 @@ public class FileIO {
                             }
                         }
                         rem.setDateRenboursement(LocalDate.parse(remEl[4]));
-
-//                        while ((remPersoOut = brRemPerso.readLine()) != null) {
-//                            String[] persoEl = remPersoOut.split(",");
-//                            if (persoEl[4].equals(remEl[0])) {
-//                                RemboursementPersonnel remperso = new RemboursementPersonnel();
-//                                remperso.setId(persoEl[0]);
-//                                for (Student stud : students) {
-//                                    if (persoEl[2].equals(stud.getId_student())) {
-//                                        remperso.setEtudient(stud);
-//                                    }
-//                                }
-//                                for (Prets pret : prets) {
-//                                    if (persoEl[1].equals(pret.getId_prets())) {
-//                                        remperso.setPrets(pret);
-//                                    }
-//                                }
-//                                remperso.setRemboursement(rem);
-//                                remboursementPersonnels.add(remperso);
-//                            }
-//
-//                        }
-
                         remboursements.add(rem);
                     }
+                    brRem.close();
                 }
+
             } catch (IOException ex) {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        } else if (choice == 4){
+
+            if (file.exists()) {
+                try{
+                    String niveauInput;
+                    FileInputStream inputStream1 = new FileInputStream(file);
+                    BufferedReader brniveau = new BufferedReader(new InputStreamReader(inputStream1));
+                    while ((niveauInput = brniveau.readLine()) != null) {
+                        String[] niveauEl = niveauInput.split(",");
+                        for(Niveau n: niveaux){
+                            if(niveauEl[0].equals(n.getNiveau())){
+                                n.setLeaddrs(niveauEl[1]);
+                                n.setIsencour(Boolean.parseBoolean(niveauEl[2]));
+                            }
+                        }
+                    }
+                    brniveau.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
         }
     }
 }

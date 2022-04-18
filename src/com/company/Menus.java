@@ -84,8 +84,6 @@ public  abstract class Menus {
 
     public static void moduleEtudiant() {
         int choix;
-        File file = new File(filename("student"));
-        FileIO.load(file,1);
         boolean stay = true;
         do {
             do {
