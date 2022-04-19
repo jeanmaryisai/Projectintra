@@ -1,5 +1,6 @@
 package com.company;
 import java.io.File;
+import java.util.Scanner;
 
 import static com.company.Tools.*;
 import static com.company.Methodes.*;
@@ -81,9 +82,32 @@ public  abstract class Menus {
             if(stay)br();
         } while (stay);
     }
+    public static void settype(){
+        int choice;
+        File file = new File("type.txt");
+        d("entrez le type de fichier pour sauvegarder les données\n \n");
+        d("Presser 1 pour le type txt\n" +
+                "presser 2 pour le type csv\n" +
+                "presser 3 pour le type xlxs\n"
+        );
+        Scanner scr = new Scanner(System.in);
+        choice = scr.nextInt();
+        switch (choice){
+            case 1:typeText.setExtention("txt");break;
+            case 2:typeText.setExtention("csv");break;
+            case 3:typeText.setExtention("xlsx");break;
+        }
+        if (FileIO.loadtype()){
+            FileIO.writetype(false);
+        } else{
+            d("le type de fichier est deja definit");
 
+        }
+
+    }
     public static void moduleEtudiant() {
         int choix;
+
         boolean stay = true;
         do {
             do {

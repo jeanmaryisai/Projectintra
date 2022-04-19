@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import static com.company.Dao.*;
 import static com.company.Menus.menuPrincipale;
+import static com.company.Menus.settype;
 import static com.company.Methodes.*;
 import static com.company.Tools.*;
 
@@ -16,6 +17,12 @@ public class Main {
         File file1=new File(filename("niveau"));
         FileIO.load(file,1);
         FileIO.load(file1,4);
+        if (FileIO.loadtype()){
+            settype();
+        } else{
+            d("le type de fichier est deja definit");
+
+        }
 
         menuPrincipale();
 //        while (stayed) {

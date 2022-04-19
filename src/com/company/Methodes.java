@@ -44,7 +44,7 @@ public abstract class Methodes {
         niveaux.add(niv2);
         niveaux.add(niv3);
         niveaux.add(niv2a);
-
+        niveaux.add(niv3a);
     }
 
 
@@ -91,10 +91,10 @@ public abstract class Methodes {
                 students.add(student);
             }
         }
+        d("new type "+ typeText.extention);
         FileIO.write(file,1,false);
         //add file to file and specify the file path with extension
         FileIO.write(file2,5,false);
-
     }
 
     public static void modifyStudent(){

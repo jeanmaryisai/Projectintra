@@ -21,8 +21,37 @@ public class FileIO {
     public static void Log(Object d) {
         System.out.println(d);
     }
-
-
+    public static void writetype( Boolean isuse) {
+        File file = new File("type.txt");
+        try {
+        FileWriter writer;
+        writer = new FileWriter(file.getAbsoluteFile(), false);
+        writer.write(typeText.extention + ","+ isuse);
+        writer.close();
+        } catch (IOException e) {
+            Log("error load cache from file " + e.toString());
+        }
+    }
+    public static Boolean loadtype(){
+        String typeInput ;
+        File file = new File("type.txt");
+        Boolean val=true;
+        try {
+            if(file.exists()) {
+                FileInputStream inputStream = new FileInputStream(file);
+                BufferedReader brtype = new BufferedReader(new InputStreamReader(inputStream));
+                while ((typeInput = brtype.readLine()) != null) {
+                    String[] typeEl = typeInput.split(",");
+                    typeText.setExtention("."+typeEl[0]);
+                    typeText.setDelimiteur(",");
+                    val = Boolean.parseBoolean(typeEl[1]);
+                }
+            }
+        }catch (IOException e) {
+            Log("error load cache from file " + e.toString());
+        }
+        return val;
+    }
     public static void write(File file, int choice, Boolean append) {
         if (choice == 1) {
             try {
@@ -34,6 +63,8 @@ public class FileIO {
                 }
                 bufferWriter.close();
                 writer.close();
+
+
             } catch (IOException e) {
 
                 Log("error load cache from file " + e.toString());
@@ -53,6 +84,7 @@ public class FileIO {
                     bufferWriter.write(p.stringgson() + "\n");
                     bufferWriter.close();
                     writer.close();
+
                 } catch (IOException e) {
 
                     Log("error load cache from file " + e.toString());
@@ -71,6 +103,8 @@ public class FileIO {
                     bufferWriter.write(r.stringgson() + "\n");
                     bufferWriter.close();
                     writer.close();
+
+
                 } catch (IOException e) {
 
                     Log("error load cache from file " + e.toString());

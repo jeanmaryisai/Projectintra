@@ -26,15 +26,15 @@ public abstract class Dao {
 	public static Niveau niv2a= new Niveau("DUT1");
 	public static Niveau niv3a= new Niveau("DUT2");
 
-	public static Fileinfo text=new Fileinfo("texte",".txt",",");
+	public static Fileinfo text=new Fileinfo();
 	public static Fileinfo typeText=text;
 
-	
-	
-	
-	
 
-	
-	
+
+
+
+
+
+
 
 }
